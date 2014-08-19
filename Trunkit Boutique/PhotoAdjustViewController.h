@@ -12,6 +12,8 @@
 #import "TKEditViewController.h"
 #import "TKCropViewController.h"
 #import "GPUImage.h"
+#import "ALAssetLibrary+Singleton.h"
+
 
 typedef enum {
     TKPhotoAdjustBrightnessContrastMode,
@@ -36,11 +38,11 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UILabel *squareLabel;
 @property (strong, nonatomic) IBOutlet UILabel *portraitLabel;
 
-@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) ALAsset *image;
 
-@property (nonatomic, copy) void (^setEditedPhotoOnParentController)(UIImage *, CGFloat, CGFloat);
+@property (nonatomic, copy) void (^setEditedPhotoOnParentController)(UIImage *, CGFloat);
 
-- (IBAction)toggleImageEditButtonTapped:(id)sender;
+//- (IBAction)toggleImageEditButtonTapped:(id)sender;
 - (IBAction)sliderDragged:(id)sender;
 
 - (IBAction)cancelEditButtonTapped:(id)sender;

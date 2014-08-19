@@ -9,6 +9,7 @@
 #import "CameraViewController.h"
 #import "PhotoEditorViewController.h"
 //#import <QuartzCore/QuartzCore.h>
+#import "ALAssetLibrary+Singleton.h"
 
 static CGFloat optionAvailableAlpha = 0.6;
 static CGFloat optionUnavailableAlpha = 0.2;
@@ -20,7 +21,7 @@ static CGFloat optionUnavailableAlpha = 0.2;
 //@property (strong, nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer *capturePreviewLayer;
-@property (strong, nonatomic) UIImage *capturedPhoto;
+@property (strong, nonatomic) ALAsset *capturedPhoto;
 
 
 @property (readwrite) BOOL isCapturingImage;
@@ -163,8 +164,8 @@ static CGFloat optionUnavailableAlpha = 0.2;
 - (void)capturePhoto
 {
 #if TARGET_IPHONE_SIMULATOR
-    self.capturedPhoto = [UIImage imageNamed:@"SampleSkinnyJeansWomen"];
-    [self performSegueWithIdentifier:@"CameraToPhotoAcceptanceSegueIdentifier" sender:self];
+    UIImage *photo = [UIImage imageNamed:@"SampleSkinnyJeansWomen"];
+    [self navigateToEditorControllerWithPhoto:photo];
     
 #else
     _isCapturingImage = YES;
@@ -229,11 +230,35 @@ static CGFloat optionUnavailableAlpha = 0.2;
          cropSize.height = cropSize.width / aspectRatio;
          
          capturedImage = [weakSelf crop:capturedImage from:capturedImage.size to:cropSize];
-		 weakSelf.capturedPhoto = capturedImage;
-         _isCapturingImage = NO;
-         [weakSelf performSegueWithIdentifier:@"CameraToPhotoAcceptanceSegueIdentifier" sender:weakSelf];
+         [self navigateToEditorControllerWithPhoto:capturedImage];
+         
      }];
 #endif
+}
+
+- (void)navigateToEditorControllerWithPhoto:(UIImage *)photo
+{
+    ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+    [library writeImageToSavedPhotosAlbum:photo.CGImage orientation:(ALAssetOrientation)photo.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )
+     {
+         NSLog(@"IMAGE SAVED TO PHOTO ALBUM");
+         [library assetForURL:assetURL resultBlock:^(ALAsset *asset )
+          {
+              self.capturedPhoto = asset;
+              self.isCapturingImage = NO;
+              [self performSegueWithIdentifier:@"CameraToPhotoAcceptanceSegueIdentifier" sender:self];
+          }
+                 failureBlock:^(NSError *error )
+          {
+              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
+                                                              message:@"A system error occurred while trying to save your photo."
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK" otherButtonTitles:nil];
+              [alert show];
+              NSLog(@"Error loading asset");
+              self.isCapturingImage = NO;
+          }];
+     }];
 }
 
 - (UIImage *)crop:(UIImage *)image from:(CGSize)src to:(CGSize)dst

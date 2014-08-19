@@ -34,6 +34,7 @@
 		822E2A56198E7FB600B170EA /* PhotoPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 822E2A55198E7FB600B170EA /* PhotoPagesViewController.m */; };
 		822E2A59198E80A500B170EA /* PhotoSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 822E2A58198E80A500B170EA /* PhotoSlideViewController.m */; };
 		822E2A5C198F015E00B170EA /* TKCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 822E2A5B198F015E00B170EA /* TKCollectionView.m */; };
+		822FF72119A2F0A8005CEA4B /* ALAssetLibrary+Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 822FF72019A2F0A8005CEA4B /* ALAssetLibrary+Singleton.m */; };
 		823177B6196660C600E3990A /* SupplyAnItemPage3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 823177B5196660C600E3990A /* SupplyAnItemPage3ViewController.m */; };
 		82337D64196CE906005800AA /* DropDownIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 82337D63196CE906005800AA /* DropDownIcon.png */; };
 		8233B7E2196E3A1E00333FE9 /* SamplePinkShirt.png in Resources */ = {isa = PBXBuildFile; fileRef = 8233B7E1196E3A1E00333FE9 /* SamplePinkShirt.png */; };
@@ -163,6 +164,8 @@
 		822E2A58198E80A500B170EA /* PhotoSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSlideViewController.m; sourceTree = "<group>"; };
 		822E2A5A198F015E00B170EA /* TKCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCollectionView.h; sourceTree = "<group>"; };
 		822E2A5B198F015E00B170EA /* TKCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCollectionView.m; sourceTree = "<group>"; };
+		822FF71F19A2F0A8005CEA4B /* ALAssetLibrary+Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetLibrary+Singleton.h"; sourceTree = "<group>"; };
+		822FF72019A2F0A8005CEA4B /* ALAssetLibrary+Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetLibrary+Singleton.m"; sourceTree = "<group>"; };
 		823177B4196660C600E3990A /* SupplyAnItemPage3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupplyAnItemPage3ViewController.h; sourceTree = "<group>"; };
 		823177B5196660C600E3990A /* SupplyAnItemPage3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupplyAnItemPage3ViewController.m; sourceTree = "<group>"; };
 		82337D63196CE906005800AA /* DropDownIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropDownIcon.png; sourceTree = "<group>"; };
@@ -440,6 +443,8 @@
 				828DA794199DBB79006FA328 /* LeftMenuViewController.m */,
 				82558D9A199F03DF009AFE61 /* HelpViewController.h */,
 				82558D9B199F03DF009AFE61 /* HelpViewController.m */,
+				822FF71F19A2F0A8005CEA4B /* ALAssetLibrary+Singleton.h */,
+				822FF72019A2F0A8005CEA4B /* ALAssetLibrary+Singleton.m */,
 			);
 			path = "Trunkit Boutique";
 			sourceTree = "<group>";
@@ -723,6 +728,7 @@
 				82A0C7181969A5DC00C5B97F /* ReviewItemViewController.m in Sources */,
 				82EC63A8197B15B8002CA430 /* TKCropRectView.m in Sources */,
 				828DA789199DB86D006FA328 /* AMSlideMenuContentSegue.m in Sources */,
+				822FF72119A2F0A8005CEA4B /* ALAssetLibrary+Singleton.m in Sources */,
 				8222B59C19722B0F00F49905 /* PhotoSelectionViewController.m in Sources */,
 				828DA78D199DB86D006FA328 /* AMSlideMenuRightMenuSegue.m in Sources */,
 				828DA78B199DB86D006FA328 /* AMSlideMenuLeftTableViewController.m in Sources */,
@@ -895,7 +901,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C340A17E-2C52-478B-A5D2-764A19E95E5F";
+				PROVISIONING_PROFILE = "cf96d671-1517-4d05-970f-c26d54bd2597";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -914,7 +920,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C340A17E-2C52-478B-A5D2-764A19E95E5F";
+				PROVISIONING_PROFILE = "cf96d671-1517-4d05-970f-c26d54bd2597";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

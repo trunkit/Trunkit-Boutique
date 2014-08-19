@@ -92,9 +92,7 @@
 
     if (_adjustMode == TKPhotoAdjustCropMode)
     {
-        //FIXME Dup code
-        
-        UIImage *image = _image;
+        UIImage *image = _workImage; // [UIImage imageWithCGImage:[[_image defaultRepresentation] fullResolutionImage]];
         if (_loadSliderValue != 0)
         {
             self.slider.value = _loadSliderValue;
@@ -125,7 +123,7 @@
 
 - (UIImage *)filteredImage
 {
-    UIImage *image = [self.filterGroup imageByFilteringImage:_image];
+    UIImage *image = [self.filterGroup imageByFilteringImage:_workImage];
     [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
     return image;
 }
@@ -170,12 +168,18 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (void)setImage:(UIImage *)image
+- (void)setImage:(ALAsset *)image
 {
     _image = image;
-    CGFloat width = 320.0f;
-    CGFloat height = image.size.height * (320 / image.size.width);
-    self.workImage = [self image:_image scaledToSize:CGSizeMake(width, height)];
+    
+    self.workImage = [UIImage imageWithCGImage:[[_image defaultRepresentation] fullScreenImage]];
+    
+//    CGFloat width = 320.0f;
+//    CGFloat height = image.size.height * (320 / image.size.width);
+//    
+//    
+//    
+//    self.workImage = [self image:_image scaledToSize:CGSizeMake(width, height)];
     
     if (self.workImage && self.filterGroup)
     {
@@ -200,29 +204,29 @@
     [super prepareForSegue:segue sender:sender];
 }
 
-- (IBAction)toggleImageEditButtonTapped:(id)sender
-{
-    self.toggleImageEditButton.selected = !self.toggleImageEditButton.selected;
-    [self resetViewForToggleEditState:self.toggleImageEditButton.selected];
-    
-    if (self.toggleImageEditButton.selected)
-    {
-//        UIImage *image = [self.image imageWithContrast:(self.slider.value + 1) brightness:self.slider.value];
-        if (!self.cropViewController)
-        {
-            [self loadCropControllerWithImage:[self filteredImage]];
-        }
-        self.cropViewController.image = [self filteredImage];
-    }
-    else
-    {
-        UIImage *croppedImage = [self.image rotatedImageWithtransform:((TKCropView *)self.cropViewController.cropView).rotation
-                                                        croppedToRect:self.cropViewController.cropView.zoomedCropRect];
-        croppedImage = [croppedImage imageScaledToQuarter];
-        self.workImage = croppedImage;
-        [self sliderDragged:self];
-    }
-}
+//- (IBAction)toggleImageEditButtonTapped:(id)sender
+//{
+//    self.toggleImageEditButton.selected = !self.toggleImageEditButton.selected;
+//    [self resetViewForToggleEditState:self.toggleImageEditButton.selected];
+//    
+//    if (self.toggleImageEditButton.selected)
+//    {
+////        UIImage *image = [self.image imageWithContrast:(self.slider.value + 1) brightness:self.slider.value];
+//        if (!self.cropViewController)
+//        {
+//            [self loadCropControllerWithImage:[self filteredImage]];
+//        }
+//        self.cropViewController.image = [self filteredImage];
+//    }
+//    else
+//    {
+//        UIImage *croppedImage = [self.image rotatedImageWithtransform:((TKCropView *)self.cropViewController.cropView).rotation
+//                                                        croppedToRect:self.cropViewController.cropView.zoomedCropRect];
+//        croppedImage = [croppedImage imageScaledToQuarter];
+//        self.workImage = croppedImage;
+//        [self sliderDragged:self];
+//    }
+//}
 
 - (void)loadCropControllerWithImage:(UIImage *)image
 {
@@ -265,7 +269,7 @@
         image = self.cropViewController.cropView.croppedImage;
     }
     
-    self.setEditedPhotoOnParentController(image, 0, 0);
+    self.setEditedPhotoOnParentController(image, self.slider.value);
     [self.navigationController popViewControllerAnimated:YES];
 }
 

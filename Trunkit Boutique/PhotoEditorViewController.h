@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TKEditViewController.h"
+#import "ALAssetLibrary+Singleton.h"
 
 @interface PhotoEditorViewController : TKEditViewController
 
@@ -15,7 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *retakeButton;
 @property (strong, nonatomic) IBOutlet UIButton *useButton;
 
-@property (strong, nonatomic) UIImage *photo;
+@property (strong, nonatomic) ALAsset *photo;
 @property (strong, nonatomic) UIImage *editedPhoto;
 
 //@property (readwrite, nonatomic) CGFloat brightnessAdjustment;
