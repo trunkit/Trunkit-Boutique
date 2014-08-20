@@ -21,21 +21,16 @@
 @implementation TKCropViewController
 @synthesize rotationEnabled = _rotationEnabled;
 
-+ (NSBundle *)bundle
-{
-    static NSBundle *bundle = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSURL *bundleURL = [[NSBundle mainBundle] URLForResource:@"PEPhotoCropEditor" withExtension:@"bundle"];
-        bundle = [[NSBundle alloc] initWithURL:bundleURL];
-    });
-    
-    return bundle;
-}
-
-//static inline NSString *PELocalizedString(NSString *key, NSString *comment)
+//+ (NSBundle *)bundle
 //{
-//    return [[PECropViewController bundle] localizedStringForKey:key value:nil table:@"Localizable"];
+//    static NSBundle *bundle = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        NSURL *bundleURL = [[NSBundle mainBundle] URLForResource:@"PEPhotoCropEditor" withExtension:@"bundle"];
+//        bundle = [[NSBundle alloc] initWithURL:bundleURL];
+//    });
+//    
+//    return bundle;
 //}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -81,33 +76,21 @@
 {
     [super viewDidLoad];
     
-//	[self.navigationController setNavigationBarHidden:NO animated:NO];
-//    self.navigationController.navigationBar.translucent = NO;
-//    self.navigationController.toolbar.translucent = NO;
-//
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-//                                                                                          target:self
-//                                                                                          action:@selector(cancel:)];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-//                                                                                           target:self
-//                                                                                           action:@selector(done:)];
-//
-//    if (!self.toolbarItems) {
-//        UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-//                                                                                       target:nil
-//                                                                                       action:nil];
-//        UIBarButtonItem *constrainButton = [[UIBarButtonItem alloc] initWithTitle:@"Constrain"
-//                                                                            style:UIBarButtonItemStyleBordered
-//                                                                           target:self
-//                                                                           action:@selector(constrain:)];
-//        self.toolbarItems = @[flexibleSpace, constrainButton, flexibleSpace];
-//    }
-////    self.navigationController.toolbarHidden = self.toolbarHidden;
-//    self.navigationController.toolbarHidden = NO;
-    
     self.cropView.image = self.image;
     
     self.cropView.rotationGestureRecognizer.enabled = _rotationEnabled;
+
+    if (self.cropAspectRatio != 0) {
+        self.cropAspectRatio = self.cropAspectRatio;
+    }
+    if (!CGRectEqualToRect(self.cropRect, CGRectZero)) {
+        self.cropRect = self.cropRect;
+    }
+    if (!CGRectEqualToRect(self.imageCropRect, CGRectZero)) {
+        self.imageCropRect = self.imageCropRect;
+    }
+    
+    self.keepingCropAspectRatio = self.keepingCropAspectRatio;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -161,6 +144,7 @@
 - (void)setCropRect:(CGRect)cropRect
 {
     _cropRect = cropRect;
+//    self.cropView.cropRect = _cropRect;
     _imageCropRect = CGRectZero;
     
     CGRect cropViewCropRect = self.cropView.cropRect;
@@ -291,6 +275,12 @@
         cropRect.size = CGSizeMake(width, width * ratio);
         self.cropView.cropRect = cropRect;
     }
+}
+
+- (void)setCropViewCropRect:(CGRect)rect imageRect:(CGRect)imageRect
+{
+    self.cropRect = rect;
+    self.imageCropRect = imageRect;
 }
 
 @end

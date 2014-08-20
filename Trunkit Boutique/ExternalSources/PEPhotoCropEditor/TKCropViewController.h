@@ -41,6 +41,8 @@
 
 - (UIImage *)imageCroppedWithImage:(UIImage *)image;
 
+- (void)setCropViewCropRect:(CGRect)rect imageRect:(CGRect)imageRect;
+
 @end
 
 @protocol PECropViewControllerDelegate <NSObject>

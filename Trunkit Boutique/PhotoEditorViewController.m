@@ -12,9 +12,9 @@
 
 @interface PhotoEditorViewController ()
 
-//@property (strong, nonatomic) PhotoAdjustViewController *photoAdjustController;
-@property (strong, nonatomic) PhotoAdjustViewController *photoCropController;
 @property (nonatomic) CGFloat filterSliderValue;
+@property (nonatomic) CGRect cropRect;
+@property (nonatomic) CGRect imageCropRect;
 
 @end
 
@@ -34,7 +34,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         _editedPhoto = nil;
-        _filterSliderValue = 1;
+        _filterSliderValue = 0;
+        _cropRect = CGRectZero;
     }
     return self;
 }
@@ -92,8 +93,6 @@
 
 - (IBAction)backButtonTapped:(id)sender
 {
-//    self.photoAdjustController = nil;
-    self.photoCropController = nil;
     self.editedPhoto = nil;
     self.photo = nil;
     [super backButtonTapped:sender];
@@ -108,38 +107,40 @@
         vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
 //        [self addChildViewController:vc];
         vc.image = self.photo;
-        vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat filterSliderValue) {
+        vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat filterSliderValue, CGRect cropRect, CGRect imageCropRect) {
             self.editedPhoto = image;
             self.filterSliderValue = filterSliderValue;
         };
 //        self.photoAdjustController = vc;
 //    }
-    if (self.photoCropController)
-    {
-        vc.image = [self.photoCropController.cropViewController imageCroppedWithImage:self.photo];
-    }
+//    vc.loadCropRect = _cropRect;
+//    if (self.photoCropController)
+//    {
+//        vc.image = [self.photoCropController.cropViewController imageCroppedWithImage:self.photo];
+//    }
     [self.navigationController pushViewController:vc animated:YES];
     
 }
 
 - (IBAction)cropButtonTapped:(id)sender
 {
-//    if (!self.photoCropController)
-//    {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        PhotoAdjustViewController *vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
-        [self addChildViewController:vc];
-        vc.image = self.photo;
-        vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat filterSliderValue) {
-            self.editedPhoto = image;
-        };
-        [vc setAdjustMode:TKPhotoAdjustCropMode];
-//        self.photoCropController = vc;
-//    }
-//    if (self.photoAdjustController)
-//    {
-        vc.loadSliderValue = self.filterSliderValue;
-//    }
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PhotoAdjustViewController *vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
+//    [self addChildViewController:vc];
+    vc.image = self.photo;
+    vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat filterSliderValue, CGRect cropRect, CGRect imageCropRect) {
+        self.editedPhoto = image;
+        self.cropRect = cropRect;
+        self.imageCropRect = imageCropRect;
+    };
+    [vc setAdjustMode:TKPhotoAdjustCropMode];
+    
+    
+    if (!CGRectEqualToRect(_cropRect, CGRectZero))
+    {
+        vc.loadCropRect = _cropRect;
+        vc.loadImageCropRect = _imageCropRect;
+    }
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -42,6 +42,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         _loadSliderValue = 0.0f;
+        _loadCropRect = CGRectZero;
+        _loadImageCropRect = CGRectZero;
         _imageSource = nil;
         _gammaFilter = nil;
     }
@@ -234,17 +236,16 @@
     vc.delegate = self;
     vc.view.frame = self.cropContainerView.bounds;
     
-    CGFloat width = image.size.width;
-    CGFloat height = image.size.height;
-    CGFloat length = MIN(width, height);
-    vc.imageCropRect = CGRectMake((width - length) / 2,
-                                  (height - length) / 2,
-                                  length,
-                                  length);
-    
     [self.cropContainerView addSubview:vc.view];
     self.cropViewController = vc;
     self.cropViewController.image = image;
+    
+    if (!CGRectEqualToRect(_loadCropRect, CGRectZero))
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.cropViewController setCropViewCropRect:_loadCropRect imageRect:_loadImageCropRect];
+        });
+    }
 }
 
 - (IBAction)cancelEditButtonTapped:(id)sender
@@ -254,22 +255,19 @@
 
 - (IBAction)acceptEditButtonTapped:(id)sender
 {
-//    CGFloat contrast = (self.slider.value + 1);
-//    CGFloat brightness = self.slider.value;
-//    
-//    //FIXME: We're forced to scale the image, the contrast method has a bug that resizes very large images...
-//    UIImage *image = [[_image imageScaledToHalf] imageWithContrast:contrast brightness:brightness];
-    
     UIImage *image = [self filteredImage];
     
     
-    //FIXME: Add crop
     if (_adjustMode == TKPhotoAdjustCropMode)
     {
         image = self.cropViewController.cropView.croppedImage;
+        self.setEditedPhotoOnParentController(image, self.slider.value, _cropViewController.cropView.cropRect, _cropViewController.zoomedCropRect);
+    }
+    else
+    {
+        self.setEditedPhotoOnParentController(image, self.slider.value, CGRectZero, CGRectZero);
     }
     
-    self.setEditedPhotoOnParentController(image, self.slider.value);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -321,10 +319,12 @@
 
 - (void)cropViewController:(TKCropViewController *)controller didFinishCroppingImage:(UIImage *)croppedImage
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 - (void)cropViewControllerDidCancel:(TKCropViewController *)controller
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 #pragma mark Convenience

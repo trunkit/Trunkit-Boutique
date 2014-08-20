@@ -19,9 +19,6 @@
 @property (strong, nonatomic) ALAsset *photo;
 @property (strong, nonatomic) UIImage *editedPhoto;
 
-//@property (readwrite, nonatomic) CGFloat brightnessAdjustment;
-//@property (readwrite, nonatomic) CGFloat contrastAdjustment;
-
 @property (strong, nonatomic) UIViewController *popToControllerOnAccept;
 
 - (IBAction)adjustButtonTapped:(id)sender;

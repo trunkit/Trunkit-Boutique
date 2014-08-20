@@ -26,6 +26,8 @@ typedef enum {
 
 @property (readwrite) TKPhotoAdjustMode adjustMode;
 @property (readwrite, nonatomic) CGFloat loadSliderValue;
+@property (readwrite, nonatomic) CGRect loadCropRect;
+@property (readwrite, nonatomic) CGRect loadImageCropRect;
 
 @property (strong, nonatomic) IBOutlet UIButton *toggleImageEditButton;
 @property (strong, nonatomic) IBOutlet UIButton *cropButton;
@@ -40,7 +42,7 @@ typedef enum {
 
 @property (strong, nonatomic) ALAsset *image;
 
-@property (nonatomic, copy) void (^setEditedPhotoOnParentController)(UIImage *, CGFloat);
+@property (nonatomic, copy) void (^setEditedPhotoOnParentController)(UIImage *, CGFloat, CGRect, CGRect);
 
 //- (IBAction)toggleImageEditButtonTapped:(id)sender;
 - (IBAction)sliderDragged:(id)sender;
