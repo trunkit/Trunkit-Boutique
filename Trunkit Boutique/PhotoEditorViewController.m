@@ -101,23 +101,18 @@
 - (IBAction)adjustButtonTapped:(id)sender
 {
     PhotoAdjustViewController *vc = nil;
-//    if (!self.photoAdjustController)
-//    {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
-//        [self addChildViewController:vc];
-        vc.image = self.photo;
-        vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat filterSliderValue, CGRect cropRect, CGRect imageCropRect) {
-            self.editedPhoto = image;
-            self.filterSliderValue = filterSliderValue;
-        };
-//        self.photoAdjustController = vc;
-//    }
-//    vc.loadCropRect = _cropRect;
-//    if (self.photoCropController)
-//    {
-//        vc.image = [self.photoCropController.cropViewController imageCroppedWithImage:self.photo];
-//    }
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
+    //        [self addChildViewController:vc];
+    vc.image = self.photo;
+
+    vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat filterSliderValue, CGRect cropRect, CGRect imageCropRect) {
+        self.editedPhoto = image;
+        self.filterSliderValue = filterSliderValue;
+    };
+    
+    vc.loadImageCropRect = _imageCropRect;
+    vc.loadSliderValue = _filterSliderValue;
     [self.navigationController pushViewController:vc animated:YES];
     
 }
@@ -128,6 +123,7 @@
     PhotoAdjustViewController *vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
 //    [self addChildViewController:vc];
     vc.image = self.photo;
+    vc.loadSliderValue = _filterSliderValue;
     vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat filterSliderValue, CGRect cropRect, CGRect imageCropRect) {
         self.editedPhoto = image;
         self.cropRect = cropRect;

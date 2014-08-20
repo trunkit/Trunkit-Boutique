@@ -88,28 +88,33 @@
     self.imageSource = stillImageSource;
     
     [self.filterGroup addTarget:self.gpuImageView];
-    //    [self.filterGroup useNextFrameForImageCapture];
+    [self.filterGroup useNextFrameForImageCapture];
     [self.imageSource processImage];
 
+    
+    UIImage *image = _workImage; // [UIImage imageWithCGImage:[[_image defaultRepresentation] fullResolutionImage]];
+    if (_loadSliderValue != 0)
+    {
+        self.slider.value = _loadSliderValue;
+        [self sliderDragged:self.slider];
+//        [self.view setNeedsLayout];
+        image = [self filteredImage];
+    }
 
     if (_adjustMode == TKPhotoAdjustCropMode)
     {
-        UIImage *image = _workImage; // [UIImage imageWithCGImage:[[_image defaultRepresentation] fullResolutionImage]];
         if (_loadSliderValue != 0)
         {
-            self.slider.value = _loadSliderValue;
-            [self sliderDragged:nil];
-            image = [self filteredImage];
         }
         [self resetViewForToggleEditState:YES];
         [self loadCropControllerWithImage:image];
     }
     else
     {
-        @autoreleasepool {
-        }
+        image = nil;
         [self resetViewForToggleEditState:NO];
     }
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -168,6 +173,16 @@
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+- (void)setLoadImageCropRect:(CGRect)loadImageCropRect
+{
+    _loadImageCropRect = loadImageCropRect;
+    
+    if (_adjustMode == TKPhotoAdjustBrightnessContrastMode && (!CGRectEqualToRect(_loadImageCropRect, CGRectZero)))
+    {
+        self.workImage = [self imageByCropping:_workImage toRect:_loadImageCropRect];
+    }
 }
 
 - (void)setImage:(ALAsset *)image
@@ -349,6 +364,13 @@
     
     //return image
     return image;
+}
+
+- (UIImage*)imageByCropping:(UIImage *)imageToCrop toRect:(CGRect)rect
+{
+    CGImageRef imageRef = CGImageCreateWithImageInRect([imageToCrop CGImage], rect);
+    UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+    return cropped;
 }
 
 @end
