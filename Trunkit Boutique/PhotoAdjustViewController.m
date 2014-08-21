@@ -53,7 +53,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    [self resetViewForToggleEditState:(_adjustMode == TKPhotoAdjustCropMode)];
+
     [self applyThemeToLabel:self.squareLabel withFontSize:13.0];
     [self applyThemeToLabel:self.portraitLabel withFontSize:13.0];
     
@@ -62,43 +64,46 @@
     [self.slider setThumbImage:[UIImage imageNamed:@"SliderControlImage"] forState:UIControlStateNormal];
     [self.slider setThumbImage:[UIImage imageNamed:@"SliderControlImage"] forState:UIControlStateHighlighted];
     
-    GPUImageFilterGroup *group = [[GPUImageFilterGroup alloc] init];
-    GPUImageGammaFilter *theGammaFilter = [[GPUImageGammaFilter alloc] init];
-    GPUImageWhiteBalanceFilter *theWhiteBalanceFilter = [[GPUImageWhiteBalanceFilter alloc] init];
-    
-    [theGammaFilter setGamma:1.0f];
-    [theWhiteBalanceFilter setTemperature:5000];
-    
-    [group addFilter:theGammaFilter];
-    [group addFilter:theWhiteBalanceFilter];
-    
-    [theGammaFilter addTarget:theWhiteBalanceFilter];
-    
-    [group setInitialFilters:@[theGammaFilter]];
-    [group setTerminalFilter:theWhiteBalanceFilter];
-    
-    
-    self.filterGroup = group;
-    self.gammaFilter = theGammaFilter;
-    self.whiteBalanceFilter = theWhiteBalanceFilter;
-    
-    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
-    [stillImageSource addTarget:self.filterGroup];
-    
-    self.imageSource = stillImageSource;
-    
-    [self.filterGroup addTarget:self.gpuImageView];
-    [self.filterGroup useNextFrameForImageCapture];
-    [self.imageSource processImage];
+//    GPUImageFilterGroup *group = [[GPUImageFilterGroup alloc] init];
+//    GPUImageGammaFilter *theGammaFilter = [[GPUImageGammaFilter alloc] init];
+//    GPUImageWhiteBalanceFilter *theWhiteBalanceFilter = [[GPUImageWhiteBalanceFilter alloc] init];
+//    
+//    [theGammaFilter setGamma:1.0f];
+//    [theWhiteBalanceFilter setTemperature:5000];
+//    
+//    [group addFilter:theGammaFilter];
+//    [group addFilter:theWhiteBalanceFilter];
+//    
+//    [theGammaFilter addTarget:theWhiteBalanceFilter];
+//    
+//    [group setInitialFilters:@[theGammaFilter]];
+//    [group setTerminalFilter:theWhiteBalanceFilter];
+//    
+//    
+//    self.filterGroup = group;
+//    self.gammaFilter = theGammaFilter;
+//    self.whiteBalanceFilter = theWhiteBalanceFilter;
+//    
+//    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
+//    [stillImageSource addTarget:self.filterGroup];
+//    
+//    self.imageSource = stillImageSource;
+//    
+//    [self.filterGroup addTarget:self.gpuImageView];
+//    [self.filterGroup useNextFrameForImageCapture];
+//    [self.imageSource processImage];
 
     
-    UIImage *image = _workImage; // [UIImage imageWithCGImage:[[_image defaultRepresentation] fullResolutionImage]];
+    __block UIImage *image = _workImage; // [UIImage imageWithCGImage:[[_image defaultRepresentation] fullResolutionImage]];
     if (_loadSliderValue != 0)
     {
         self.slider.value = _loadSliderValue;
-        [self sliderDragged:self.slider];
-//        [self.view setNeedsLayout];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self sliderDragged:self.slider];
+            [self.view setNeedsLayout];
+        });
         image = [self filteredImage];
+
     }
 
     if (_adjustMode == TKPhotoAdjustCropMode)
@@ -106,13 +111,13 @@
         if (_loadSliderValue != 0)
         {
         }
-        [self resetViewForToggleEditState:YES];
+//        [self resetViewForToggleEditState:YES];
         [self loadCropControllerWithImage:image];
     }
     else
     {
         image = nil;
-        [self resetViewForToggleEditState:NO];
+//        [self resetViewForToggleEditState:NO];
     }
     
 }
@@ -291,6 +296,8 @@
     self.toggleImageEditButton.hidden = selected;
     self.cropButton.hidden = !selected;
     self.slider.hidden = selected;
+    self.sliderLine.hidden = selected;
+    self.sliderDot.hidden = selected;
 //    self.imageView.hidden = selected;
     self.gpuImageView.hidden = selected;
     self.cropContainerView.hidden = !selected;
@@ -304,13 +311,14 @@
     if (length < 0)
         length = 0;
     
-    CGRect lineFrame = CGRectMake(center.x, center.y - 0, length, 1.5f);
+    CGRect lineFrame = CGRectMake(center.x, center.y - 0, length, 10.5f);
     
     if (self.slider.value < 0)
     {
         lineFrame.origin.x -= length;
     }
     self.sliderLine.frame = lineFrame;
+    [self.view layoutSubviews];
     
     [self setGPUImageViewForSliderValue:self.slider.value];
 }

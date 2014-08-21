@@ -34,6 +34,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet GPUImageView *gpuImageView;
 @property (strong, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIView *sliderLine;
+@property (strong, nonatomic) IBOutlet UIImageView *sliderDot;
 @property (strong, nonatomic) IBOutlet UIView *cropContainerView;
 @property (strong, nonatomic) IBOutlet UIView *cropButtonBarView;
 
