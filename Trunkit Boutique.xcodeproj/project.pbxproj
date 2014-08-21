@@ -88,6 +88,7 @@
 		82A0C7181969A5DC00C5B97F /* ReviewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C7171969A5DC00C5B97F /* ReviewItemViewController.m */; };
 		82A0C71B1969C3EC00C5B97F /* TKEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71A1969C3EC00C5B97F /* TKEditViewController.m */; };
 		82A0C71E1969C54E00C5B97F /* ItemFullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71D1969C54E00C5B97F /* ItemFullViewController.m */; };
+		82BE82A519A59894006126A0 /* TKImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BE82A419A59894006126A0 /* TKImage.m */; };
 		82CCD55C1999BB970053E08B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CCD55B1999BB970053E08B /* CoreMedia.framework */; };
 		82CCD55E1999BB9D0053E08B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CCD55D1999BB9D0053E08B /* CoreVideo.framework */; };
 		82CCD5601999BBA70053E08B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CCD55F1999BBA70053E08B /* OpenGLES.framework */; };
@@ -244,6 +245,8 @@
 		82A0C71A1969C3EC00C5B97F /* TKEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKEditViewController.m; sourceTree = "<group>"; };
 		82A0C71C1969C54E00C5B97F /* ItemFullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemFullViewController.h; sourceTree = "<group>"; };
 		82A0C71D1969C54E00C5B97F /* ItemFullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemFullViewController.m; sourceTree = "<group>"; };
+		82BE82A319A59894006126A0 /* TKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImage.h; sourceTree = "<group>"; };
+		82BE82A419A59894006126A0 /* TKImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImage.m; sourceTree = "<group>"; };
 		82CCD55B1999BB970053E08B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		82CCD55D1999BB9D0053E08B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		82CCD55F1999BBA70053E08B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -440,6 +443,8 @@
 				828DA794199DBB79006FA328 /* LeftMenuViewController.m */,
 				82558D9A199F03DF009AFE61 /* HelpViewController.h */,
 				82558D9B199F03DF009AFE61 /* HelpViewController.m */,
+				82BE82A319A59894006126A0 /* TKImage.h */,
+				82BE82A419A59894006126A0 /* TKImage.m */,
 			);
 			path = "Trunkit Boutique";
 			sourceTree = "<group>";
@@ -749,6 +754,7 @@
 				822E2A56198E7FB600B170EA /* PhotoPagesViewController.m in Sources */,
 				82FF6BD9196874FF0005553E /* SizeAndQuantityViewController.m in Sources */,
 				823760341963ADC300010A00 /* ItemsTableViewController.m in Sources */,
+				82BE82A519A59894006126A0 /* TKImage.m in Sources */,
 				822E2A59198E80A500B170EA /* PhotoSlideViewController.m in Sources */,
 				822335AD1974E0B400C0D8BE /* PhotoCollectionViewCell.m in Sources */,
 				823760031963A6C700010A00 /* main.m in Sources */,

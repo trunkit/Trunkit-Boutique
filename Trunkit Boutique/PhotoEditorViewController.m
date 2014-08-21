@@ -9,6 +9,7 @@
 #import "PhotoEditorViewController.h"
 #import "PhotoAdjustViewController.h"
 #import "PhotoSelectionViewController.h"
+#import "UIImage+TKImageScale.h"
 
 @interface PhotoEditorViewController ()
 
@@ -32,16 +33,16 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        _editedPhoto = nil;
+//        _editedPhoto = nil;
     }
     return self;
 }
 
-- (void)setEditedPhoto:(UIImage *)editedPhoto
-{
-    _editedPhoto = editedPhoto;
-    self.imageView.image = editedPhoto;
-}
+//- (void)setEditedPhoto:(TKImage *)editedPhoto
+//{
+//    _editedPhoto = editedPhoto;
+//    self.imageView.image = editedPhoto;
+//}
 
 - (void)viewDidLoad
 {
@@ -62,6 +63,12 @@
 {
 //    self.photoAdjustController = nil;
 //    self.photoCropController = nil;
+    
+    // FIXME
+    // TEMP
+    UIImage *_editedPhoto = _photo;
+    //
+    //
     
     if (![self.merchandiseItem.productPhotosTaken containsObject:self.photo]
           || ![self.merchandiseItem.productPhotosTaken containsObject:_editedPhoto])
@@ -92,7 +99,7 @@
 {
     self.photoAdjustController = nil;
     self.photoCropController = nil;
-    self.editedPhoto = nil;
+//    self.editedPhoto = nil;
     self.photo = nil;
     [super backButtonTapped:sender];
 }
@@ -104,18 +111,19 @@
     {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
+        self.photoAdjustController = vc;
 //        [self addChildViewController:vc];
         vc.image = self.photo;
         vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat brightness, CGFloat contrast) {
-            self.editedPhoto = image;
+            self.imageView.image = [self editedPhotoScaledToScreen];
+//            self.editedPhoto = (TKImage *)image;
 //            self.brightnessAdjustment = brightness;
 //            self.contrastAdjustment = contrast;
         };
-        self.photoAdjustController = vc;
     }
     if (self.photoCropController)
     {
-        self.photoAdjustController.image = [self.photoCropController.cropViewController imageCroppedWithImage:self.photo];
+        self.photoAdjustController.image = (TKImage *)[self.photoCropController.cropViewController imageCroppedWithImage:self.photo];
     }
     [self.navigationController pushViewController:self.photoAdjustController animated:YES];
     
@@ -127,19 +135,41 @@
     {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         PhotoAdjustViewController *vc = [sb instantiateViewControllerWithIdentifier:@"PhotoAdjustViewControllerIdentifier"];
+        self.photoCropController = vc;
         [self addChildViewController:vc];
         vc.image = self.photo;
         vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat brightness, CGFloat contrast) {
-            self.editedPhoto = image;
+//            self.editedPhoto = (TKImage *)image;
+//            self.imageView.image = [[self.photoCropController.cropViewController imageCroppedWithImage:self.photo] scaledToScreenSize];
+            self.imageView.image = [self editedPhotoScaledToScreen];
         };
         [vc setAdjustMode:TKPhotoAdjustCropMode];
-        self.photoCropController = vc;
     }
     if (self.photoAdjustController)
     {
-        self.photoCropController.loadSliderValue = self.photoAdjustController.slider.value;
+        self.photoCropController.image = (TKImage *)[self.photoAdjustController filteredImageForImage:_photo];
     }
     [self.navigationController pushViewController:self.photoCropController animated:YES];
+}
+
+- (UIImage *)editedPhoto
+{
+    UIImage *edited = _photo;
+    if (self.photoCropController)
+    {
+        edited = [self.photoCropController.cropViewController imageCroppedWithImage:edited];
+    }
+    
+    if (self.photoAdjustController)
+    {
+        edited = [self.photoAdjustController filteredImageForImage:edited];
+    }
+    return edited;
+}
+
+- (UIImage *)editedPhotoScaledToScreen
+{
+    return [[self editedPhoto] scaledToScreenSize];
 }
 
 @end

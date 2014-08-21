@@ -16,4 +16,7 @@
 - (UIImage *)imageScaledToScale:(CGFloat)scale
        withInterpolationQuality:(CGInterpolationQuality)quality;
 
+- (UIImage *)scaledToSize:(CGSize)size;
+- (UIImage *)scaledToScreenSize;
+
 @end

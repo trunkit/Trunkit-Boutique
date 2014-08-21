@@ -14,6 +14,7 @@
 #import "UIImage+TKImageScale.h"
 #import "UIImage+TKCrop.h"
 #import "TKCropView.h"
+#import "UIImage+TKImageScale.h"
 
 @interface PhotoAdjustViewController ()
 
@@ -22,7 +23,7 @@
 @property (strong , nonatomic) GPUImageGammaFilter *gammaFilter;
 @property (strong, nonatomic) GPUImageWhiteBalanceFilter *whiteBalanceFilter;
 
-@property (strong, nonatomic) UIImage *workImage;
+@property (strong, nonatomic) TKImage *workImage;
 
 @end
 
@@ -52,6 +53,8 @@
 {
     [super viewDidLoad];
     
+    [self resetViewForToggleEditState:(_adjustMode == TKPhotoAdjustCropMode)];
+    
     [self applyThemeToLabel:self.squareLabel withFontSize:13.0];
     [self applyThemeToLabel:self.portraitLabel withFontSize:13.0];
     
@@ -60,55 +63,51 @@
     [self.slider setThumbImage:[UIImage imageNamed:@"SliderControlImage"] forState:UIControlStateNormal];
     [self.slider setThumbImage:[UIImage imageNamed:@"SliderControlImage"] forState:UIControlStateHighlighted];
     
-    GPUImageFilterGroup *group = [[GPUImageFilterGroup alloc] init];
-    GPUImageGammaFilter *theGammaFilter = [[GPUImageGammaFilter alloc] init];
-    GPUImageWhiteBalanceFilter *theWhiteBalanceFilter = [[GPUImageWhiteBalanceFilter alloc] init];
-    
-    [theGammaFilter setGamma:1.0f];
-    [theWhiteBalanceFilter setTemperature:5000];
-    
-    [group addFilter:theGammaFilter];
-    [group addFilter:theWhiteBalanceFilter];
-    
-    [theGammaFilter addTarget:theWhiteBalanceFilter];
-    
-    [group setInitialFilters:@[theGammaFilter]];
-    [group setTerminalFilter:theWhiteBalanceFilter];
-    
-    
-    self.filterGroup = group;
-    self.gammaFilter = theGammaFilter;
-    self.whiteBalanceFilter = theWhiteBalanceFilter;
-    
-    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
-    [stillImageSource addTarget:self.filterGroup];
-    
-    self.imageSource = stillImageSource;
-    
-    [self.filterGroup addTarget:self.gpuImageView];
-    //    [self.filterGroup useNextFrameForImageCapture];
-    [self.imageSource processImage];
 
 
     if (_adjustMode == TKPhotoAdjustCropMode)
     {
-        //FIXME Dup code
-        
         UIImage *image = _image;
-        if (_loadSliderValue != 0)
-        {
-            self.slider.value = _loadSliderValue;
-            [self sliderDragged:nil];
-            image = [self filteredImage];
-        }
-        [self resetViewForToggleEditState:YES];
+//        if (_loadSliderValue != 0)
+//        {
+//            self.slider.value = _loadSliderValue;
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self sliderDragged:self.slider];
+//            });
+//            image = [self filteredImage];
+//        }
         [self loadCropControllerWithImage:image];
     }
     else
     {
-        @autoreleasepool {
-        }
-        [self resetViewForToggleEditState:NO];
+        GPUImageFilterGroup *group = [[GPUImageFilterGroup alloc] init];
+        GPUImageGammaFilter *theGammaFilter = [[GPUImageGammaFilter alloc] init];
+        GPUImageWhiteBalanceFilter *theWhiteBalanceFilter = [[GPUImageWhiteBalanceFilter alloc] init];
+        
+        [theGammaFilter setGamma:1.0f];
+        [theWhiteBalanceFilter setTemperature:5000];
+        
+        [group addFilter:theGammaFilter];
+        [group addFilter:theWhiteBalanceFilter];
+        
+        [theGammaFilter addTarget:theWhiteBalanceFilter];
+        
+        [group setInitialFilters:@[theGammaFilter]];
+        [group setTerminalFilter:theWhiteBalanceFilter];
+        
+        
+        self.filterGroup = group;
+        self.gammaFilter = theGammaFilter;
+        self.whiteBalanceFilter = theWhiteBalanceFilter;
+        
+        GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
+        [stillImageSource addTarget:self.filterGroup];
+        
+        self.imageSource = stillImageSource;
+        
+        [self.filterGroup addTarget:self.gpuImageView];
+        //    [self.filterGroup useNextFrameForImageCapture];
+        [self.imageSource processImage];
     }
 }
 
@@ -125,9 +124,14 @@
 
 - (UIImage *)filteredImage
 {
-    UIImage *image = [self.filterGroup imageByFilteringImage:_image];
+    return [self filteredImageForImage:_image];
+}
+
+- (UIImage *)filteredImageForImage:(UIImage *)image
+{
+    UIImage *filtered = [self.filterGroup imageByFilteringImage:image];
     [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
-    return image;
+    return filtered;
 }
 
 - (void)setGPUImageViewForSliderValue:(CGFloat)sliderValue
@@ -170,20 +174,33 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (void)setImage:(UIImage *)image
+- (void)setImage:(TKImage *)image
 {
     _image = image;
-    CGFloat width = 320.0f;
-    CGFloat height = image.size.height * (320 / image.size.width);
-    self.workImage = [self image:_image scaledToSize:CGSizeMake(width, height)];
     
-    if (self.workImage && self.filterGroup)
+    
+    
+    if (_adjustMode == TKPhotoAdjustBrightnessContrastMode)
     {
-        GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
-        [stillImageSource addTarget:self.filterGroup];
+//        CGFloat screenScale = [[UIScreen mainScreen] scale];
+//        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+//        CGFloat width = screenBounds.size.width * screenScale;
+//        CGFloat height = image.size.height * (width / image.size.width);
+//        self.workImage = (TKImage *)[_image scaledToSize:CGSizeMake(width, height)];
+        self.workImage = (TKImage *)[_image scaledToScreenSize];
         
-        self.imageSource = stillImageSource;
-        [self.imageSource processImage];
+        if (self.workImage && self.filterGroup)
+        {
+            GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
+            [stillImageSource addTarget:self.filterGroup];
+            
+            self.imageSource = stillImageSource;
+            [self.imageSource processImage];
+        }
+    }
+    else
+    {
+        self.cropViewController.image = _image;
     }
 }
 
@@ -219,7 +236,7 @@
         UIImage *croppedImage = [self.image rotatedImageWithtransform:((TKCropView *)self.cropViewController.cropView).rotation
                                                         croppedToRect:self.cropViewController.cropView.zoomedCropRect];
         croppedImage = [croppedImage imageScaledToQuarter];
-        self.workImage = croppedImage;
+        self.workImage = (TKImage *)croppedImage;
         [self sliderDragged:self];
     }
 }
@@ -250,20 +267,16 @@
 
 - (IBAction)acceptEditButtonTapped:(id)sender
 {
-//    CGFloat contrast = (self.slider.value + 1);
-//    CGFloat brightness = self.slider.value;
-//    
-//    //FIXME: We're forced to scale the image, the contrast method has a bug that resizes very large images...
-//    UIImage *image = [[_image imageScaledToHalf] imageWithContrast:contrast brightness:brightness];
+    UIImage *image = nil;
     
-    UIImage *image = [self filteredImage];
-    
-    
-    //FIXME: Add crop
-    if (_adjustMode == TKPhotoAdjustCropMode)
-    {
-        image = self.cropViewController.cropView.croppedImage;
-    }
+//    if (_adjustMode == TKPhotoAdjustCropMode)
+//    {
+//        image = self.cropViewController.cropView.croppedImage;
+//    }
+//    else
+//    {
+//        image = [self filteredImage];
+//    }
     
     self.setEditedPhotoOnParentController(image, 0, 0);
     [self.navigationController popViewControllerAnimated:YES];
@@ -274,7 +287,9 @@
     self.toggleImageEditButton.hidden = selected;
     self.cropButton.hidden = !selected;
     self.slider.hidden = selected;
-//    self.imageView.hidden = selected;
+    self.sliderLine.hidden = selected;
+    self.sliderDot.hidden = selected;
+    //    self.imageView.hidden = selected;
     self.gpuImageView.hidden = selected;
     self.cropContainerView.hidden = !selected;
     self.cropButtonBarView.hidden = !selected;
@@ -321,30 +336,6 @@
 
 - (void)cropViewControllerDidCancel:(TKCropViewController *)controller
 {
-}
-
-#pragma mark Convenience
-
-- (UIImage *)image:(UIImage*)originalImage scaledToSize:(CGSize)size
-{
-    //avoid redundant drawing
-    if (CGSizeEqualToSize(originalImage.size, size))
-    {
-        return originalImage;
-    }
-    
-    //create drawing context
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
-    
-    //draw
-    [originalImage drawInRect:CGRectMake(0.0f, 0.0f, size.width, size.height)];
-    
-    //capture resultant image
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    //return image
-    return image;
 }
 
 @end

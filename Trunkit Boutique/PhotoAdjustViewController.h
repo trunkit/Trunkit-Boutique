@@ -12,6 +12,7 @@
 #import "TKEditViewController.h"
 #import "TKCropViewController.h"
 #import "GPUImage.h"
+#import "TKImage.h"
 
 typedef enum {
     TKPhotoAdjustBrightnessContrastMode,
@@ -30,13 +31,15 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet GPUImageView *gpuImageView;
 @property (strong, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIView *sliderLine;
+@property (strong, nonatomic) IBOutlet UIImageView *sliderDot;
+
 @property (strong, nonatomic) IBOutlet UIView *cropContainerView;
 @property (strong, nonatomic) IBOutlet UIView *cropButtonBarView;
 
 @property (strong, nonatomic) IBOutlet UILabel *squareLabel;
 @property (strong, nonatomic) IBOutlet UILabel *portraitLabel;
 
-@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) TKImage *image;
 
 @property (nonatomic, copy) void (^setEditedPhotoOnParentController)(UIImage *, CGFloat, CGFloat);
 
@@ -50,5 +53,7 @@ typedef enum {
 - (IBAction)portraitButtonTapped:(id)sender;
 
 - (IBAction)TEMPconstraintButtonTapped:(id)sender;
+
+- (UIImage *)filteredImageForImage:(UIImage *)image;
 
 @end

@@ -2624,9 +2624,13 @@
                                     <action selector="sliderDragged:" destination="EI8-ia-aw3" eventType="valueChanged" id="bnb-xK-gcI"/>
                                 </connections>
                             </slider>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="SliderDotImage" translatesAutoresizingMaskIntoConstraints="NO" id="gO8-aP-NUp">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SliderDotImage" translatesAutoresizingMaskIntoConstraints="NO" id="gO8-aP-NUp">
                                 <rect key="frame" x="156" y="529" width="9" height="9"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="9" id="Jx1-rC-kLs"/>
+                                    <constraint firstAttribute="width" constant="9" id="f0h-bI-3Gz"/>
+                                </constraints>
                             </imageView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZE0-T0-1dE">
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2652,10 +2656,12 @@
                             <constraint firstItem="uks-cA-Wee" firstAttribute="top" secondItem="sP0-sG-UfU" secondAttribute="bottom" constant="14" id="c5y-hN-kMq"/>
                             <constraint firstAttribute="trailing" secondItem="BZq-lO-A72" secondAttribute="trailing" id="dbB-vF-VqF"/>
                             <constraint firstItem="eHf-am-R3g" firstAttribute="top" secondItem="MFI-Zg-K0z" secondAttribute="top" id="gIO-tZ-oPd"/>
+                            <constraint firstAttribute="centerX" secondItem="gO8-aP-NUp" secondAttribute="centerX" id="gLe-dh-Sgk"/>
                             <constraint firstAttribute="trailing" secondItem="uks-cA-Wee" secondAttribute="trailing" constant="20" id="pUf-9k-b02"/>
                             <constraint firstItem="Baa-y4-PmD" firstAttribute="top" secondItem="uks-cA-Wee" secondAttribute="bottom" constant="20" id="szv-Mo-QBc"/>
                             <constraint firstItem="wnZ-zA-fsO" firstAttribute="top" secondItem="eHf-am-R3g" secondAttribute="bottom" id="t6N-bm-k0E"/>
                             <constraint firstAttribute="trailing" secondItem="sP0-sG-UfU" secondAttribute="trailing" id="vJg-F6-n4r"/>
+                            <constraint firstItem="Baa-y4-PmD" firstAttribute="top" secondItem="gO8-aP-NUp" secondAttribute="bottom" constant="30" id="yTc-Gb-LfC"/>
                             <constraint firstAttribute="trailing" secondItem="wnZ-zA-fsO" secondAttribute="trailing" id="zys-X7-pV8"/>
                         </constraints>
                     </view>
@@ -2668,6 +2674,7 @@
                         <outlet property="gpuImageView" destination="sP0-sG-UfU" id="Hqf-ax-RHL"/>
                         <outlet property="portraitLabel" destination="7Ca-Ju-4Dl" id="o6s-Ws-fXA"/>
                         <outlet property="slider" destination="uks-cA-Wee" id="RMG-iw-BHK"/>
+                        <outlet property="sliderDot" destination="gO8-aP-NUp" id="pGW-Pc-Lxr"/>
                         <outlet property="sliderLine" destination="ZE0-T0-1dE" id="GlO-MH-bpf"/>
                         <outlet property="squareLabel" destination="3Cy-Sl-bA0" id="fdj-4I-fFo"/>
                         <outlet property="toggleImageEditButton" destination="SWO-ka-YFs" id="Yl8-p8-bdF"/>

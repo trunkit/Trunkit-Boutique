@@ -36,4 +36,49 @@
     return newImage;
 }
 
+- (UIImage *)scaledToSize:(CGSize)size
+{
+    //avoid redundant drawing
+    if (CGSizeEqualToSize(self.size, size))
+    {
+        return self;
+    }
+    
+    //create drawing context
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
+    
+    //draw
+    [self drawInRect:CGRectMake(0.0f, 0.0f, size.width, size.height)];
+    
+    //capture resultant image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //return image
+    return image;
+}
+
+- (UIImage *)scaledToScreenSize
+{
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenBounds.size.width * screenScale;
+    CGFloat height = self.size.height * (width / self.size.width);
+    CGSize size = CGSizeMake(width, height);
+    
+    //create drawing context
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
+    
+    //draw
+    [self drawInRect:CGRectMake(0.0f, 0.0f, size.width, size.height)];
+    
+    //capture resultant image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //return image
+    return image;
+}
+
+
 @end

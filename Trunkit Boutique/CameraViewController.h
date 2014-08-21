@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "TKEditViewController.h"
+#import "TKImage.h"
 
 typedef enum {
     TKCameraViewFinderFormatPortrait,
