@@ -130,6 +130,15 @@
                 ALAsset *aSessionPhoto = [_photos objectAtIndex:currentIndex];
                 [self.photos removeObject:aSessionPhoto];
                 [self.photos insertObject:aSessionPhoto atIndex:index];
+                
+                // Automatically select the last photo that was just taken
+                if (index == sessionPhotos.count - 1)
+                {
+                    if (![_selectedAssets containsObject:aSessionPhoto])
+                    {
+                        [self setPhoto:aSessionPhoto selected:YES];
+                    }
+                }
             }
             else
             {
@@ -168,6 +177,26 @@
 //        [_delegate photoCollectionViewController:self didChangeSelection:self.selectedAssets];
 //    }
 
+}
+
+- (void)setPhoto:(ALAsset *)photo selected:(BOOL)selected
+{
+    if (selected)
+    {
+        [self.selectedAssets addObject:photo];
+        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didSelectItem:)])
+        {
+            [_delegate photoCollectionViewController:self didSelectItem:photo];
+        }
+    }
+    else
+    {
+        [self.selectedAssets removeObject:photo];
+        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didDeSelectItem:)])
+        {
+            [_delegate photoCollectionViewController:self didDeSelectItem:photo];
+        }
+    }
 }
 
 
@@ -240,20 +269,13 @@
     NSInteger index = [self.selectedAssets indexOfObject:photo];
     if (index == NSNotFound)
     {
-        [self.selectedAssets addObject:photo];
-        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didSelectItem:)])
-        {
-            [_delegate photoCollectionViewController:self didSelectItem:photo];
-        }
+        [self setPhoto:photo selected:YES];
     }
     else
     {
-        [self.selectedAssets removeObject:photo];
-        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didDeSelectItem:)])
-        {
-            [_delegate photoCollectionViewController:self didDeSelectItem:photo];
-        }
+        [self setPhoto:photo selected:NO];
     }
+    
     // FIXME: Be more efficient and reload only the selected items to
     // reset the selection order label
     [self.collectionView reloadData];

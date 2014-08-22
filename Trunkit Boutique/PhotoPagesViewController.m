@@ -80,9 +80,7 @@
 - (void)setPhotos:(NSArray *)photos
 {
     _photos = photos;
-//    self.dataSource = nil;
-    
-//    PhotoSlideViewController *initialVC = [self viewControllerForPhotoAtIndex:0];
+
     PhotoSlideViewController *initialVC = nil;
     
     if (_photos.count)

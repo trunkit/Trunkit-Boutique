@@ -47,35 +47,27 @@
     [self.collectionContainerView addSubview:vc.view];
     
     
-    PhotoCollectionViewController *vc3 = [sb instantiateViewControllerWithIdentifier:@"PhotoCollectionViewControllerIdentifier"];
-    [vc addChildViewController:vc3];
-    self.photosCollectionController = vc3;
-    vc3.delegate = self;
-    vc3.view.frame = vc.containerView.bounds;
-    [vc.containerView addSubview:vc3.view];
-//    [vc3 setPhotos:[self.merchandiseItem.productPhotosTaken mutableCopy]];
-    vc3.sessionPhotos = self.merchandiseItem.productPhotosTaken;
+    PhotoCollectionViewController *collection = [sb instantiateViewControllerWithIdentifier:@"PhotoCollectionViewControllerIdentifier"];
+//    [vc addChildViewController:vc3];
+    self.photosCollectionController = collection;
+    collection.delegate = self;
+    collection.view.frame = vc.containerView.bounds;
+    [vc.containerView addSubview:collection.view];
     
-    
-//    PhotoScrollViewController *vc2 = [sb instantiateViewControllerWithIdentifier:@"PhotoScrollViewControllerIdentifier"];
-//	[self addChildViewController:vc2];
-//    self.photoScrollViewController = vc2;
-//    vc2.view.frame = self.itemPhotosContainerView.bounds;
-//    [self.itemPhotosContainerView addSubview:vc2.view];
-    
-    PhotoPagesViewController *vc2 = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
-    vc2.merchandiseItem = self.merchandiseItem;
-    [self addChildViewController:vc2];
-    self.photoPagesViewController = vc2;
-    vc2.view.frame = self.itemPhotosContainerView.bounds;
-    [self.itemPhotosContainerView addSubview:vc2.view];
-    
-    //FIXME: TEMP CODE, we need to persist the selection
-    [vc3 selectAllPhotos];
-    
-//    self.photoScrollViewController.photos = [self.merchandiseItem.productPhotos mutableCopy];
-//    self.photoScrollViewController.photos = self.merchandiseItem.productPhotos;
+    // FIXME: Add persisted selected photos
 
+    //FIXME Shitty property name,
+    collection.sessionPhotos = self.merchandiseItem.productPhotosTaken;
+    
+    
+    
+
+    PhotoPagesViewController *pages = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
+    pages.merchandiseItem = self.merchandiseItem;
+//    [self addChildViewController:pages];
+    self.photoPagesViewController = pages;
+    pages.view.frame = self.itemPhotosContainerView.bounds;
+    [self.itemPhotosContainerView addSubview:pages.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated

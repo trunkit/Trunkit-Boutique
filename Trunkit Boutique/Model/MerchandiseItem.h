@@ -32,6 +32,6 @@
 @property (strong, nonatomic) NSMutableArray *productPhotos;
 @property (readonly, nonatomic) UIImage *mainProductPhoto;
 
-- (UIImage *)lastTakenPhoto;
+- (NSURL *)lastTakenPhoto;
 
 @end

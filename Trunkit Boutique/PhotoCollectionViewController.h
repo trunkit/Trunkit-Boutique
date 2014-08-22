@@ -29,6 +29,5 @@
 
 - (void)addPhoto:(id)aPhoto;
 - (void)removePhoto:(id)aPhoto;
-- (void)selectAllPhotos;
 
 @end

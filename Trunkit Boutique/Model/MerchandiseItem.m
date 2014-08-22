@@ -66,7 +66,7 @@
     return nil;
 }
 
-- (UIImage *)lastTakenPhoto
+- (NSURL *)lastTakenPhoto
 {
     if (_productPhotosTaken.count)
     {
