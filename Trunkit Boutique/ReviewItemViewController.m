@@ -54,7 +54,6 @@
     self.descriptionTextView.text = self.merchandiseItem.itemLongDescription;
     self.fitTextField.text = self.merchandiseItem.fitDescription;
     self.materialsTextField.text = self.merchandiseItem.materialsDescription;
-//    self.photoImageView.image = self.merchandiseItem.mainProductPhoto;
     [self formatCurrencyField:self.priceTextField];
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

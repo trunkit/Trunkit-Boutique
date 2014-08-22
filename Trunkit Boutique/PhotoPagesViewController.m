@@ -63,7 +63,8 @@
     }
     else
     {
-        self.photos = _merchandiseItem.productPhotosTaken;
+//        self.photos = _merchandiseItem.productPhotosTaken;
+        self.photos = [@[] mutableCopy];
     }
 }
 

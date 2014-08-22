@@ -7,7 +7,7 @@
 //
 
 #import "MerchandiseItem.h"
-#import <AssetsLibrary/AssetsLibrary.h>
+#import "ALAssetsLibrary+TKSingleton.h"
 
 @implementation MerchandiseItem
 
@@ -26,15 +26,42 @@
 
 - (UIImage *)mainProductPhoto
 {
-    if (_productPhotos.count)
+    return [self imageAtIndex:0];
+}
+
+- (UIImage *)imageAtIndex:(NSInteger)index
+{
+    if (!_productPhotos.count || (index < 0) || (index > _productPhotos.count - 1))
     {
-        id mainPhoto = [self.productPhotos objectAtIndex:0];
-        if ([mainPhoto isKindOfClass:[ALAsset class]])
-        {
-            ALAsset *asset = (ALAsset *)mainPhoto;
-            return [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-        }
-        return [self.productPhotos objectAtIndex:0];
+        return nil;
+    }
+
+    id image = [self.productPhotos objectAtIndex:index];
+    if (![image isKindOfClass:[NSURL class]])
+    {
+        NSLog(@"WARNING! Object in photo array in not a URL: %@", image);
+        return image;
+    }
+    else
+    {
+        // Probably will not keep this code
+        //
+        ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+        [library assetForURL:image
+                 resultBlock:^(ALAsset *asset) {
+                     NSLog(@"WARNING! %s called unexpectedly.", __PRETTY_FUNCTION__);
+                 }
+                failureBlock:^(NSError *error )
+         {
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
+                                                             message:@"A system error occurred while trying to save your photo."
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             [alert show];
+             NSLog(@"Error loading asset");
+         }];
+        
+//        return [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
     }
     return nil;
 }

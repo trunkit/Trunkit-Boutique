@@ -17,7 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *useButton;
 
 @property (strong, nonatomic) TKImage *photo;
-//@property (strong, nonatomic) TKImage *editedPhoto;
 
 //@property (readwrite, nonatomic) CGFloat brightnessAdjustment;
 //@property (readwrite, nonatomic) CGFloat contrastAdjustment;

@@ -81,7 +81,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.photosCollectionController.sessionPhotos = self.merchandiseItem.productPhotosTaken;
+//    self.photosCollectionController.sessionPhotos = self.merchandiseItem.productPhotosTaken;
 }
 
 - (BOOL)singleTapDiscardsKeyboard

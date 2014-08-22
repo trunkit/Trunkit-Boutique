@@ -10,6 +10,8 @@
 #import "PhotoAdjustViewController.h"
 #import "PhotoSelectionViewController.h"
 #import "UIImage+TKImageScale.h"
+#import "ALAssetsLibrary+TKSingleton.h"
+
 
 @interface PhotoEditorViewController ()
 
@@ -33,20 +35,15 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-//        _editedPhoto = nil;
     }
     return self;
 }
 
-//- (void)setEditedPhoto:(TKImage *)editedPhoto
-//{
-//    _editedPhoto = editedPhoto;
-//    self.imageView.image = editedPhoto;
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"CONTROLLERS = %@", self.navigationController.viewControllers);
     
     [self applyThemeToBlackButton:self.retakeButton withFontSize:14.0];
     [self applyThemeToBlackButton:self.useButton withFontSize:14.0];
@@ -61,30 +58,59 @@
 
 - (IBAction)useButtonTapped:(id)sender
 {
-//    self.photoAdjustController = nil;
-//    self.photoCropController = nil;
+    [self savePhotoAndContinue];
+}
+
+- (void)savePhotoAndContinue
+{
+    UIImage *editedPhoto = [self editedPhoto];
     
-    // FIXME
-    // TEMP
-    UIImage *_editedPhoto = _photo;
-    //
-    //
-    
-    if (![self.merchandiseItem.productPhotosTaken containsObject:self.photo]
-          || ![self.merchandiseItem.productPhotosTaken containsObject:_editedPhoto])
-    {
-        [self.merchandiseItem.productPhotosTaken addObject:(_editedPhoto) ? _editedPhoto : self.photo];
-    }
-    if (_popToControllerOnAccept)
-    {
-//        PhotoSelectionViewController *vc = (PhotoSelectionViewController *)_popToControllerOnAccept;
-//        vc.
-        [self.navigationController popToViewController:_popToControllerOnAccept animated:YES];
-    }
-    else
-    {
-        [self performSegueWithIdentifier:@"PhotoEditorUsePhotoToPhotosSelectionSegueIdentifier" sender:sender];
-    }
+
+    self.photoAdjustController = nil;
+    self.photoCropController = nil;
+    self.photo = nil;
+
+    ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+    [library writeImageToSavedPhotosAlbum:editedPhoto.CGImage orientation:(ALAssetOrientation)editedPhoto.imageOrientation
+                          completionBlock:^(NSURL *assetURL, NSError *error)
+     {
+         if (!error)
+         {
+             if (![self.merchandiseItem.productPhotosTaken containsObject:assetURL])
+             {
+                 [self.merchandiseItem.productPhotosTaken addObject:assetURL];
+             }
+             
+             NSLog(@"IMAGE SAVED TO PHOTO ALBUM");
+             
+             if (_popToControllerOnAccept)
+             {
+                 [self.navigationController popToViewController:_popToControllerOnAccept animated:YES];
+             }
+             else
+             {
+                 [self performSegueWithIdentifier:@"PhotoEditorUsePhotoToPhotosSelectionSegueIdentifier" sender:self];
+             }
+         }
+         else
+         {
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
+                                                             message:@"A system error occurred while trying to save your photo."
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             [alert show];
+             NSLog(@"Error saving asset: %@", error);
+
+         }
+         
+//         [library assetForURL:assetURL
+//                  resultBlock:^(ALAsset *asset) {
+//          }
+//                 failureBlock:^(NSError *error )
+//          {
+//          }];
+     }];
+
 }
 
 #pragma mark - Navigation
@@ -99,7 +125,6 @@
 {
     self.photoAdjustController = nil;
     self.photoCropController = nil;
-//    self.editedPhoto = nil;
     self.photo = nil;
     [super backButtonTapped:sender];
 }
@@ -139,8 +164,6 @@
         [self addChildViewController:vc];
         vc.image = self.photo;
         vc.setEditedPhotoOnParentController = ^void(UIImage *image, CGFloat brightness, CGFloat contrast) {
-//            self.editedPhoto = (TKImage *)image;
-//            self.imageView.image = [[self.photoCropController.cropViewController imageCroppedWithImage:self.photo] scaledToScreenSize];
             self.imageView.image = [self editedPhotoScaledToScreen];
         };
         [vc setAdjustMode:TKPhotoAdjustCropMode];

@@ -7,6 +7,7 @@
 //
 
 #import "PhotoSlideViewController.h"
+#import "ALAssetsLibrary+TKSingleton.h"
 
 @interface PhotoSlideViewController ()
 
@@ -44,12 +45,21 @@
     if ([_image isKindOfClass:[ALAsset class]])
     {
         ALAsset *asset = (ALAsset *)_image;
-        photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
+        photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
         self.imageView.image = photo;
     }
-    else
+    else if ([_image isKindOfClass:[NSURL class]])
     {
-        self.imageView.image = _image;
+        ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+        [library assetForURL:(NSURL *)_image
+                 resultBlock:^(ALAsset *asset) {
+                     UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                     self.imageView.image = photo;
+                 }
+                failureBlock:^(NSError *error )
+         {
+             NSLog(@"ERROR %s: %@", __PRETTY_FUNCTION__, error);
+         }];
     }
 }
 

@@ -32,44 +32,28 @@
 - (void) setAsset:(ALAsset *)asset
 {
     _asset = asset;
-    if ([self.imageFormatIdentifier isEqualToString:@"thumbnail"])
-    {
-        self.photoImageView.image = [UIImage imageWithCGImage:[asset thumbnail]];
-        return;
-    }
-//    self.photoImageView.image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
+    self.photoImageView.image = [UIImage imageWithCGImage:[asset thumbnail]];
 
-
-//    CGImageRef iref = [asset aspectRatioThumbnail];
-//    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        
-////        UIImage itemImage = [[UIImageView alloc] initWithFrame:CGRectMake([arrayIndex intValue]*320, 0, 320, 320)];
-//        UIImage *itemImage = [UIImage imageWithCGImage:iref];
-//        self.photoImageView.image = itemImage;
-//        
-//    });//end block
-
-    
-//    UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-////    image.size = CGSizeMake(100, 100);
-////    NSData *imgData= UIImageJPEGRepresentation(image,50 /*compressionQuality*/);
-////    UIImage *compImage = [image imageScaledToQuarter];
-//    self.photoImageView.image = compImage;
-//    
-////    ALAssetRepresentation *representation = [asset defaultRepresentation];
-////    self.photoImageView.image = [UIImage imageWithCGImage:representation.fullResolutionImage
-////                               scale:.1
-////                         orientation:(UIImageOrientation)[representation orientation]];
+    UIFont *countFont = [UIFont fontWithName:@"BebasNeue" size:15.0];
+    self.selectionOrderLabel.font = countFont;
 }
 
-- (void)setImage:(UIImage *)image
+- (void)setImage:(NSURL *)image
 {
     _image = image;
-    self.photoImageView.image = image;
+    self.photoImageView.image = nil;
     
     UIFont *countFont = [UIFont fontWithName:@"BebasNeue" size:15.0];
     self.selectionOrderLabel.font = countFont;
+    
+//    ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+//    [library assetForURL:_image
+//             resultBlock:^(ALAsset *asset) {
+//                 self.asset = asset;
+//             }
+//            failureBlock:^(NSError *error )
+//     {
+//     }];
 }
 
 - (void)setSelectionOrder:(NSInteger)selectionOrder
