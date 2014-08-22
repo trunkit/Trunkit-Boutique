@@ -74,7 +74,7 @@
     [library writeImageToSavedPhotosAlbum:editedPhoto.CGImage orientation:(ALAssetOrientation)editedPhoto.imageOrientation
                           completionBlock:^(NSURL *assetURL, NSError *error)
      {
-         if (!error)
+         if (!error && assetURL)
          {
              if (![self.merchandiseItem.productPhotosTaken containsObject:assetURL])
              {
@@ -94,6 +94,10 @@
          }
          else
          {
+             if (!assetURL)
+             {
+                 NSLog(@"ERROR: writeImage return a nil assetURL.");
+             }
              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
                                                              message:@"A system error occurred while trying to save your photo."
                                                             delegate:nil

@@ -192,7 +192,8 @@
     
     [itemQuantityButton setAttributedTitle:attributedString forState:UIControlStateNormal];
 
-    itemImageView.image = theItem.mainProductPhoto;
+    // FIXME using ALAsset now
+//    itemImageView.image = theItem.mainProductPhoto;
     itemTitleLabel.text = theItem.title;
     [itemTitleLabel applyThemeAttribute];
     itemSubtitleLabel.text = [NSString stringWithFormat:@"Designed By %@", theItem.designerName];

@@ -1323,7 +1323,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="backButtonTapped:" destination="2FP-JY-hon" eventType="touchUpInside" id="BKQ-pQ-EUn"/>
+                                    <action selector="takeButtonTapped:" destination="2FP-JY-hon" eventType="touchUpInside" id="u4J-uZ-xaL"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPk-BK-Ul9">
@@ -2501,16 +2501,6 @@
                                             <action selector="acceptEditButtonTapped:" destination="EI8-ia-aw3" eventType="touchUpInside" id="3ex-71-Ybj"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uM-KE-WiA">
-                                        <rect key="frame" x="256" y="41" width="50" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Hidden">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="2FP-JY-hon" kind="push" identifier="PhotoAdjustToPhotoSelectionSegueIdentifier" id="go6-iX-QCt"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWO-ka-YFs">
                                         <rect key="frame" x="135" y="19" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3312,9 +3302,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="go6-iX-QCt"/>
-        <segue reference="6we-p8-kzk"/>
         <segue reference="MrD-fz-yKZ"/>
         <segue reference="hxb-tF-b6a"/>
+        <segue reference="6we-p8-kzk"/>
     </inferredMetricsTieBreakers>
 </document>

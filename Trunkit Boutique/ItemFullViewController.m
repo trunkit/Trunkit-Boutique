@@ -76,7 +76,9 @@
                                      , self.merchandiseItem.itemLongDescription
                                      , self.merchandiseItem.fitDescription
                                      , self.merchandiseItem.materialsDescription];
-    self.itemMainPhotoImageView.image = self.merchandiseItem.mainProductPhoto;
+    
+    //FIXME Put a Pages controller
+//    self.itemMainPhotoImageView.image = self.merchandiseItem.mainProductPhoto;
 }
 
 - (void)viewDidLayoutSubviews

@@ -49,12 +49,14 @@ static CGFloat optionUnavailableAlpha = 0.2;
     
 
     
-    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
+    // FIXME Need to use assets now
+//    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
+    // FIXME Need to use assets now
+//    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
     [_captureSession startRunning];
 }
 
