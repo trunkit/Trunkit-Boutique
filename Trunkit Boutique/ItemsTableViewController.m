@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIImageView *navBarHairlineImageView;
 
 @property (strong, nonatomic) MerchandiseItem *itemToPassToDestinationController;
+@property (strong, nonatomic) NSMutableDictionary *cachedImages;
 
 @end
 
@@ -34,15 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-//    UINavigationBar *navigationBar = self.navigationController.navigationBar;
-//    _navBarHairlineImageView = [self findHairlineImageViewUnder:navigationBar];
+    self.cachedImages = [[NSMutableDictionary alloc] init];
     [self setupMockModel];
 }
 
@@ -58,7 +51,11 @@
     
     item1.itemName = @"Onyx-Dyed To Match Thread Super Skinny Ankle";
     item1.styleNumber = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    item1.productPhotos = @[[UIImage imageNamed:@"SampleSkinnyJeansWomen"]].mutableCopy;
+    
+    NSURL *item1Image1URL = [NSURL URLWithString:@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg"];
+    item1.productPhotos = [@[item1Image1URL] mutableCopy];
+    
+    
     item1.designerName = @"Henry & Belle";
     item1.supplierName = @"Trunkit Boutique";
     item1.fitDescription = @"This is the text for describing how the clothes fit.";
@@ -71,7 +68,11 @@
     item2.itemName = @"Massimo Shirt Pink";
     item2.styleNumber = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     item2.designerName = @"Massimo";
-    item2.productPhotos = @[[UIImage imageNamed:@"SamplePinkShirt"]].mutableCopy;
+    
+    NSURL *item2Image2URL = [NSURL URLWithString:@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg"];
+    item2.productPhotos = [@[item2Image2URL] mutableCopy];
+    
+    
     item2.supplierName = @"Trunkit Boutique";
     item2.fitDescription = @"This is the text for describing how the clothes fit.";
     item2.materialsDescription = @"This is the text for describing the materials.";
@@ -132,29 +133,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"indexpath = %@", indexPath);
+//    NSLog(@"indexpath = %@", indexPath);
     
     static NSString *CellIdentifier = @"ItemReuseIdentifier";
     ItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[ItemTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     
-	for (NSString* family in [UIFont familyNames])
-	{
-		if ([family hasPrefix:@"B"])
-		{
-			NSLog(@"%@", family);
-            
-			for (NSString* name in [UIFont fontNamesForFamilyName: family])
-			{
-				NSLog(@"  %@", name);
-			}
-		}
-	}
+//	for (NSString* family in [UIFont familyNames])
+//	{
+//		if ([family hasPrefix:@"B"])
+//		{
+//			NSLog(@"%@", family);
+//            
+//			for (NSString* name in [UIFont fontNamesForFamilyName: family])
+//			{
+//				NSLog(@"  %@", name);
+//			}
+//		}
+//	}
   
     UILabel *itemTitleLabel = (UILabel *)[cell.contentView viewWithTag:1001];
     UILabel *itemSubtitleLabel = (UILabel *)[cell.contentView viewWithTag:1002];
@@ -194,6 +194,8 @@
 
     // FIXME using ALAsset now
 //    itemImageView.image = theItem.mainProductPhoto;
+//    [cell setImage:theItem.mainProductPhoto];
+    
     itemTitleLabel.text = theItem.title;
     [itemTitleLabel applyThemeAttribute];
     itemSubtitleLabel.text = [NSString stringWithFormat:@"Designed By %@", theItem.designerName];
@@ -205,6 +207,38 @@
     
     //Enable the image to be clicked
     itemImageView.userInteractionEnabled = YES;
+    
+    
+    
+    
+    
+    NSString *identifier = [NSString stringWithFormat:@"Cell%d" ,
+                            indexPath.row];
+    
+    if ([self.cachedImages objectForKey:identifier] != nil)
+    {
+        cell.imageView.image = [self.cachedImages valueForKey:identifier];
+    }
+    else
+    {
+        char const * s = [identifier  UTF8String];
+        dispatch_queue_t queue = dispatch_queue_create(s, 0);
+        dispatch_async(queue, ^{
+            NSURL *url = theItem.mainProductPhoto;
+            UIImage *img = nil;
+            NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+            img = [[UIImage alloc] initWithData:data];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([tableView indexPathForCell:cell].row == indexPath.row)
+                {
+                    [self.cachedImages setValue:img forKey:identifier];
+                    cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
+                }
+            });
+        });
+    
+    }
 
     return cell;
 }

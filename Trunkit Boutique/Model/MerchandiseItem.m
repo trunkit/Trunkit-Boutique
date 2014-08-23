@@ -24,7 +24,7 @@
     return self;
 }
 
-- (UIImage *)mainProductPhoto
+- (id)mainProductPhoto
 {
     return [self imageAtIndex:0];
 }
@@ -40,30 +40,31 @@
     if (![image isKindOfClass:[NSURL class]])
     {
         NSLog(@"WARNING! Object in photo array in not a URL: %@", image);
-        return image;
+//        return image;
     }
-    else
-    {
-        // Probably will not keep this code
-        //
-        ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
-        [library assetForURL:image
-                 resultBlock:^(ALAsset *asset) {
-                     NSLog(@"WARNING! %s called unexpectedly.", __PRETTY_FUNCTION__);
-                 }
-                failureBlock:^(NSError *error )
-         {
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
-                                                             message:@"A system error occurred while trying to save your photo."
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"OK" otherButtonTitles:nil];
-             [alert show];
-             NSLog(@"Error loading asset");
-         }];
-        
-//        return [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-    }
-    return nil;
+    return image;
+//    else
+//    {
+//        // Probably will not keep this code
+//        //
+//        ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+//        [library assetForURL:image
+//                 resultBlock:^(ALAsset *asset) {
+//                     NSLog(@"WARNING! %s called unexpectedly.", __PRETTY_FUNCTION__);
+//                 }
+//                failureBlock:^(NSError *error )
+//         {
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
+//                                                             message:@"A system error occurred while trying to save your photo."
+//                                                            delegate:nil
+//                                                   cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//             [alert show];
+//             NSLog(@"Error loading asset");
+//         }];
+//        
+////        return [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
+//    }
+//    return nil;
 }
 
 - (NSURL *)lastTakenPhoto
