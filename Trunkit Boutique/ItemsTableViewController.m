@@ -46,41 +46,48 @@
 
 - (void)setupMockModel
 {
-    MerchandiseItem *item1 = [[MerchandiseItem alloc] init];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:10] forKey:@"Size-Test-1"];
+    NSArray *mockImages = @[@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg",
+                            @"http://whatkatewore.com/wp-content/uploads/2011/09/Kate-Hudson-Jeans-Jeanography.jpg",
+                            @"http://www.eecloth.com/wp-content/uploads/2014/03/07/0/106-Hudson-Jeans-Palerme-Cuff-Knee-Short-for-Women-4.jpg",
+                            @"https://s3.amazonaws.com/assets.svpply.com/large/2614718.jpg?1402501163",
+                            @"http://www.stylegag.com/wp-content/uploads/2014/02/2012-women-new-designer-casual-dresses-gentlewomen-a-plus-size-bust-skirt-print-lace-decoration-bohemia.jpg",
+                            @"http://cache.net-a-porter.com/images/products/35202/35202_fr_xl.jpg",
+                            @"http://s7d2.scene7.com/is/image/DVF/S890401T14BBLACK?$Demandware%20Large%20Rectangle$",
+                            @"http://www.maykool.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/k/skirts-designer-asymmetric-hem-black-skirt-004705.jpg",
+                            @"http://1.bp.blogspot.com/-pz-VlK1GywY/TfdW5ul-rsI/AAAAAAAAAJg/gWt1i99FOS0/s400/summer_shoes_trehds_2011.jpg",
+                            @"http://cdn.shopify.com/s/files/1/0115/5332/products/1024_lyon_blue_1024x1024.jpg?v=1398297639",
+                            @"http://img.alibaba.com/wsphoto/v0/519213392/free-ship-EMS-luxury-trend-nackline-point-shirt-black-white-wedding-groom-shirt-M-L-XL.jpg",
+                            @"http://blog.youdesignit.com/images/prophecy_opt.jpg",
+                            @"https://trishsformalaffair.com/wp-content/uploads/2014/07/zagairi-boulevard-of-dreams-mens-long-sleeve-designer-shirt.jpg",
+                            @"http://i1.tribune.com.pk/wp-content/uploads/2012/08/423410-image-1345213752-109-640x480.JPG",
+                            @"http://c776239.r39.cf2.rackcdn.com/Gilli-5246-Black-White-1.jpg",
+                            @"http://cdn.is.bluefly.com/mgen/Bluefly/prodImage.ms?productCode=2070113&width=300&height=300.jpg"];
     
-    item1.itemName = @"Onyx-Dyed To Match Thread Super Skinny Ankle";
-    item1.styleNumber = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    
-    NSURL *item1Image1URL = [NSURL URLWithString:@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg"];
-    item1.productPhotos = [@[item1Image1URL] mutableCopy];
-    
-    
-    item1.designerName = @"Henry & Belle";
-    item1.supplierName = @"Trunkit Boutique";
-    item1.fitDescription = @"This is the text for describing how the clothes fit.";
-    item1.materialsDescription = @"This is the text for describing the materials.";
-    item1.unitPrice = 200.00;
-    item1.itemLongDescription = @"This is the text for describing the item.";
-    item1.quantityPerSizes = dict;
-    
-    MerchandiseItem *item2 = [[MerchandiseItem alloc] init];
-    item2.itemName = @"Massimo Shirt Pink";
-    item2.styleNumber = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    item2.designerName = @"Massimo";
-    
-    NSURL *item2Image2URL = [NSURL URLWithString:@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg"];
-    item2.productPhotos = [@[item2Image2URL] mutableCopy];
-    
-    
-    item2.supplierName = @"Trunkit Boutique";
-    item2.fitDescription = @"This is the text for describing how the clothes fit.";
-    item2.materialsDescription = @"This is the text for describing the materials.";
-    item2.unitPrice = 200.00;
-    item2.itemLongDescription = @"This is the text for describing the item.";
-    item2.quantityPerSizes = [dict mutableCopy];
-    
-    self.merchandiseItems = [@[item1, item2] mutableCopy];
+    self.merchandiseItems = [@[] mutableCopy];
+    for (NSInteger i = 0; i < 10; i++)
+    {
+        MerchandiseItem *item1 = [[MerchandiseItem alloc] init];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:10 + (1*i)] forKey:@"Mock Size 1"];
+        [dict setObject:[NSNumber numberWithInt:5 + (1*i)] forKey:@"Mock Size 2"];
+        
+        item1.itemName = [NSString stringWithFormat:@"Mock Item Number %d", i];
+        item1.styleNumber = [NSString stringWithFormat:@"%d%d%dMOCK%dSTYLENUMBER%d",i ,i ,i ,i ,i];
+        
+        NSUInteger randomIndex = arc4random() % [mockImages count];
+        NSURL *url = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex]];
+        item1.productPhotos = [@[url] mutableCopy];
+        
+        
+        item1.designerName = @"Mock Designer";
+        item1.supplierName = @"Trunkit Mock Boutique";
+        item1.fitDescription = @"This is the text for describing how the clothes fit.";
+        item1.materialsDescription = @"This is the text for describing the materials.";
+        item1.unitPrice = 109 + (30 * i);
+        item1.itemLongDescription = @"This is the text for describing the item.";
+        item1.quantityPerSizes = dict;
+        [self.merchandiseItems addObject:item1];
+    }
 }
 
 - (void)addMerchandiseItem:(MerchandiseItem *)item
@@ -192,10 +199,6 @@
     
     [itemQuantityButton setAttributedTitle:attributedString forState:UIControlStateNormal];
 
-    // FIXME using ALAsset now
-//    itemImageView.image = theItem.mainProductPhoto;
-//    [cell setImage:theItem.mainProductPhoto];
-    
     itemTitleLabel.text = theItem.title;
     [itemTitleLabel applyThemeAttribute];
     itemSubtitleLabel.text = [NSString stringWithFormat:@"Designed By %@", theItem.designerName];
@@ -211,13 +214,13 @@
     
     
     
-    
+    cell.productPhotoImageView.image = nil;
     NSString *identifier = [NSString stringWithFormat:@"Cell%d" ,
                             indexPath.row];
     
     if ([self.cachedImages objectForKey:identifier] != nil)
     {
-        cell.imageView.image = [self.cachedImages valueForKey:identifier];
+        cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
     }
     else
     {
