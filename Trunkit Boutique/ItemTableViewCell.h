@@ -13,4 +13,7 @@
 
 @property (strong, nonatomic) MerchandiseItem *merchandiseItem;
 
+@property (strong, nonatomic) id image;
+@property (strong, nonatomic) IBOutlet UIImageView *productPhotoImageView;
+
 @end

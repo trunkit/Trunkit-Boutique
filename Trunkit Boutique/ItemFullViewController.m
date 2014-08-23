@@ -8,8 +8,11 @@
 
 #import "ItemFullViewController.h"
 #import "UILabel+UILabel_TKExtensions.h"
+#import "PhotoPagesViewController.h"
 
 @interface ItemFullViewController ()
+
+@property (strong, nonatomic) PhotoPagesViewController *photoPagesViewController;
 
 @end
 
@@ -28,16 +31,13 @@
 {
     [super viewDidLoad];
 
-//    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self applyThemeToBlackButton:self.editButton withFontSize:15.0];
-    
     [self applyTitleThemeToLabel:self.itemNameLabel withFontSize:18.0];
     [self applyThemeToLabel:self.styleNumberLabel withFontSize:14.0];
     [self applyThemeToLabel:self.designedByLabel withFontSize:14.0];
     [self applyThemeToLabel:self.suppliedByLabel withFontSize:14.0];
     [self applyThemeToLabel:self.supplierLabel withFontSize:14.0];
     [self applyThemeToLabel:self.priceLabel withFontSize:14.0];
-//    [self applyThemeToLabel:self.aboutTheClothesLabel withFontSize:12.0];
     
     [self applyThemeToTextView:self.descriptionTextView withFontSize:14.0];
     self.descriptionTextView.layer.borderWidth = 0.0;
@@ -70,13 +70,21 @@
                              range:NSMakeRange(0, [string length])];
 
     [self.priceButton setAttributedTitle:attributedString forState:UIControlStateNormal];
-//    [self.priceButton setTitle:string forState:UIControlStateNormal];
     
     self.descriptionTextView.text = [NSString stringWithFormat:@"ABOUT THE CLOTHES:\n%@\n\nHOW DO THEY FIT?\n%@\n\nWHAT ARE THE CLOTHES MADE OF?\n%@"
                                      , self.merchandiseItem.itemLongDescription
                                      , self.merchandiseItem.fitDescription
                                      , self.merchandiseItem.materialsDescription];
-    self.itemMainPhotoImageView.image = self.merchandiseItem.mainProductPhoto;
+    
+
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PhotoPagesViewController *vc2 = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
+    [vc2 setUsesMerchandiseProductPhotos:YES];
+    vc2.merchandiseItem = self.merchandiseItem;
+    //    [self addChildViewController:vc2];
+    self.photoPagesViewController = vc2;
+    vc2.view.frame = self.itemPhotosContainerView.bounds;
+    [self.itemPhotosContainerView addSubview:vc2.view];
 }
 
 - (void)viewDidLayoutSubviews
@@ -109,7 +117,7 @@
 - (IBAction)closeButtonTapped:(id)sender
 {
 //    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    NSLog(@"SCROLL VIEW FRAME = (%f, %f, %f, %f), ", self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+//    NSLog(@"SCROLL VIEW FRAME = (%f, %f, %f, %f), ", self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
 //    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

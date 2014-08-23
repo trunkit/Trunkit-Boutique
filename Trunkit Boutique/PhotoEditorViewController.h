@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TKEditViewController.h"
+#import "TKImage.h"
 
 @interface PhotoEditorViewController : TKEditViewController
 
@@ -15,8 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *retakeButton;
 @property (strong, nonatomic) IBOutlet UIButton *useButton;
 
-@property (strong, nonatomic) UIImage *photo;
-@property (strong, nonatomic) UIImage *editedPhoto;
+@property (strong, nonatomic) TKImage *photo;
 
 //@property (readwrite, nonatomic) CGFloat brightnessAdjustment;
 //@property (readwrite, nonatomic) CGFloat contrastAdjustment;

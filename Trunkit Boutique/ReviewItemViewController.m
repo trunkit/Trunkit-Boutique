@@ -54,13 +54,12 @@
     self.descriptionTextView.text = self.merchandiseItem.itemLongDescription;
     self.fitTextField.text = self.merchandiseItem.fitDescription;
     self.materialsTextField.text = self.merchandiseItem.materialsDescription;
-//    self.photoImageView.image = self.merchandiseItem.mainProductPhoto;
     [self formatCurrencyField:self.priceTextField];
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PhotoPagesViewController *vc2 = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
     vc2.merchandiseItem = self.merchandiseItem;
-    [self addChildViewController:vc2];
+//    [self addChildViewController:vc2];
     self.photoPagesViewController = vc2;
     [vc2 setUsesMerchandiseProductPhotos:YES];
     vc2.view.frame = self.itemPhotosContainerView.bounds;

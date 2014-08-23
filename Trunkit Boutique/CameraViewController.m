@@ -20,7 +20,7 @@ static CGFloat optionUnavailableAlpha = 0.2;
 //@property (strong, nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer *capturePreviewLayer;
-@property (strong, nonatomic) UIImage *capturedPhoto;
+@property (strong, nonatomic) TKImage *capturedPhoto;
 
 
 @property (readwrite) BOOL isCapturingImage;
@@ -49,12 +49,14 @@ static CGFloat optionUnavailableAlpha = 0.2;
     
 
     
-    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
+    // FIXME Need to use assets now
+//    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
+    // FIXME Need to use assets now
+//    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
     [_captureSession startRunning];
 }
 
@@ -163,7 +165,7 @@ static CGFloat optionUnavailableAlpha = 0.2;
 - (void)capturePhoto
 {
 #if TARGET_IPHONE_SIMULATOR
-    self.capturedPhoto = [UIImage imageNamed:@"SampleSkinnyJeansWomen"];
+    self.capturedPhoto = [[TKImage alloc] initWithCGImage:[UIImage imageNamed:@"SampleSkinnyJeansWomen"].CGImage];
     [self performSegueWithIdentifier:@"CameraToPhotoAcceptanceSegueIdentifier" sender:self];
     
 #else
@@ -229,7 +231,8 @@ static CGFloat optionUnavailableAlpha = 0.2;
          cropSize.height = cropSize.width / aspectRatio;
          
          capturedImage = [weakSelf crop:capturedImage from:capturedImage.size to:cropSize];
-		 weakSelf.capturedPhoto = capturedImage;
+		 weakSelf.capturedPhoto = [[TKImage alloc] initWithCGImage:capturedImage.CGImage];
+//         capturedImage;
          _isCapturingImage = NO;
          [weakSelf performSegueWithIdentifier:@"CameraToPhotoAcceptanceSegueIdentifier" sender:weakSelf];
      }];

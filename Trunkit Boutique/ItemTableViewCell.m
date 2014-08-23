@@ -7,6 +7,7 @@
 //
 
 #import "ItemTableViewCell.h"
+#import "ALAssetsLibrary+TKSingleton.h"
 
 @implementation ItemTableViewCell
 

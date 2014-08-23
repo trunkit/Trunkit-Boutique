@@ -7,6 +7,7 @@
 //
 
 #import "PhotoSlideViewController.h"
+#import "ALAssetsLibrary+TKSingleton.h"
 
 @interface PhotoSlideViewController ()
 
@@ -28,7 +29,6 @@
     [super viewDidLoad];
 
     [self setImageOnImageView];
-//    self.imageView.image = _image;
 }
 
 - (void)setImage:(id)image
@@ -39,17 +39,45 @@
 
 - (void)setImageOnImageView
 {
-    UIImage *photo = nil;
-    
     if ([_image isKindOfClass:[ALAsset class]])
     {
         ALAsset *asset = (ALAsset *)_image;
-        photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
+        UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
         self.imageView.image = photo;
     }
-    else
+    else if ([_image isKindOfClass:[NSURL class]])
     {
-        self.imageView.image = _image;
+        NSURL *url = (NSURL *)_image;
+        if ([url.absoluteString hasPrefix:@"assets-library://asset"])
+        {
+            ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+            [library assetForURL:url
+                     resultBlock:^(ALAsset *asset) {
+                         UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                         self.imageView.image = photo;
+                     }
+                    failureBlock:^(NSError *error )
+             {
+                 NSLog(@"ERROR %s: %@", __PRETTY_FUNCTION__, error);
+             }];
+        }
+        else
+        {
+            NSString *identifier = [NSString stringWithFormat:@"%@-%@", self.description, url.absoluteString];
+            char const * s = [identifier  UTF8String];
+
+            dispatch_queue_t queue = dispatch_queue_create(s, 0);
+            dispatch_async(queue, ^{
+                UIImage *photo = nil;
+                NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+                photo = [[UIImage alloc] initWithData:data];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.imageView.image = photo;
+                });
+            });
+
+        }
     }
 }
 

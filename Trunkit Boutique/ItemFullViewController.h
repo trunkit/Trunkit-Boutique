@@ -11,6 +11,7 @@
 @interface ItemFullViewController : TKEditViewController
 
 //@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIView *itemPhotosContainerView;
 @property (strong, nonatomic) IBOutlet UIImageView *itemMainPhotoImageView;
 @property (strong, nonatomic) IBOutlet UIButton *priceButton;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;

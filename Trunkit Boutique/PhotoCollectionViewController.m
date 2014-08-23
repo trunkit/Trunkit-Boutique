@@ -7,7 +7,7 @@
 //
 
 #import "PhotoCollectionViewController.h"
-#import <AssetsLibrary/AssetsLibrary.h>
+#import "ALAssetsLibrary+TKSingleton.h"
 #import "UIImage+TKImageScale.h"
 
 
@@ -78,33 +78,78 @@
 - (void)setSessionPhotos:(NSMutableArray *)sessionPhotos
 {
     _sessionPhotos = sessionPhotos;
-    self.photos = [_sessionPhotos mutableCopy];
+//    self.photos = [_sessionPhotos mutableCopy];
+    self.photos = [@[] mutableCopy];
     [self.collectionView reloadData];
     
     __block NSMutableArray *tmpAssets = [@[] mutableCopy];
-    // 1
-    ALAssetsLibrary *assetsLibrary = [PhotoCollectionViewController defaultAssetsLibrary];
+
+    ALAssetsLibrary *assetsLibrary = [ALAssetsLibrary defaultAssetsLibrary];
     NSLog(@"Assets load");
-    // 2
+
     [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        NSLog(@"GROUP = %@", group);
         [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
             if(result)
             {
-                // 3
                 [tmpAssets addObject:result];
+                NSLog(@"Asset loaded %@", result);
             }
         }];
         
-        // 4
-        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
-        //self.assets = [tmpAssets sortedArrayUsingDescriptors:@[sort]];
-        [self.photos addObjectsFromArray:tmpAssets];
-//        self.assets = tmpAssets;
-        NSLog(@"Assets loaded %d", tmpAssets.count);
+
         
-        // 5
+        for (ALAsset *anAsset in tmpAssets)
+        {
+            NSLog(@"URL = %@", anAsset.defaultRepresentation.url);
+            
+            NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"defaultRepresentation.url == %@", anAsset.defaultRepresentation.url]];
+            
+            if (!filtered.count)
+            {
+                [self.photos addObject:anAsset];
+            }
+        }
+        
+        // Put the session photos up front
+        //
+        NSLog(@"SESSION PHOTOS = %@", sessionPhotos);
+        for (NSInteger index = 0; index < sessionPhotos.count; index++)
+        {
+            NSURL *url = [sessionPhotos objectAtIndex:index];
+            NSInteger currentIndex = NSNotFound;
+            
+            NSIndexSet *indexSet = [_photos indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:url.absoluteString];
+            }];
+            
+            currentIndex = indexSet.firstIndex;
+            
+            if (currentIndex != NSNotFound)
+            {
+                ALAsset *aSessionPhoto = [_photos objectAtIndex:currentIndex];
+                [self.photos removeObject:aSessionPhoto];
+                [self.photos insertObject:aSessionPhoto atIndex:index];
+                
+                // Automatically select the last photo that was just taken
+                if (index == sessionPhotos.count - 1)
+                {
+                    if (![_selectedAssets containsObject:aSessionPhoto])
+                    {
+                        [self setPhoto:aSessionPhoto selected:YES];
+                    }
+                }
+            }
+            else
+            {
+                NSLog(@"WARNING: An asset was not loaded for a session photo with URL %@", url);
+                continue;
+            }
+        }
+
         [self.collectionView reloadData];
-    } failureBlock:^(NSError *error) {
+    }
+                               failureBlock:^(NSError *error) {
         NSLog(@"Error loading images %@", error);
     }];
     
@@ -123,12 +168,35 @@
 
 - (void)selectAllPhotos
 {
-    self.selectedAssets = [self.sessionPhotos mutableCopy];
-    if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didChangeSelection:)])
-    {
-        [_delegate photoCollectionViewController:self didChangeSelection:self.selectedAssets];
-    }
+    //FIXME DISABLED FOR NOW - WIP
+    //
+    
+//    self.selectedAssets = [self.sessionPhotos mutableCopy];
+//    if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didChangeSelection:)])
+//    {
+//        [_delegate photoCollectionViewController:self didChangeSelection:self.selectedAssets];
+//    }
 
+}
+
+- (void)setPhoto:(ALAsset *)photo selected:(BOOL)selected
+{
+    if (selected)
+    {
+        [self.selectedAssets addObject:photo];
+        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didSelectItem:)])
+        {
+            [_delegate photoCollectionViewController:self didSelectItem:photo];
+        }
+    }
+    else
+    {
+        [self.selectedAssets removeObject:photo];
+        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didDeSelectItem:)])
+        {
+            [_delegate photoCollectionViewController:self didDeSelectItem:photo];
+        }
+    }
 }
 
 
@@ -145,39 +213,37 @@
     PhotoCollectionViewCell *cell = (PhotoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCollectionViewCellIdentifier" forIndexPath:indexPath];
     
     id photo = self.photos[indexPath.row];
-    UIImage *image = nil;
+    ALAsset *asset = nil;
     
     if ([photo isKindOfClass:[ALAsset class]])
     {
-        ALAsset *asset = (ALAsset *)photo;
-        image = [self.cachedImages valueForKey:[asset description]];
-        if (!image)
-        {
-            image = [UIImage imageWithCGImage:[asset thumbnail]];
-//            image = [image imageScaledToQuarter];
-//            [self.cachedImages setValue:image forKey:[asset description]];
-        }
-//        if (cell.asset != asset)
-//        {
-//            cell.asset = asset;
-//        }
-
+        asset = (ALAsset *)photo;
+        [cell setAsset:asset];
     }
-    else
+    else if ([photo isKindOfClass:[NSURL class]])
     {
-        image = (UIImage *)photo;
-    }
-    [cell setImage:image];
+        asset = [self.cachedImages valueForKey:[photo absoluteString]];
+        if (!asset)
+        {
+            ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+            [library assetForURL:photo
+                     resultBlock:^(ALAsset *anAsset) {
+                         [cell setAsset:anAsset];
+                         [self.cachedImages setObject:anAsset forKey:[photo absoluteString]];
+                     }
+                    failureBlock:^(NSError *error )
+             {
+             }];
 
-//    cell.imageFormatIdentifier = @"thumbnail";
-//    ALAsset *asset = self.assets[indexPath.row];
-//    if (cell.asset != asset)
-//    {
-//        cell.asset = asset;
-//    }
-//    NSInteger index = [self.selectedAssets indexOfObject:asset];
-    NSInteger index = [self.selectedAssets indexOfObject:photo];
-    cell.selectionOrder = (index == NSNotFound) ? -1 : index + 1;
+        }
+    }
+    
+    NSIndexSet *indexSet = [_selectedAssets indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:asset.defaultRepresentation.url.absoluteString];
+    }];
+    
+    NSUInteger selectionIndex = indexSet.firstIndex;
+    cell.selectionOrder = (selectionIndex == NSNotFound) ? -1 : selectionIndex + 1;
     
     return cell;
 }
@@ -203,20 +269,13 @@
     NSInteger index = [self.selectedAssets indexOfObject:photo];
     if (index == NSNotFound)
     {
-        [self.selectedAssets addObject:photo];
-        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didSelectItem:)])
-        {
-            [_delegate photoCollectionViewController:self didSelectItem:photo];
-        }
+        [self setPhoto:photo selected:YES];
     }
     else
     {
-        [self.selectedAssets removeObject:photo];
-        if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didDeSelectItem:)])
-        {
-            [_delegate photoCollectionViewController:self didDeSelectItem:photo];
-        }
+        [self setPhoto:photo selected:NO];
     }
+    
     // FIXME: Be more efficient and reload only the selected items to
     // reset the selection order label
     [self.collectionView reloadData];
@@ -224,24 +283,6 @@
     {
         [_delegate photoCollectionViewController:self didChangeSelection:self.selectedAssets];
     }
-//    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    
-    
-//    ALAssetRepresentation *defaultRep = [asset defaultRepresentation];
-//    UIImage *image = [UIImage imageWithCGImage:[defaultRep fullScreenImage] scale:[defaultRep scale] orientation:0];
-    // Do something with the image
-}
-
-#pragma mark - assets
-
-+ (ALAssetsLibrary *)defaultAssetsLibrary
-{
-    static dispatch_once_t pred = 0;
-    static ALAssetsLibrary *library = nil;
-    dispatch_once(&pred, ^{
-        library = [[ALAssetsLibrary alloc] init];
-    });
-    return library;
 }
 
 @end
