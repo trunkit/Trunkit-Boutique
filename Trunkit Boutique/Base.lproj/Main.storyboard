@@ -139,6 +139,14 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </imageView>
+                                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="shV-0w-Fg6">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <segue destination="NTX-Gz-5U7" kind="embed" id="jfg-jz-qFm"/>
+                                                </connections>
+                                            </containerView>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Item Name With a Very Long Text" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="none" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="227" translatesAutoresizingMaskIntoConstraints="NO" id="MJk-JP-JaW">
                                                 <rect key="frame" x="6" y="322" width="227" height="51"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -256,6 +264,7 @@
                         <outlet property="editButton" destination="64m-VK-W2j" id="4Sz-Mq-fpZ"/>
                         <outlet property="itemMainPhotoImageView" destination="0QG-1b-mL2" id="Ldj-Zg-n4c"/>
                         <outlet property="itemNameLabel" destination="MJk-JP-JaW" id="LE6-2J-aOS"/>
+                        <outlet property="itemPhotosContainerView" destination="shV-0w-Fg6" id="cPb-BA-t4b"/>
                         <outlet property="priceButton" destination="a3i-T5-wWk" id="bd5-a6-f8F"/>
                         <outlet property="scrollView" destination="qgE-Wd-y5j" id="kip-Cv-wzj"/>
                         <outlet property="styleNumberLabel" destination="h1W-34-yDO" id="43M-lV-0Ad"/>
@@ -3015,7 +3024,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ndd-FD-aRW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7461" y="232"/>
+            <point key="canvasLocation" x="7671" y="154"/>
         </scene>
         <!--Size And Quantity View Controller-->
         <scene sceneID="dry-Fq-7aW">
@@ -3033,7 +3042,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REE-Yr-bMv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7876" y="282"/>
+            <point key="canvasLocation" x="8131" y="218"/>
         </scene>
         <!--Photo Selection View Controller-->
         <scene sceneID="eKO-gu-F7w">
@@ -3269,6 +3278,24 @@
             </objects>
             <point key="canvasLocation" x="-1872" y="155"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="n7M-3o-1w5">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="NTX-Gz-5U7" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="slr-UI-FsO"/>
+                        <viewControllerLayoutGuide type="bottom" id="79l-Gl-lUP"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="C53-sx-pX1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iaZ-OD-Avy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="AddItemImageButton" width="41" height="41"/>
@@ -3305,8 +3332,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="6we-p8-kzk"/>
         <segue reference="MrD-fz-yKZ"/>
-        <segue reference="hZO-yZ-XE6"/>
+        <segue reference="hxb-tF-b6a"/>
+        <segue reference="6we-p8-kzk"/>
     </inferredMetricsTieBreakers>
 </document>

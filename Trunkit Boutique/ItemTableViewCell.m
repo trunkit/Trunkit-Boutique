@@ -32,42 +32,4 @@
     // Configure the view for the selected state
 }
 
-//- (void)setImage:(id)image
-//{
-//    _image = image;
-//    [self setImageOnImageView];
-//}
-//
-//- (void)setImageOnImageView
-//{
-//    UIImage *photo = nil;
-//    
-//    if ([_image isKindOfClass:[ALAsset class]])
-//    {
-//        ALAsset *asset = (ALAsset *)_image;
-//        photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-//        self.imageView.image = photo;
-//    }
-//    else if ([_image isKindOfClass:[NSURL class]])
-//    {
-//        ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
-//        [library assetForURL:(NSURL *)_image
-//                 resultBlock:^(ALAsset *asset) {
-//                     NSLog(@"Read asset: %@ - %@", asset, asset.defaultRepresentation.url);
-//                     
-//                     UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-//                     self.productPhotoImageView.image = photo;
-//                 }
-//                failureBlock:^(NSError *error )
-//         {
-//             NSLog(@"ERROR %s: %@", __PRETTY_FUNCTION__, error);
-//         }];
-//    }
-//    else if ([_image isKindOfClass:[UIImage class]])
-//    {
-//        self.productPhotoImageView.image = _image;
-//    }
-//}
-
-
 @end

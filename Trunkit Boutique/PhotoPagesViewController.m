@@ -85,7 +85,7 @@
     
     if (_photos.count)
     {
-        initialVC = [self viewControllerForPhotoAtIndex:(_photos.count - 1)];
+        initialVC = [self viewControllerForPhotoAtIndex:0];
     }
     
     if (!initialVC)
@@ -96,7 +96,7 @@
 //    __weak typeof(self) weakSelf = self;
     
     [self setViewControllers:@[initialVC]
-                   direction:UIPageViewControllerNavigationDirectionForward|UIPageViewControllerNavigationDirectionReverse
+                   direction:UIPageViewControllerNavigationDirectionForward //|UIPageViewControllerNavigationDirectionReverse
                     animated:NO
                   completion:^(BOOL finished) {
 //                      __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -161,7 +161,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSLog(@"%s Asked what's After %d", __PRETTY_FUNCTION__, ((PhotoSlideViewController *)viewController).slideIndex);
+//    NSLog(@"%s Asked what's After %d", __PRETTY_FUNCTION__, ((PhotoSlideViewController *)viewController).slideIndex);
     
     NSInteger imageIndex = 0;
     if ([viewController isKindOfClass:[PhotoSlideViewController class]])
@@ -179,7 +179,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSLog(@"%s Asked what's Before %d", __PRETTY_FUNCTION__, ((PhotoSlideViewController *)viewController).slideIndex);
+//    NSLog(@"%s Asked what's Before %d", __PRETTY_FUNCTION__, ((PhotoSlideViewController *)viewController).slideIndex);
     
     NSInteger imageIndex = 0;
     if ([viewController isKindOfClass:[PhotoSlideViewController class]])

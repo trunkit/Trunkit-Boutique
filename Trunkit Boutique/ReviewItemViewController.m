@@ -59,7 +59,7 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PhotoPagesViewController *vc2 = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
     vc2.merchandiseItem = self.merchandiseItem;
-    [self addChildViewController:vc2];
+//    [self addChildViewController:vc2];
     self.photoPagesViewController = vc2;
     [vc2 setUsesMerchandiseProductPhotos:YES];
     vc2.view.frame = self.itemPhotosContainerView.bounds;

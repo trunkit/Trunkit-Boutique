@@ -9,6 +9,8 @@
 #import "ItemsTableViewController.h"
 #import "TKEditViewController.h"
 #import "UILabel+UILabel_TKExtensions.h"
+#import "ALAssetsLibrary+TKSingleton.h"
+
 
 @interface ItemsTableViewController ()
 
@@ -66,27 +68,30 @@
     self.merchandiseItems = [@[] mutableCopy];
     for (NSInteger i = 0; i < 10; i++)
     {
-        MerchandiseItem *item1 = [[MerchandiseItem alloc] init];
+        MerchandiseItem *item = [[MerchandiseItem alloc] init];
         
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:10 + (1*i)] forKey:@"Mock Size 1"];
         [dict setObject:[NSNumber numberWithInt:5 + (1*i)] forKey:@"Mock Size 2"];
         
-        item1.itemName = [NSString stringWithFormat:@"Mock Item Number %d", i];
-        item1.styleNumber = [NSString stringWithFormat:@"%d%d%dMOCK%dSTYLENUMBER%d",i ,i ,i ,i ,i];
+        item.itemName = [NSString stringWithFormat:@"Mock Item Number %d", i];
+        item.styleNumber = [NSString stringWithFormat:@"%d%d%dMOCK%dSTYLENUMBER%d",i ,i ,i ,i ,i];
         
-        NSUInteger randomIndex = arc4random() % [mockImages count];
-        NSURL *url = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex]];
-        item1.productPhotos = [@[url] mutableCopy];
+        NSUInteger randomIndex1 = arc4random() % [mockImages count];
+        NSURL *url1 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex1]];
+        item.productPhotos = [@[url1] mutableCopy];
+        NSUInteger randomIndex2 = arc4random() % [mockImages count];
+        NSURL *url2 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex2]];
+        [item.productPhotos addObject:url2];
         
         
-        item1.designerName = @"Mock Designer";
-        item1.supplierName = @"Trunkit Mock Boutique";
-        item1.fitDescription = @"This is the text for describing how the clothes fit.";
-        item1.materialsDescription = @"This is the text for describing the materials.";
-        item1.unitPrice = 109 + (30 * i);
-        item1.itemLongDescription = @"This is the text for describing the item.";
-        item1.quantityPerSizes = dict;
-        [self.merchandiseItems addObject:item1];
+        item.designerName = @"Mock Designer";
+        item.supplierName = @"Trunkit Mock Boutique";
+        item.fitDescription = @"This is the text for describing how the clothes fit.";
+        item.materialsDescription = @"This is the text for describing the materials.";
+        item.unitPrice = 109 + (30 * i);
+        item.itemLongDescription = @"This is the text for describing the item.";
+        item.quantityPerSizes = dict;
+        [self.merchandiseItems addObject:item];
     }
 }
 
@@ -227,18 +232,39 @@
         char const * s = [identifier  UTF8String];
         dispatch_queue_t queue = dispatch_queue_create(s, 0);
         dispatch_async(queue, ^{
-            NSURL *url = theItem.mainProductPhoto;
-            UIImage *img = nil;
-            NSData *data = [[NSData alloc] initWithContentsOfURL:url];
-            img = [[UIImage alloc] initWithData:data];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([tableView indexPathForCell:cell].row == indexPath.row)
+            if ([theItem.mainProductPhoto isKindOfClass:[NSURL class]])
+            {
+                NSURL *url = theItem.mainProductPhoto;
+                UIImage *img = nil;
+                NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+                img = [[UIImage alloc] initWithData:data];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([tableView indexPathForCell:cell].row == indexPath.row)
+                    {
+                        [self.cachedImages setValue:img forKey:identifier];
+                        cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
+                    }
+                });
+            }
+            else
+            {
+                NSLog(@"WARNING: We are executing code that should be soon deprecated. At this point, any product photo is expected to be a NSURL only.");
+                if ([theItem.mainProductPhoto isKindOfClass:[ALAsset class]])
                 {
-                    [self.cachedImages setValue:img forKey:identifier];
-                    cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
+                    ALAsset *asset = (ALAsset *)theItem.mainProductPhoto;
+                    UIImage *img = [UIImage imageWithCGImage:[asset.defaultRepresentation fullScreenImage]];
+
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([tableView indexPathForCell:cell].row == indexPath.row)
+                        {
+                            [self.cachedImages setValue:img forKey:identifier];
+                            cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
+                        }
+                    });
                 }
-            });
+            }
         });
     
     }
