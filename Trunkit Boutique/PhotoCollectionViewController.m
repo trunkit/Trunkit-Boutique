@@ -83,75 +83,89 @@
     [self.collectionView reloadData];
     
     __block NSMutableArray *tmpAssets = [@[] mutableCopy];
-
-    ALAssetsLibrary *assetsLibrary = [ALAssetsLibrary defaultAssetsLibrary];
-    NSLog(@"Assets load");
-
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        NSLog(@"GROUP = %@", group);
-        [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            if(result)
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSAssert(![NSThread isMainThread], @"This would create a deadlock (main thread waiting for main thread to complete)");
+        
+        ALAssetsLibrary *assetsLibrary = [ALAssetsLibrary defaultAssetsLibrary];
+        NSLog(@"Assets load");
+        
+        [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+            NSLog(@"GROUP = %@", group);
+            
+            if (!group)
             {
-                [tmpAssets addObject:result];
-                NSLog(@"Asset loaded %@", result);
+                return;
             }
-        }];
-        
-
-        
-        for (ALAsset *anAsset in tmpAssets)
-        {
-            NSLog(@"URL = %@", anAsset.defaultRepresentation.url);
             
-            NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"defaultRepresentation.url == %@", anAsset.defaultRepresentation.url]];
-            
-            if (!filtered.count)
-            {
-                [self.photos addObject:anAsset];
-            }
-        }
-        
-        // Put the session photos up front
-        //
-        NSLog(@"SESSION PHOTOS = %@", sessionPhotos);
-        for (NSInteger index = 0; index < sessionPhotos.count; index++)
-        {
-            NSURL *url = [sessionPhotos objectAtIndex:index];
-            NSInteger currentIndex = NSNotFound;
-            
-            NSIndexSet *indexSet = [_photos indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:url.absoluteString];
+            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                if(result)
+                {
+                    [tmpAssets addObject:result];
+                    NSLog(@"Asset loaded %@", result);
+                }
             }];
             
-            currentIndex = indexSet.firstIndex;
             
-            if (currentIndex != NSNotFound)
+            
+            for (ALAsset *anAsset in tmpAssets)
             {
-                ALAsset *aSessionPhoto = [_photos objectAtIndex:currentIndex];
-                [self.photos removeObject:aSessionPhoto];
-                [self.photos insertObject:aSessionPhoto atIndex:index];
+                NSLog(@"URL = %@", anAsset.defaultRepresentation.url);
                 
-                // Automatically select the last photo that was just taken
-                if (index == sessionPhotos.count - 1)
+                NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"defaultRepresentation.url == %@", anAsset.defaultRepresentation.url]];
+                
+                if (!filtered.count)
                 {
-                    if (![_selectedAssets containsObject:aSessionPhoto])
-                    {
-                        [self setPhoto:aSessionPhoto selected:YES];
-                    }
+                    [self.photos addObject:anAsset];
                 }
             }
-            else
+            
+            // Put the session photos up front
+            //
+            NSLog(@"SESSION PHOTOS = %@", sessionPhotos);
+            for (NSInteger index = 0; index < sessionPhotos.count; index++)
             {
-                NSLog(@"WARNING: An asset was not loaded for a session photo with URL %@", url);
-                continue;
+                NSURL *url = [sessionPhotos objectAtIndex:index];
+                NSInteger currentIndex = NSNotFound;
+                
+                NSIndexSet *indexSet = [_photos indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                    return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:url.absoluteString];
+                }];
+                
+                currentIndex = indexSet.firstIndex;
+                
+                if (currentIndex != NSNotFound)
+                {
+                    ALAsset *aSessionPhoto = [_photos objectAtIndex:currentIndex];
+                    [self.photos removeObject:aSessionPhoto];
+                    [self.photos insertObject:aSessionPhoto atIndex:index];
+                    
+                    // Automatically select the last photo that was just taken
+                    if (index == sessionPhotos.count - 1)
+                    {
+                        if (![_selectedAssets containsObject:aSessionPhoto])
+                        {
+                            [self setPhoto:aSessionPhoto selected:YES];
+                        }
+                    }
+                }
+                else
+                {
+                    NSLog(@"WARNING: An asset was not loaded for a session photo with URL %@", url);
+                    continue;
+                }
             }
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [self.collectionView reloadData];
+            });
         }
+                                   failureBlock:^(NSError *error) {
+                                       NSLog(@"Error loading images %@", error);
+                                   }];
+    });
 
-        [self.collectionView reloadData];
-    }
-                               failureBlock:^(NSError *error) {
-        NSLog(@"Error loading images %@", error);
-    }];
     
 }
 - (void)addPhoto:(id)aPhoto
