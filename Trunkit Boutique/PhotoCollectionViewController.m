@@ -93,8 +93,7 @@
         
         [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
             NSLog(@"GROUP = %@", group);
-            
-            if (!group)
+            if (![[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:TK_PHOTO_ALBUM_NAME])
             {
                 return;
             }

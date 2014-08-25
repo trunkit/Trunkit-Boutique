@@ -12,7 +12,6 @@
 #import "UIImage+TKImageScale.h"
 #import "ALAssetsLibrary+TKSingleton.h"
 
-
 @interface PhotoEditorViewController ()
 
 @property (strong, nonatomic) PhotoAdjustViewController *photoAdjustController;
@@ -58,6 +57,7 @@
 
 - (IBAction)useButtonTapped:(id)sender
 {
+    [self.useButton setEnabled:NO];
     [self savePhotoAndContinue];
 }
 
@@ -71,49 +71,55 @@
     self.photo = nil;
 
     ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
-    [library writeImageToSavedPhotosAlbum:editedPhoto.CGImage orientation:(ALAssetOrientation)editedPhoto.imageOrientation
-                          completionBlock:^(NSURL *assetURL, NSError *error)
-     {
-         if (!error && assetURL)
-         {
-             if (![self.merchandiseItem.productPhotosTaken containsObject:assetURL])
-             {
-                 [self.merchandiseItem.productPhotosTaken addObject:assetURL];
-             }
-             
-             NSLog(@"IMAGE SAVED TO PHOTO ALBUM");
-             
-             if (_popToControllerOnAccept)
-             {
-                 [self.navigationController popToViewController:_popToControllerOnAccept animated:YES];
-             }
-             else
-             {
-                 [self performSegueWithIdentifier:@"PhotoEditorUsePhotoToPhotosSelectionSegueIdentifier" sender:self];
-             }
-         }
-         else
-         {
-             if (!assetURL)
-             {
-                 NSLog(@"ERROR: writeImage return a nil assetURL.");
-             }
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
-                                                             message:@"A system error occurred while trying to save your photo."
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"OK" otherButtonTitles:nil];
-             [alert show];
-             NSLog(@"Error saving asset: %@", error);
-
-         }
-         
-//         [library assetForURL:assetURL
-//                  resultBlock:^(ALAsset *asset) {
-//          }
-//                 failureBlock:^(NSError *error )
-//          {
-//          }];
-     }];
+    [library saveImage:editedPhoto
+               toAlbum:TK_PHOTO_ALBUM_NAME
+   withCompletionBlock:^(NSURL *assetURL, NSError *error) {
+       if (!error && assetURL)
+       {
+           if (![self.merchandiseItem.productPhotosTaken containsObject:assetURL])
+           {
+               [self.merchandiseItem.productPhotosTaken addObject:assetURL];
+           }
+           
+           NSLog(@"IMAGE SAVED TO PHOTO ALBUM");
+           
+           if (_popToControllerOnAccept)
+           {
+               [self.navigationController popToViewController:_popToControllerOnAccept animated:YES];
+           }
+           else
+           {
+               [self performSegueWithIdentifier:@"PhotoEditorUsePhotoToPhotosSelectionSegueIdentifier" sender:self];
+           }
+       }
+       else
+       {
+           if (!assetURL)
+           {
+               NSLog(@"ERROR: writeImage return a nil assetURL.");
+           }
+           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Photo"
+                                                           message:@"A system error occurred while trying to save your photo."
+                                                          delegate:nil
+                                                 cancelButtonTitle:@"OK" otherButtonTitles:nil];
+           [alert show];
+           NSLog(@"Error saving asset: %@", error);
+           
+       }
+   }];
+    
+    
+//    [library writeImageToSavedPhotosAlbum:editedPhoto.CGImage orientation:(ALAssetOrientation)editedPhoto.imageOrientation
+//                          completionBlock:^(NSURL *assetURL, NSError *error)
+//     {
+//         
+////         [library assetForURL:assetURL
+////                  resultBlock:^(ALAsset *asset) {
+////          }
+////                 failureBlock:^(NSError *error )
+////          {
+////          }];
+//     }];
 
 }
 
