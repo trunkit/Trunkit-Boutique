@@ -43,23 +43,31 @@
     {
         ALAsset *asset = (ALAsset *)_image;
         UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-        self.imageView.image = photo;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageView.image = photo;
+        });
     }
     else if ([_image isKindOfClass:[NSURL class]])
     {
         NSURL *url = (NSURL *)_image;
         if ([url.absoluteString hasPrefix:@"assets-library://asset"])
         {
-            ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
-            [library assetForURL:url
-                     resultBlock:^(ALAsset *asset) {
-                         UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-                         self.imageView.image = photo;
-                     }
-                    failureBlock:^(NSError *error )
-             {
-                 NSLog(@"ERROR %s: %@", __PRETTY_FUNCTION__, error);
-             }];
+            dispatch_queue_t queue = dispatch_queue_create("PHOTO_SLIDE_QUEUE", 0);
+            dispatch_async(queue, ^{
+                ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+                [library assetForURL:url
+                         resultBlock:^(ALAsset *asset) {
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                                 self.imageView.image = photo;
+                             });
+                         }
+                        failureBlock:^(NSError *error)
+                 {
+                     NSLog(@"ERROR %s: %@", __PRETTY_FUNCTION__, error);
+                 }];
+            });
+                           
         }
         else
         {

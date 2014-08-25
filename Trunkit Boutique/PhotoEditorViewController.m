@@ -11,6 +11,7 @@
 #import "PhotoSelectionViewController.h"
 #import "UIImage+TKImageScale.h"
 #import "ALAssetsLibrary+TKSingleton.h"
+#import "MBProgressHUD.h"
 
 @interface PhotoEditorViewController ()
 
@@ -63,6 +64,14 @@
 
 - (void)savePhotoAndContinue
 {
+    MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progressHUD];
+    
+    // Set determinate mode
+    progressHUD.mode = MBProgressHUDModeIndeterminate;
+    progressHUD.labelText = @"Saving Photo to Trunkit Album.";
+    [progressHUD show:YES];
+
     UIImage *editedPhoto = [self editedPhoto];
     
 
@@ -74,6 +83,8 @@
     [library saveImage:editedPhoto
                toAlbum:TK_PHOTO_ALBUM_NAME
    withCompletionBlock:^(NSURL *assetURL, NSError *error) {
+       [progressHUD hide:YES];
+       
        if (!error && assetURL)
        {
            if (![self.merchandiseItem.productPhotosTaken containsObject:assetURL])
