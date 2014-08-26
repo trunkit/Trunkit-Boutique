@@ -67,47 +67,40 @@
 
     if (_adjustMode == TKPhotoAdjustCropMode)
     {
-        UIImage *image = _image;
-//        if (_loadSliderValue != 0)
-//        {
-//            self.slider.value = _loadSliderValue;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self sliderDragged:self.slider];
-//            });
-//            image = [self filteredImage];
-//        }
-        [self loadCropControllerWithImage:image];
+        [self loadCropControllerWithImage:_image];
     }
     else
     {
-        GPUImageFilterGroup *group = [[GPUImageFilterGroup alloc] init];
-        GPUImageGammaFilter *theGammaFilter = [[GPUImageGammaFilter alloc] init];
-        GPUImageWhiteBalanceFilter *theWhiteBalanceFilter = [[GPUImageWhiteBalanceFilter alloc] init];
-        
-        [theGammaFilter setGamma:1.0f];
-        [theWhiteBalanceFilter setTemperature:5000];
-        
-        [group addFilter:theGammaFilter];
-        [group addFilter:theWhiteBalanceFilter];
-        
-        [theGammaFilter addTarget:theWhiteBalanceFilter];
-        
-        [group setInitialFilters:@[theGammaFilter]];
-        [group setTerminalFilter:theWhiteBalanceFilter];
-        
-        
-        self.filterGroup = group;
-        self.gammaFilter = theGammaFilter;
-        self.whiteBalanceFilter = theWhiteBalanceFilter;
-        
-        GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
-        [stillImageSource addTarget:self.filterGroup];
-        
-        self.imageSource = stillImageSource;
-        
-        [self.filterGroup addTarget:self.gpuImageView];
-        //    [self.filterGroup useNextFrameForImageCapture];
-        [self.imageSource processImage];
+        @autoreleasepool {
+            GPUImageFilterGroup *group = [[GPUImageFilterGroup alloc] init];
+            GPUImageGammaFilter *theGammaFilter = [[GPUImageGammaFilter alloc] init];
+            GPUImageWhiteBalanceFilter *theWhiteBalanceFilter = [[GPUImageWhiteBalanceFilter alloc] init];
+            
+            [theGammaFilter setGamma:1.0f];
+            [theWhiteBalanceFilter setTemperature:5000];
+            
+            [group addFilter:theGammaFilter];
+            [group addFilter:theWhiteBalanceFilter];
+            
+            [theGammaFilter addTarget:theWhiteBalanceFilter];
+            
+            [group setInitialFilters:@[theGammaFilter]];
+            [group setTerminalFilter:theWhiteBalanceFilter];
+            
+            
+            self.filterGroup = group;
+            self.gammaFilter = theGammaFilter;
+            self.whiteBalanceFilter = theWhiteBalanceFilter;
+            
+            GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
+            [stillImageSource addTarget:self.filterGroup];
+            
+            self.imageSource = stillImageSource;
+            
+            [self.filterGroup addTarget:self.gpuImageView];
+            //    [self.filterGroup useNextFrameForImageCapture];
+            [self.imageSource processImage];
+        }
     }
 }
 
@@ -191,11 +184,15 @@
         
         if (self.workImage && self.filterGroup)
         {
-            GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
-            [stillImageSource addTarget:self.filterGroup];
-            
-            self.imageSource = stillImageSource;
-            [self.imageSource processImage];
+            @autoreleasepool {
+                [self.imageSource removeAllTargets];
+                self.imageSource = nil;
+                GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:self.workImage];
+                [stillImageSource addTarget:self.filterGroup];
+                
+                self.imageSource = stillImageSource;
+                [self.imageSource processImage];
+            }
         }
     }
     else

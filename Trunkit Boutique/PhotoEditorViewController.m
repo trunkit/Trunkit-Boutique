@@ -202,10 +202,13 @@
         };
         [vc setAdjustMode:TKPhotoAdjustCropMode];
     }
-    if (self.photoAdjustController)
-    {
-        self.photoCropController.image = (TKImage *)[self.photoAdjustController filteredImageForImage:_photo];
-    }
+    
+    // FIXME - We're commenting this out for now because of the huge memory hog it is, which
+    // causes frequent crashes.
+//    if (self.photoAdjustController)
+//    {
+//        self.photoCropController.image = (TKImage *)[self.photoAdjustController filteredImageForImage:_photo];
+//    }
     [self.navigationController pushViewController:self.photoCropController animated:YES];
 }
 

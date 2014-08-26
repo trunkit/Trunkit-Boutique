@@ -64,7 +64,6 @@
 
     PhotoPagesViewController *pages = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
     pages.merchandiseItem = self.merchandiseItem;
-//    [self addChildViewController:pages];
     self.photoPagesViewController = pages;
     pages.view.frame = self.itemPhotosContainerView.bounds;
     [self.itemPhotosContainerView addSubview:pages.view];
