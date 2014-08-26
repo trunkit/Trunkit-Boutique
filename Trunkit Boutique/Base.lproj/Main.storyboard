@@ -1439,6 +1439,11 @@
                                     </view>
                                 </subviews>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZc-Fm-b6B">
+                                <rect key="frame" x="6" y="166" width="307" height="292"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFw-r6-dqy">
                                 <rect key="frame" x="6" y="466" width="308" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1524,8 +1529,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="eZc-Fm-b6B" secondAttribute="trailing" constant="7" id="7ZG-IS-4Y6"/>
                             <constraint firstAttribute="trailing" secondItem="aFw-r6-dqy" secondAttribute="trailing" constant="6" id="C5W-Yl-90g"/>
+                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="6" id="GPU-cY-riN"/>
                             <constraint firstItem="ZDd-jQ-Vyf" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="140" id="IfK-mj-NZ7"/>
+                            <constraint firstItem="aFw-r6-dqy" firstAttribute="top" secondItem="eZc-Fm-b6B" secondAttribute="bottom" constant="8" id="Mab-gm-93c"/>
                             <constraint firstAttribute="trailing" secondItem="Xm0-rb-8PF" secondAttribute="trailing" id="PDB-Bd-83s"/>
                             <constraint firstItem="HMR-6W-8Jx" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="20" id="Yh8-ow-FfO"/>
                             <constraint firstItem="aFw-r6-dqy" firstAttribute="top" secondItem="O37-lq-vL3" secondAttribute="bottom" constant="16" id="aos-Bp-U8O"/>
@@ -1536,6 +1544,7 @@
                             <constraint firstItem="aFw-r6-dqy" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="6" id="guC-7q-KKn"/>
                             <constraint firstItem="Xm0-rb-8PF" firstAttribute="top" secondItem="Jld-ye-Lqu" secondAttribute="top" id="hqx-oX-Mhu"/>
                             <constraint firstAttribute="trailing" secondItem="ZDd-jQ-Vyf" secondAttribute="trailing" constant="140" id="jNM-r0-oL8"/>
+                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="top" secondItem="Xm0-rb-8PF" secondAttribute="bottom" constant="102" id="kqP-Cd-0w6"/>
                             <constraint firstAttribute="trailing" secondItem="HMR-6W-8Jx" secondAttribute="trailing" constant="20" id="n0C-wq-nyG"/>
                             <constraint firstItem="KRY-3X-yfV" firstAttribute="top" secondItem="0oy-0u-gIg" secondAttribute="bottom" constant="1" id="qsi-ZQ-xzb"/>
                             <constraint firstItem="O37-lq-vL3" firstAttribute="top" secondItem="Xm0-rb-8PF" secondAttribute="bottom" id="s7a-PD-X05"/>
@@ -1551,6 +1560,7 @@
                         <outlet property="detailsContainerView" destination="fwv-Ri-GZK" id="UtX-so-9QW"/>
                         <outlet property="navigationTitleLabel" destination="dG4-6d-jTM" id="kCg-gA-GGq"/>
                         <outlet property="pageNumberLabel" destination="ZDd-jQ-Vyf" id="yRm-bF-mPN"/>
+                        <outlet property="photoPagesContainerView" destination="eZc-Fm-b6B" id="acY-2j-kGF"/>
                         <outlet property="scrollView" destination="O37-lq-vL3" id="sj8-Wf-j5C"/>
                         <outlet property="styleNumberTextField" destination="Kl6-WG-Dpg" id="Od1-JA-Tra"/>
                     </connections>
@@ -3334,6 +3344,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="MrD-fz-yKZ"/>
         <segue reference="hxb-tF-b6a"/>
-        <segue reference="6we-p8-kzk"/>
+        <segue reference="Qds-7n-ogt"/>
     </inferredMetricsTieBreakers>
 </document>

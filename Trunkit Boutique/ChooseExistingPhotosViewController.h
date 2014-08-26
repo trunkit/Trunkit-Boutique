@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "SupplyAnItemPageViewController.h"
+#import "PhotoPagesViewController.h"
 
 @interface ChooseExistingPhotosViewController : SupplyAnItemPageViewController
 
 @property (strong, nonatomic) IBOutlet UITextField *chooseBrandTextField;
 @property (strong, nonatomic) IBOutlet UITextField *styleNumberTextField;
+@property (strong, nonatomic) IBOutlet UIView *photoPagesContainerView;
+
+@property (strong, nonatomic) PhotoPagesViewController *photoPagesController;
 
 @end

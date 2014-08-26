@@ -33,7 +33,14 @@
 
 - (void)setImage:(id)image
 {
-    _image = image;
+    if ([image isKindOfClass:[NSString class]])
+    {
+        _image = [NSURL URLWithString:image];
+    }
+    else
+    {
+        _image = image;
+    }
     [self setImageOnImageView];
 }
 
