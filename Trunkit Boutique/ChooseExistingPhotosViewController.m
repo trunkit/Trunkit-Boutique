@@ -82,7 +82,7 @@
 
 - (NSString *)navigationItemTitle
 {
-    return @"Choose Existing Photos";
+    return @"Existing Photos";
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

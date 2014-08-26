@@ -1404,43 +1404,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O37-lq-vL3">
-                                <rect key="frame" x="0.0" y="64" width="320" height="386"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fwv-Ri-GZK">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="386"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Choose Brand" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Obm-O3-cFK">
-                                                <rect key="frame" x="6" y="8" width="308" height="40"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="zkJ-Qk-07D" id="Nfp-2R-hRk"/>
-                                                </connections>
-                                            </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Style Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kl6-WG-Dpg">
-                                                <rect key="frame" x="6" y="56" width="308" height="40"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="zkJ-Qk-07D" id="gNV-fs-MvB"/>
-                                                </connections>
-                                            </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TextFieldAutoCompleteIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="0uC-p8-Fp5">
-                                                <rect key="frame" x="280" y="22" width="20" height="12"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
-                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZc-Fm-b6B">
-                                <rect key="frame" x="6" y="166" width="307" height="292"/>
+                                <rect key="frame" x="46" y="69" width="227" height="345"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -1529,40 +1494,32 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="eZc-Fm-b6B" secondAttribute="trailing" constant="7" id="7ZG-IS-4Y6"/>
+                            <constraint firstAttribute="trailing" secondItem="eZc-Fm-b6B" secondAttribute="trailing" constant="47" id="7ZG-IS-4Y6"/>
                             <constraint firstAttribute="trailing" secondItem="aFw-r6-dqy" secondAttribute="trailing" constant="6" id="C5W-Yl-90g"/>
-                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="6" id="GPU-cY-riN"/>
+                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="46" id="GPU-cY-riN"/>
                             <constraint firstItem="ZDd-jQ-Vyf" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="140" id="IfK-mj-NZ7"/>
-                            <constraint firstItem="aFw-r6-dqy" firstAttribute="top" secondItem="eZc-Fm-b6B" secondAttribute="bottom" constant="8" id="Mab-gm-93c"/>
+                            <constraint firstItem="aFw-r6-dqy" firstAttribute="top" secondItem="eZc-Fm-b6B" secondAttribute="bottom" constant="52" id="Mab-gm-93c"/>
                             <constraint firstAttribute="trailing" secondItem="Xm0-rb-8PF" secondAttribute="trailing" id="PDB-Bd-83s"/>
                             <constraint firstItem="HMR-6W-8Jx" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="20" id="Yh8-ow-FfO"/>
-                            <constraint firstItem="aFw-r6-dqy" firstAttribute="top" secondItem="O37-lq-vL3" secondAttribute="bottom" constant="16" id="aos-Bp-U8O"/>
                             <constraint firstItem="Xm0-rb-8PF" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" id="bde-J8-xAD"/>
-                            <constraint firstAttribute="trailing" secondItem="O37-lq-vL3" secondAttribute="trailing" id="c93-da-bHE"/>
                             <constraint firstItem="k3t-an-5Jm" firstAttribute="top" secondItem="ZDd-jQ-Vyf" secondAttribute="bottom" constant="8" id="fwG-Ue-OhB"/>
                             <constraint firstItem="KRY-3X-yfV" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="6" id="g7M-O1-WCA"/>
                             <constraint firstItem="aFw-r6-dqy" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="6" id="guC-7q-KKn"/>
                             <constraint firstItem="Xm0-rb-8PF" firstAttribute="top" secondItem="Jld-ye-Lqu" secondAttribute="top" id="hqx-oX-Mhu"/>
                             <constraint firstAttribute="trailing" secondItem="ZDd-jQ-Vyf" secondAttribute="trailing" constant="140" id="jNM-r0-oL8"/>
-                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="top" secondItem="Xm0-rb-8PF" secondAttribute="bottom" constant="102" id="kqP-Cd-0w6"/>
+                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="top" secondItem="Xm0-rb-8PF" secondAttribute="bottom" constant="5" id="kqP-Cd-0w6"/>
                             <constraint firstAttribute="trailing" secondItem="HMR-6W-8Jx" secondAttribute="trailing" constant="20" id="n0C-wq-nyG"/>
                             <constraint firstItem="KRY-3X-yfV" firstAttribute="top" secondItem="0oy-0u-gIg" secondAttribute="bottom" constant="1" id="qsi-ZQ-xzb"/>
-                            <constraint firstItem="O37-lq-vL3" firstAttribute="top" secondItem="Xm0-rb-8PF" secondAttribute="bottom" id="s7a-PD-X05"/>
                             <constraint firstItem="ZDd-jQ-Vyf" firstAttribute="top" secondItem="HMR-6W-8Jx" secondAttribute="bottom" constant="7" id="sHD-3Z-sJF"/>
                             <constraint firstItem="HMR-6W-8Jx" firstAttribute="top" secondItem="aFw-r6-dqy" secondAttribute="bottom" constant="19" id="uaA-3u-JC4"/>
-                            <constraint firstItem="O37-lq-vL3" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" id="yar-yN-c9f"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Choose Existing Photos" id="wFm-cL-d7P"/>
                     <connections>
-                        <outlet property="chooseBrandTextField" destination="Obm-O3-cFK" id="ilP-PL-Itf"/>
                         <outlet property="continueButton" destination="aFw-r6-dqy" id="fcl-S8-Gaf"/>
-                        <outlet property="detailsContainerView" destination="fwv-Ri-GZK" id="UtX-so-9QW"/>
                         <outlet property="navigationTitleLabel" destination="dG4-6d-jTM" id="kCg-gA-GGq"/>
                         <outlet property="pageNumberLabel" destination="ZDd-jQ-Vyf" id="yRm-bF-mPN"/>
                         <outlet property="photoPagesContainerView" destination="eZc-Fm-b6B" id="acY-2j-kGF"/>
-                        <outlet property="scrollView" destination="O37-lq-vL3" id="sj8-Wf-j5C"/>
-                        <outlet property="styleNumberTextField" destination="Kl6-WG-Dpg" id="Od1-JA-Tra"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZWF-yv-a6m" userLabel="First Responder" sceneMemberID="firstResponder"/>
