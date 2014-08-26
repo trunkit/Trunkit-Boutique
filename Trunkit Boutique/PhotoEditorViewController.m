@@ -43,8 +43,6 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"CONTROLLERS = %@", self.navigationController.viewControllers);
-    
     [self applyThemeToBlackButton:self.retakeButton withFontSize:14.0];
     [self applyThemeToBlackButton:self.useButton withFontSize:14.0];
     self.imageView.image = self.photo;

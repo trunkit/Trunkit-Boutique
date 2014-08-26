@@ -147,14 +147,18 @@
                             [self.photos removeObject:aSessionPhoto];
                             [self.photos insertObject:aSessionPhoto atIndex:index];
                             
-                            // Automatically select the last photo that was just taken
-                            if (index == sessionPhotos.count - 1)
+                            if (![_selectedAssets containsObject:aSessionPhoto])
                             {
-                                if (![_selectedAssets containsObject:aSessionPhoto])
-                                {
-                                    [self setPhoto:aSessionPhoto selected:YES];
-                                }
+                                [self setPhoto:aSessionPhoto selected:YES];
                             }
+//                            // Automatically select the last photo that was just taken
+//                            if (index == sessionPhotos.count - 1)
+//                            {
+//                                if (![_selectedAssets containsObject:aSessionPhoto])
+//                                {
+//                                    [self setPhoto:aSessionPhoto selected:YES];
+//                                }
+//                            }
                         }
                         else
                         {
