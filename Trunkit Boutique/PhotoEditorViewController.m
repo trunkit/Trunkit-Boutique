@@ -93,7 +93,7 @@
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 if (asset) // (![self.merchandiseItem.productPhotosTaken containsObject:asset])
                                 {
-                                    [self.merchandiseItem.productPhotosTaken addObject:asset];
+                                    [self.merchandiseItem.productPhotos addObject:asset];
                                 }
                                 
                                 NSLog(@"IMAGE LOADED FROM PHOTO ALBUM");

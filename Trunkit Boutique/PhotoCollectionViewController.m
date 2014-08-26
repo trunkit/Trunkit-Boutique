@@ -106,8 +106,7 @@
                 }
                 else
                 {
-                    for (ALAsset *anAsset in tmpAssets)
-                    {
+                    [tmpAssets enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *anAsset, NSUInteger idx, BOOL *stop) {
                         NSLog(@"URL = %@", anAsset.defaultRepresentation.url);
                         
                         NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"defaultRepresentation.url == %@", anAsset.defaultRepresentation.url]];
@@ -116,7 +115,10 @@
                         {
                             [self.photos addObject:anAsset];
                         }
-                    }
+                    }];
+//                    for (ALAsset *anAsset in tmpAssets)
+//                    {
+//                    }
                     
                     // Put the session photos up front
                     //
@@ -151,14 +153,6 @@
                             {
                                 [self setPhoto:aSessionPhoto selected:YES];
                             }
-//                            // Automatically select the last photo that was just taken
-//                            if (index == sessionPhotos.count - 1)
-//                            {
-//                                if (![_selectedAssets containsObject:aSessionPhoto])
-//                                {
-//                                    [self setPhoto:aSessionPhoto selected:YES];
-//                                }
-//                            }
                         }
                         else
                         {

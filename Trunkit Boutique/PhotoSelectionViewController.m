@@ -57,7 +57,7 @@
     // FIXME: Add persisted selected photos
 
     //FIXME Shitty property name,
-    collection.sessionPhotos = self.merchandiseItem.productPhotosTaken;
+    collection.sessionPhotos = self.merchandiseItem.productPhotos;
     
     
     
@@ -108,12 +108,14 @@
 {
 //    [self.photoScrollViewController addPhoto:item];
     [self.photoPagesViewController addPhoto:item];
+    self.merchandiseItem.productPhotos = [self.photosCollectionController.selectedAssets mutableCopy];
 }
 
 - (void)photoCollectionViewController:(PhotoCollectionViewController *)controller didDeSelectItem:(id)item
 {
 //    [self.photoScrollViewController removePhoto:item];
     [self.photoPagesViewController removePhoto:item];
+    self.merchandiseItem.productPhotos = [self.photosCollectionController.selectedAssets mutableCopy];
 }
 
 #pragma mark - Navigation
@@ -146,6 +148,7 @@
 
 - (void)takeActionWithBackController:(UIViewController *)viewController
 {
+    self.merchandiseItem.productPhotos = [self.photosCollectionController.selectedAssets mutableCopy];
     CameraViewController *cameraVC = nil;
     if (!viewController)
     {

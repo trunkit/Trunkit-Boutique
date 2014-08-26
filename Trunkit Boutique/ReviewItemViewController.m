@@ -56,20 +56,30 @@
     self.materialsTextField.text = self.merchandiseItem.materialsDescription;
     [self formatCurrencyField:self.priceTextField];
     
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    PhotoPagesViewController *vc2 = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
-    vc2.merchandiseItem = self.merchandiseItem;
-//    [self addChildViewController:vc2];
-    self.photoPagesViewController = vc2;
-    [vc2 setUsesMerchandiseProductPhotos:YES];
-    vc2.view.frame = self.itemPhotosContainerView.bounds;
-    [self.itemPhotosContainerView addSubview:vc2.view];
-
+    [self setupPhotoPages];
 }
 
 - (NSString *)navigationItemTitle
 {
     return @"Review Item";
+}
+
+- (void)setupPhotoPages
+{
+    [self.photoPagesViewController.view removeFromSuperview];
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PhotoPagesViewController *photoPages = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
+    photoPages.merchandiseItem = self.merchandiseItem;
+    self.photoPagesViewController = photoPages;
+    [photoPages setUsesMerchandiseProductPhotos:YES];
+    photoPages.view.frame = self.itemPhotosContainerView.bounds;
+    [self.itemPhotosContainerView addSubview:photoPages.view];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setupPhotoPages];
 }
 
 //- (void)viewDidLayoutSubviews
