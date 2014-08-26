@@ -87,21 +87,36 @@
        
        if (!error && assetURL)
        {
-           if (![self.merchandiseItem.productPhotosTaken containsObject:assetURL])
-           {
-               [self.merchandiseItem.productPhotosTaken addObject:assetURL];
-           }
+           dispatch_queue_t queue = dispatch_queue_create("PHOTO_EDIT_LOAD_SAVED_ASSET", 0);
+           dispatch_async(queue, ^{
+               ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+               [library assetForURL:assetURL
+                        resultBlock:^(ALAsset *asset) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                if (asset) // (![self.merchandiseItem.productPhotosTaken containsObject:asset])
+                                {
+                                    [self.merchandiseItem.productPhotosTaken addObject:asset];
+                                }
+                                
+                                NSLog(@"IMAGE LOADED FROM PHOTO ALBUM");
+                                
+                                if (_popToControllerOnAccept)
+                                {
+                                    [self.navigationController popToViewController:_popToControllerOnAccept animated:YES];
+                                }
+                                else
+                                {
+                                    [self performSegueWithIdentifier:@"PhotoEditorUsePhotoToPhotosSelectionSegueIdentifier" sender:self];
+                                }
+                            });
+                        }
+                       failureBlock:^(NSError *error)
+                {
+                    NSLog(@"ERROR %s: %@", __PRETTY_FUNCTION__, error);
+                }];
+           });
+
            
-           NSLog(@"IMAGE SAVED TO PHOTO ALBUM");
-           
-           if (_popToControllerOnAccept)
-           {
-               [self.navigationController popToViewController:_popToControllerOnAccept animated:YES];
-           }
-           else
-           {
-               [self performSegueWithIdentifier:@"PhotoEditorUsePhotoToPhotosSelectionSegueIdentifier" sender:self];
-           }
        }
        else
        {

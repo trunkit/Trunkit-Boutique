@@ -78,8 +78,8 @@
 - (void)setSessionPhotos:(NSMutableArray *)sessionPhotos
 {
     _sessionPhotos = sessionPhotos;
-//    self.photos = [_sessionPhotos mutableCopy];
-    self.photos = [@[] mutableCopy];
+    self.photos = [_sessionPhotos mutableCopy];
+//    self.photos = [@[] mutableCopy];
     [self.collectionView reloadData];
     
     __block NSMutableArray *tmpAssets = [@[] mutableCopy];
@@ -104,61 +104,70 @@
                     [tmpAssets addObject:result];
                     NSLog(@"Asset loaded %@", result);
                 }
-            }];
-            
-            
-            
-            for (ALAsset *anAsset in tmpAssets)
-            {
-                NSLog(@"URL = %@", anAsset.defaultRepresentation.url);
-                
-                NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"defaultRepresentation.url == %@", anAsset.defaultRepresentation.url]];
-                
-                if (!filtered.count)
-                {
-                    [self.photos addObject:anAsset];
-                }
-            }
-            
-            // Put the session photos up front
-            //
-            NSLog(@"SESSION PHOTOS = %@", sessionPhotos);
-            for (NSInteger index = 0; index < sessionPhotos.count; index++)
-            {
-                NSURL *url = [sessionPhotos objectAtIndex:index];
-                NSInteger currentIndex = NSNotFound;
-                
-                NSIndexSet *indexSet = [_photos indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                    return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:url.absoluteString];
-                }];
-                
-                currentIndex = indexSet.firstIndex;
-                
-                if (currentIndex != NSNotFound)
-                {
-                    ALAsset *aSessionPhoto = [_photos objectAtIndex:currentIndex];
-                    [self.photos removeObject:aSessionPhoto];
-                    [self.photos insertObject:aSessionPhoto atIndex:index];
-                    
-                    // Automatically select the last photo that was just taken
-                    if (index == sessionPhotos.count - 1)
-                    {
-                        if (![_selectedAssets containsObject:aSessionPhoto])
-                        {
-                            [self setPhoto:aSessionPhoto selected:YES];
-                        }
-                    }
-                }
                 else
                 {
-                    NSLog(@"WARNING: An asset was not loaded for a session photo with URL %@", url);
-                    continue;
+                    for (ALAsset *anAsset in tmpAssets)
+                    {
+                        NSLog(@"URL = %@", anAsset.defaultRepresentation.url);
+                        
+                        NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"defaultRepresentation.url == %@", anAsset.defaultRepresentation.url]];
+                        
+                        if (!filtered.count)
+                        {
+                            [self.photos addObject:anAsset];
+                        }
+                    }
+                    
+                    // Put the session photos up front
+                    //
+                    NSLog(@"SESSION PHOTOS = %@", sessionPhotos);
+                    for (NSInteger index = 0; index < sessionPhotos.count; index++)
+                    {
+                        NSURL *url = nil;
+                        id image = [sessionPhotos objectAtIndex:index];
+                        if ([image isKindOfClass:[ALAsset class]])
+                        {
+                            url = ((ALAsset *) image).defaultRepresentation.url;
+                        }
+                        else
+                        {
+                            url = image;
+                        }
+                        NSInteger currentIndex = NSNotFound;
+                        
+                        NSIndexSet *indexSet = [_photos indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                            return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:url.absoluteString];
+                        }];
+                        
+                        currentIndex = indexSet.firstIndex;
+                        
+                        if (currentIndex != NSNotFound)
+                        {
+                            ALAsset *aSessionPhoto = [_photos objectAtIndex:currentIndex];
+                            [self.photos removeObject:aSessionPhoto];
+                            [self.photos insertObject:aSessionPhoto atIndex:index];
+                            
+                            // Automatically select the last photo that was just taken
+                            if (index == sessionPhotos.count - 1)
+                            {
+                                if (![_selectedAssets containsObject:aSessionPhoto])
+                                {
+                                    [self setPhoto:aSessionPhoto selected:YES];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            NSLog(@"WARNING: An asset was not loaded for a session photo with URL %@", url);
+                            continue;
+                        }
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
+                        [self.collectionView reloadData];
+                    });
                 }
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                [self.collectionView reloadData];
-            });
+            }];
         }
                                    failureBlock:^(NSError *error) {
                                        NSLog(@"Error loading images %@", error);

@@ -93,19 +93,14 @@
         initialVC = [[PhotoSlideViewController alloc] init];
     }
 
-//    __weak typeof(self) weakSelf = self;
-    
-    [self setViewControllers:@[initialVC]
-                   direction:UIPageViewControllerNavigationDirectionForward //|UIPageViewControllerNavigationDirectionReverse
-                    animated:NO
-                  completion:^(BOOL finished) {
-//                      __strong typeof(weakSelf) strongSelf = weakSelf;
-//                      if (strongSelf) {
-//                          strongSelf.dataSource = nil;
-//                          strongSelf.dataSource = strongSelf;
-//                      }
-                  }];
-//    self.dataSource = self;
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setViewControllers:@[initialVC]
+                       direction:UIPageViewControllerNavigationDirectionForward //|UIPageViewControllerNavigationDirectionReverse
+                        animated:NO
+                      completion:^(BOOL finished) {
+                      }];
+    });
 
 }
 

@@ -41,9 +41,9 @@
 {
     if ([_image isKindOfClass:[ALAsset class]])
     {
-        ALAsset *asset = (ALAsset *)_image;
-        UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
         dispatch_async(dispatch_get_main_queue(), ^{
+            ALAsset *asset = (ALAsset *)_image;
+            UIImage *photo = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
             self.imageView.image = photo;
         });
     }
