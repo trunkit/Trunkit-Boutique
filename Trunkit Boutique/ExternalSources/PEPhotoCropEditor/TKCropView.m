@@ -261,7 +261,22 @@ static const CGFloat MarginLeft = 0.0f;
 
 - (void)setCropAspectRatio:(CGFloat)aspectRatio andCenter:(BOOL)center
 {
+    [self setCropAspectRatio:aspectRatio andCenter:center zoom:YES];
+}
+
+- (void)setCropAspectRatio:(CGFloat)aspectRatio andCenter:(BOOL)center zoom:(BOOL)zoomFlag
+{
     CGRect cropRect = self.scrollView.frame;
+//    NSLog(@"SCROLL FRAME (%f, %f, %f, %f) - SCALE = ", cropRect.origin.x, cropRect.origin.y, cropRect.size.width, cropRect.size.height);
+//    NSLog(@"IMAGE FRAME (%f, %f, %f, %f) - SCALE = ", (self.imageView.bounds).origin.x, (self.imageView.bounds).origin.y, (self.imageView.bounds).size.width, (self.imageView.bounds).size.height);
+//
+//    
+//    NSLog(@"zoomedCropRect FRAME (%f, %f, %f, %f) - SCALE = ", self.zoomedCropRect.origin.x, self.zoomedCropRect.origin.y, self.zoomedCropRect.size.width, self.zoomedCropRect.size.height);
+////    NSLog(@"imageCropRect FRAME (%f, %f, %f, %f) - SCALE = ", self.imageCropRect.origin.x, self.imageCropRect.origin.y, self.imageCropRect.size.width, self.imageCropRect.size.height);
+//    
+//    NSLog(@"IMAGE SIZE = (%f, %f)", self.image.size.width, self.image.size.height);
+
+    
     CGFloat width = CGRectGetWidth(cropRect);
     CGFloat height = CGRectGetHeight(cropRect);
     if (aspectRatio <= 1.0f) {
@@ -278,7 +293,11 @@ static const CGFloat MarginLeft = 0.0f;
         }
     }
     cropRect.size = CGSizeMake(width, height);
-    [self zoomToCropRect:cropRect andCenter:center];
+    
+    
+    // Quick hack to still zoom if there's room on the screen
+    BOOL zoom = (!zoomFlag) ? (self.zoomedCropRect.size.height == self.image.size.height) : zoomFlag;
+    [self zoomToCropRect:cropRect andCenter:center zoom:zoom];
 }
 
 - (void)setCropAspectRatio:(CGFloat)aspectRatio
@@ -484,16 +503,22 @@ static const CGFloat MarginLeft = 0.0f;
     [self zoomToCropRect:self.cropRectView.frame];
 }
 
-- (void)zoomToCropRect:(CGRect)toRect andCenter:(BOOL)center
+- (void)zoomToCropRect:(CGRect)toRect andCenter:(BOOL)center zoom:(BOOL)zoomFlag
 {
     if (CGRectEqualToRect(self.scrollView.frame, toRect)) {
         return;
     }
-    
+
+
     CGFloat width = CGRectGetWidth(toRect);
     CGFloat height = CGRectGetHeight(toRect);
     
     CGFloat scale = MIN(CGRectGetWidth(self.editingRect) / width, CGRectGetHeight(self.editingRect) / height);
+    if (!zoomFlag)
+    {
+        scale = 1;
+    }
+//    NSLog(@"ZOOMING TO (%f, %f, %f, %f) - SCALE = %f", toRect.origin.x, toRect.origin.y, toRect.size.width, toRect.size.height, scale);
     
     CGFloat scaledWidth = width * scale;
     CGFloat scaledHeight = height * scale;
@@ -522,7 +547,7 @@ static const CGFloat MarginLeft = 0.0f;
 
 - (void)zoomToCropRect:(CGRect)toRect
 {
-    [self zoomToCropRect:toRect andCenter:NO];
+    [self zoomToCropRect:toRect andCenter:NO zoom:YES];
 }
 
 #pragma mark -
