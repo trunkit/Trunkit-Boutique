@@ -1405,7 +1405,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZc-Fm-b6B">
-                                <rect key="frame" x="46" y="69" width="227" height="345"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -1494,20 +1494,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="eZc-Fm-b6B" secondAttribute="trailing" constant="47" id="7ZG-IS-4Y6"/>
                             <constraint firstAttribute="trailing" secondItem="aFw-r6-dqy" secondAttribute="trailing" constant="6" id="C5W-Yl-90g"/>
-                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="46" id="GPU-cY-riN"/>
+                            <constraint firstAttribute="trailing" secondItem="eZc-Fm-b6B" secondAttribute="trailing" id="I1A-Rb-DmU"/>
                             <constraint firstItem="ZDd-jQ-Vyf" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="140" id="IfK-mj-NZ7"/>
-                            <constraint firstItem="aFw-r6-dqy" firstAttribute="top" secondItem="eZc-Fm-b6B" secondAttribute="bottom" constant="52" id="Mab-gm-93c"/>
                             <constraint firstAttribute="trailing" secondItem="Xm0-rb-8PF" secondAttribute="trailing" id="PDB-Bd-83s"/>
                             <constraint firstItem="HMR-6W-8Jx" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="20" id="Yh8-ow-FfO"/>
+                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" id="Zhx-e1-ZGA"/>
                             <constraint firstItem="Xm0-rb-8PF" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" id="bde-J8-xAD"/>
+                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="top" secondItem="Xm0-rb-8PF" secondAttribute="bottom" id="dQJ-kC-nhZ"/>
+                            <constraint firstItem="aFw-r6-dqy" firstAttribute="top" secondItem="eZc-Fm-b6B" secondAttribute="bottom" constant="2" id="fJw-5K-XmS"/>
                             <constraint firstItem="k3t-an-5Jm" firstAttribute="top" secondItem="ZDd-jQ-Vyf" secondAttribute="bottom" constant="8" id="fwG-Ue-OhB"/>
                             <constraint firstItem="KRY-3X-yfV" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="6" id="g7M-O1-WCA"/>
                             <constraint firstItem="aFw-r6-dqy" firstAttribute="leading" secondItem="Jld-ye-Lqu" secondAttribute="leading" constant="6" id="guC-7q-KKn"/>
                             <constraint firstItem="Xm0-rb-8PF" firstAttribute="top" secondItem="Jld-ye-Lqu" secondAttribute="top" id="hqx-oX-Mhu"/>
                             <constraint firstAttribute="trailing" secondItem="ZDd-jQ-Vyf" secondAttribute="trailing" constant="140" id="jNM-r0-oL8"/>
-                            <constraint firstItem="eZc-Fm-b6B" firstAttribute="top" secondItem="Xm0-rb-8PF" secondAttribute="bottom" constant="5" id="kqP-Cd-0w6"/>
                             <constraint firstAttribute="trailing" secondItem="HMR-6W-8Jx" secondAttribute="trailing" constant="20" id="n0C-wq-nyG"/>
                             <constraint firstItem="KRY-3X-yfV" firstAttribute="top" secondItem="0oy-0u-gIg" secondAttribute="bottom" constant="1" id="qsi-ZQ-xzb"/>
                             <constraint firstItem="ZDd-jQ-Vyf" firstAttribute="top" secondItem="HMR-6W-8Jx" secondAttribute="bottom" constant="7" id="sHD-3Z-sJF"/>
