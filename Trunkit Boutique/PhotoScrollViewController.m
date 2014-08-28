@@ -99,7 +99,7 @@
     }
     
     
-    cell.image = image;
+//    cell.image = image;
     
 //    if (cell.asset != asset)
 //    {

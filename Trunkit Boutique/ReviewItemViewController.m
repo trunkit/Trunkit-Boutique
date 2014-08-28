@@ -22,7 +22,17 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _updateMode = NO;
         // Custom initialization
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _updateMode = NO;
     }
     return self;
 }
@@ -30,6 +40,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (_updateMode)
+    {
+        [self.pageNumberLabel setHidden:YES];
+        [self.pageProgressView setHidden:YES];
+    }
 
     [self applyThemeToBlackButton:self.supplyButton];
     [self applyThemeToWhiteButton:self.editPhotosButton];

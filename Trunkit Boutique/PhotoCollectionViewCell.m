@@ -38,22 +38,13 @@
     self.selectionOrderLabel.font = countFont;
 }
 
-- (void)setImage:(NSURL *)image
+- (void)setImage:(UIImage *)image
 {
     _image = image;
-    self.photoImageView.image = nil;
+    self.photoImageView.image = image;
     
     UIFont *countFont = [UIFont fontWithName:@"BebasNeue" size:15.0];
     self.selectionOrderLabel.font = countFont;
-    
-//    ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
-//    [library assetForURL:_image
-//             resultBlock:^(ALAsset *asset) {
-//                 self.asset = asset;
-//             }
-//            failureBlock:^(NSError *error )
-//     {
-//     }];
 }
 
 - (void)setSelectionOrder:(NSInteger)selectionOrder

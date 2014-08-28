@@ -10,6 +10,21 @@
 #import "ALAssetsLibrary+TKSingleton.h"
 #import "UIImage+TKImageScale.h"
 
+@interface ALAsset (ALAsset_TKExtensions)
+
+- (NSString *)absoluteString;
+
+@end
+
+@implementation ALAsset (ALAsset_TKExtensions)
+
+- (NSString *)absoluteString
+{
+    return self.defaultRepresentation.url.absoluteString;
+}
+
+@end
+
 
 
 @interface PhotoCollectionViewController ()
@@ -109,7 +124,7 @@
                     [tmpAssets enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *anAsset, NSUInteger idx, BOOL *stop) {
                         NSLog(@"URL = %@", anAsset.defaultRepresentation.url);
                         
-                        NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"defaultRepresentation.url == %@", anAsset.defaultRepresentation.url]];
+                        NSArray * filtered = [_photos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"absoluteString == %@", anAsset.defaultRepresentation.url.absoluteString]];
                         
                         if (!filtered.count)
                         {
@@ -138,7 +153,7 @@
                         NSInteger currentIndex = NSNotFound;
                         
                         NSIndexSet *indexSet = [_photos indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                            return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:url.absoluteString];
+                            return [((ALAsset *)obj).absoluteString isEqualToString:url.absoluteString];
                         }];
                         
                         currentIndex = indexSet.firstIndex;
@@ -186,19 +201,6 @@
     [self.collectionView reloadData];
 }
 
-- (void)selectAllPhotos
-{
-    //FIXME DISABLED FOR NOW - WIP
-    //
-    
-//    self.selectedAssets = [self.sessionPhotos mutableCopy];
-//    if ([_delegate respondsToSelector:@selector(photoCollectionViewController:didChangeSelection:)])
-//    {
-//        [_delegate photoCollectionViewController:self didChangeSelection:self.selectedAssets];
-//    }
-
-}
-
 - (void)setPhoto:(ALAsset *)photo selected:(BOOL)selected
 {
     if (selected)
@@ -228,38 +230,114 @@
     return self.photos.count;
 }
 
-- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PhotoCollectionViewCell *cell = (PhotoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCollectionViewCellIdentifier" forIndexPath:indexPath];
     
     id photo = self.photos[indexPath.row];
-    ALAsset *asset = nil;
+    
+    // FIXME: MAJOR code redundancy here with PhotoSlideViewController, need
+    // to make this clean!!!
+    //
+    
+    if ([photo isKindOfClass:[NSString class]])
+    {
+        photo = [NSURL URLWithString:photo];
+    }
     
     if ([photo isKindOfClass:[ALAsset class]])
     {
-        asset = (ALAsset *)photo;
-        [cell setAsset:asset];
+        [cell setAsset:(ALAsset *)photo];
     }
     else if ([photo isKindOfClass:[NSURL class]])
     {
-        asset = [self.cachedImages valueForKey:[photo absoluteString]];
-        if (!asset)
+        
+        id imageOrAsset = [self.cachedImages valueForKey:[photo absoluteString]];
+        if (imageOrAsset)
         {
-            ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
-            [library assetForURL:photo
-                     resultBlock:^(ALAsset *anAsset) {
-                         [cell setAsset:anAsset];
-                         [self.cachedImages setObject:anAsset forKey:[photo absoluteString]];
-                     }
-                    failureBlock:^(NSError *error )
-             {
-             }];
-
+            if ([imageOrAsset isKindOfClass:[ALAsset class]])
+            {
+                [cell setAsset:(ALAsset *) imageOrAsset];
+            }
+            else if ([imageOrAsset isKindOfClass:[UIImage class]])
+            {
+                [cell setImage:(UIImage *)imageOrAsset];
+            }
         }
+        else
+        {
+            NSURL *url = (NSURL *)photo;
+            if ([url.absoluteString hasPrefix:@"assets-library://asset"])
+            {
+                dispatch_queue_t queue = dispatch_queue_create("PHOTO_SLIDE_QUEUE", 0);
+                dispatch_async(queue, ^{
+                    ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+                    [library assetForURL:url
+                             resultBlock:^(ALAsset *asset) {
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     [cell setAsset:asset];
+                                     [self.cachedImages setObject:asset forKey:[photo absoluteString]];
+                                 });
+                             }
+                            failureBlock:^(NSError *error)
+                     {
+                         NSLog(@"ERROR %s: %@", __PRETTY_FUNCTION__, error);
+                     }];
+                });
+                
+            }
+            else
+            {
+                NSString *identifier = [NSString stringWithFormat:@"%@-%@", self.description, url.absoluteString];
+                char const * s = [identifier  UTF8String];
+                
+                dispatch_queue_t queue = dispatch_queue_create(s, 0);
+                dispatch_async(queue, ^{
+                    UIImage *image = nil;
+                    NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+                    image = [[UIImage alloc] initWithData:data];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([collectionView indexPathForCell:cell].row == indexPath.row)
+                        {
+                            [cell setImage:image];
+                            [self.cachedImages setObject:image forKey:[photo absoluteString]];
+                        }
+                    });
+                });
+                
+            }
+        }
+        
+
+//    else if ([photo isKindOfClass:[NSURL class]])
+//    {
+//        asset = [self.cachedImages valueForKey:[photo absoluteString]];
+//        if (!asset)
+//        {
+//            ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
+//            [library assetForURL:photo
+//                     resultBlock:^(ALAsset *anAsset) {
+//                         [cell setAsset:anAsset];
+//                         [self.cachedImages setObject:anAsset forKey:[photo absoluteString]];
+//                     }
+//                    failureBlock:^(NSError *error )
+//             {
+//             }];
+//
+//        }
     }
     
     NSIndexSet *indexSet = [_selectedAssets indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        return [((ALAsset *)obj).defaultRepresentation.url.absoluteString isEqualToString:asset.defaultRepresentation.url.absoluteString];
+        if ([photo isKindOfClass:[ALAsset class]])
+        {
+            return [((ALAsset *)obj).absoluteString isEqualToString:((ALAsset *)photo).defaultRepresentation.url.absoluteString];
+        }
+        else if ([photo isKindOfClass:[NSURL class]])
+        {
+            return [((ALAsset *)obj).absoluteString isEqualToString:((NSURL *)photo).absoluteString];
+        }
+        return NO;
     }];
     
     NSUInteger selectionIndex = indexSet.firstIndex;

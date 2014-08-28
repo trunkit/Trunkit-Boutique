@@ -12,7 +12,7 @@
 @interface PhotoCollectionViewCell : UICollectionViewCell
 
 @property(nonatomic, strong) ALAsset *asset;
-@property (strong, nonatomic) NSURL *image;
+@property (strong, nonatomic) UIImage *image;
 @property(readwrite, nonatomic) NSInteger selectionOrder;
 @property(strong, nonatomic) NSString *imageFormatIdentifier;
 

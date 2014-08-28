@@ -26,6 +26,9 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *editPhotosButton;
 @property (strong, nonatomic) IBOutlet UIButton *editSizesButton;
+@property (strong, nonatomic) IBOutlet UIProgressView *pageProgressView;
+
+@property (readwrite, nonatomic) BOOL updateMode;
 
 - (IBAction)supplyButtonTapped:(id)sender;
 

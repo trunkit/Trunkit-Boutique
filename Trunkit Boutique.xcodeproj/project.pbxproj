@@ -75,6 +75,7 @@
 		8278D7B2196B8C89000B2B40 /* TKSearchResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8278D7B1196B8C89000B2B40 /* TKSearchResultTableViewCell.m */; };
 		8278D7B5196B8DB9000B2B40 /* TKSearchResultsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8278D7B4196B8DB9000B2B40 /* TKSearchResultsTableView.m */; };
 		8278D7B8196B8F73000B2B40 /* TextFieldSearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8278D7B7196B8F73000B2B40 /* TextFieldSearchResultsTableViewController.m */; };
+		8283EEFF19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8283EEFE19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.m */; };
 		828DA789199DB86D006FA328 /* AMSlideMenuContentSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 828DA77B199DB86D006FA328 /* AMSlideMenuContentSegue.m */; };
 		828DA78A199DB86D006FA328 /* AMSlideMenuLeftMenuSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 828DA77D199DB86D006FA328 /* AMSlideMenuLeftMenuSegue.m */; };
 		828DA78B199DB86D006FA328 /* AMSlideMenuLeftTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828DA77F199DB86D006FA328 /* AMSlideMenuLeftTableViewController.m */; };
@@ -220,6 +221,8 @@
 		8278D7B4196B8DB9000B2B40 /* TKSearchResultsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSearchResultsTableView.m; sourceTree = "<group>"; };
 		8278D7B6196B8F73000B2B40 /* TextFieldSearchResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldSearchResultsTableViewController.h; sourceTree = "<group>"; };
 		8278D7B7196B8F73000B2B40 /* TextFieldSearchResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldSearchResultsTableViewController.m; sourceTree = "<group>"; };
+		8283EEFD19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemSizeAndQuantityViewController.h; sourceTree = "<group>"; };
+		8283EEFE19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditItemSizeAndQuantityViewController.m; sourceTree = "<group>"; };
 		828DA77A199DB86D006FA328 /* AMSlideMenuContentSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSlideMenuContentSegue.h; sourceTree = "<group>"; };
 		828DA77B199DB86D006FA328 /* AMSlideMenuContentSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSlideMenuContentSegue.m; sourceTree = "<group>"; };
 		828DA77C199DB86D006FA328 /* AMSlideMenuLeftMenuSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSlideMenuLeftMenuSegue.h; sourceTree = "<group>"; };
@@ -453,6 +456,8 @@
 				82BE82A419A59894006126A0 /* TKImage.m */,
 				82BE82A619A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.h */,
 				82BE82A719A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.m */,
+				8283EEFD19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.h */,
+				8283EEFE19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.m */,
 			);
 			path = "Trunkit Boutique";
 			sourceTree = "<group>";
@@ -742,6 +747,7 @@
 				828DA78E199DB86D006FA328 /* AMSlideMenuRightTableViewController.m in Sources */,
 				828DA792199DB9C2006FA328 /* MainMenuViewController.m in Sources */,
 				8229110519685694006B37C4 /* ChooseOrTakePhotoViewController.m in Sources */,
+				8283EEFF19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.m in Sources */,
 				8278D7B5196B8DB9000B2B40 /* TKSearchResultsTableView.m in Sources */,
 				82A0C7181969A5DC00C5B97F /* ReviewItemViewController.m in Sources */,
 				82EC63A8197B15B8002CA430 /* TKCropRectView.m in Sources */,
