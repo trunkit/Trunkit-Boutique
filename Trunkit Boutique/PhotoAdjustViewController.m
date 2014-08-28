@@ -317,7 +317,7 @@
 
 - (IBAction)portraitButtonTapped:(id)sender
 {
-    [self.cropViewController setCropAspectRatio:(80.0/97.9)];
+    [self.cropViewController setCropAspectRatio:(320.0f/421.0f)];
 }
 
 - (IBAction)TEMPconstraintButtonTapped:(id)sender

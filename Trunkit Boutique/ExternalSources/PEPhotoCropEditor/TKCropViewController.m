@@ -154,8 +154,8 @@
 - (void)setCropAspectRatio:(CGFloat)cropAspectRatio
 {
     _cropAspectRatio = cropAspectRatio;
-    self.cropView.cropAspectRatio = self.cropAspectRatio;
-    [self.cropView resetZoomingRect];
+    [self.cropView setCropAspectRatio:self.cropAspectRatio andCenter:YES zoom:NO];
+//    [self.cropView resetZoomingRect];
 }
 
 - (void)setCropRect:(CGRect)cropRect

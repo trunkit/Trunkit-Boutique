@@ -2448,8 +2448,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-zA-fsO">
-                                <rect key="frame" x="0.0" y="64" width="320" height="440"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-zA-fsO">
+                                <rect key="frame" x="0.0" y="64" width="320" height="421"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -2606,7 +2606,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sP0-sG-UfU" customClass="GPUImageView">
-                                <rect key="frame" x="0.0" y="64" width="320" height="440"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="421"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -2615,14 +2615,14 @@
                         <constraints>
                             <constraint firstItem="wnZ-zA-fsO" firstAttribute="leading" secondItem="MFI-Zg-K0z" secondAttribute="leading" id="6xG-mT-VWS"/>
                             <constraint firstAttribute="trailing" secondItem="eHf-am-R3g" secondAttribute="trailing" id="8TC-Ay-dg8"/>
-                            <constraint firstItem="BZq-lO-A72" firstAttribute="top" secondItem="wnZ-zA-fsO" secondAttribute="bottom" constant="-1" id="FjU-o0-HBe"/>
+                            <constraint firstItem="BZq-lO-A72" firstAttribute="top" secondItem="wnZ-zA-fsO" secondAttribute="bottom" constant="18" id="FjU-o0-HBe"/>
                             <constraint firstItem="sP0-sG-UfU" firstAttribute="leading" secondItem="MFI-Zg-K0z" secondAttribute="leading" id="LMO-4A-Gbr"/>
                             <constraint firstItem="BZq-lO-A72" firstAttribute="leading" secondItem="MFI-Zg-K0z" secondAttribute="leading" id="M1q-LN-SMd"/>
                             <constraint firstItem="sP0-sG-UfU" firstAttribute="top" secondItem="eHf-am-R3g" secondAttribute="bottom" id="Pm0-zx-4Ww"/>
                             <constraint firstItem="uks-cA-Wee" firstAttribute="leading" secondItem="MFI-Zg-K0z" secondAttribute="leading" constant="20" id="RfX-y3-LMN"/>
                             <constraint firstItem="Baa-y4-PmD" firstAttribute="top" secondItem="BZq-lO-A72" secondAttribute="bottom" id="UaH-go-4PP"/>
                             <constraint firstItem="eHf-am-R3g" firstAttribute="leading" secondItem="MFI-Zg-K0z" secondAttribute="leading" id="Xmx-1G-vWN"/>
-                            <constraint firstItem="uks-cA-Wee" firstAttribute="top" secondItem="sP0-sG-UfU" secondAttribute="bottom" constant="14" id="c5y-hN-kMq"/>
+                            <constraint firstItem="uks-cA-Wee" firstAttribute="top" secondItem="sP0-sG-UfU" secondAttribute="bottom" constant="33" id="c5y-hN-kMq"/>
                             <constraint firstAttribute="trailing" secondItem="BZq-lO-A72" secondAttribute="trailing" id="dbB-vF-VqF"/>
                             <constraint firstItem="eHf-am-R3g" firstAttribute="top" secondItem="MFI-Zg-K0z" secondAttribute="top" id="gIO-tZ-oPd"/>
                             <constraint firstAttribute="centerX" secondItem="gO8-aP-NUp" secondAttribute="centerX" id="gLe-dh-Sgk"/>
