@@ -8,7 +8,7 @@
 
 #import "TKEditViewController.h"
 
-@interface ItemFullViewController : TKEditViewController
+@interface ItemFullViewController : TKEditViewController <UIGestureRecognizerDelegate>
 
 //@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *itemPhotosContainerView;

@@ -51,7 +51,27 @@
     self.editButton.contentEdgeInsets = UIEdgeInsetsMake(2.0, 2.0, 0.0, 0.0);
     
     [self initDataInUI];
+    
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageTap:)];
+    [tapRecognizer setDelegate:self];
+    //    [tapRecognizer setDelaysTouchesBegan:YES];
+	[self.photoPagesViewController.view addGestureRecognizer:tapRecognizer];
+    
+
 }
+
+- (void)handleImageTap:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
 
 - (void)initDataInUI
 {

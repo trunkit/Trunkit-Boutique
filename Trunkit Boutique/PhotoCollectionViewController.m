@@ -66,18 +66,18 @@
 //    NSArray *recos = self.collectionView.gestureRecognizers;
 //    NSLog(@"RECOS = %@", recos);
 }
-
+//
 //- (void)handlePan:(UIPanGestureRecognizer *)gestureRecognizer
 //{
 //    [super handlePan:gestureRecognizer];
 //    
 //}
-
+//
 //- (void)handleTwoFingerSwipe:(UIPanGestureRecognizer *)gestureRecognizer
 //{
 //    NSLog(@"%s", __PRETTY_FUNCTION__);
 //}
-
+//
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 //{
 //    return YES;
