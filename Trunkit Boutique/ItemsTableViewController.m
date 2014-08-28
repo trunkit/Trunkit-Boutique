@@ -48,6 +48,20 @@
 
 - (void)setupMockModel
 {
+    NSArray *mockImages = @[@"http://www.rag-bone.com/store/productimages/details/6624_dusty_olive_l_z.jpg",
+                            @"http://www.rag-bone.com/store/productimages/details/6627_black_l_z.jpg",
+                            @"http://www.rag-bone.com/store/productimages/regular/6677_black_l.jpg",
+                            @"http://www.rag-bone.com/store/ProductImages/details/6677_black_s.jpg",
+                            @"http://www.rag-bone.com/store/ProductImages/details/6677_black_s_z.jpg",
+                            @"http://www.rag-bone.com/store/productimages/regular/6429_white_l.jpg",
+                            @"http://www.rag-bone.com/store/ProductImages/details/6429_white_s_z.jpg",
+                            @"http://www.rag-bone.com/store/productimages/details/6655_royal_red_l_z.jpg",
+                            @"http://www.rag-bone.com/store/productimages/regular/6646_almond_l.jpg",
+                            @"http://www.rag-bone.com/store/ProductImages/details/6656_black_sp.jpg",
+                            @"http://www.rag-bone.com/store/ProductImages/details/6639_flynt_green_sp_z.jpg"];
+
+    /*
+     *
     NSArray *mockImages = @[@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg",
                             @"http://whatkatewore.com/wp-content/uploads/2011/09/Kate-Hudson-Jeans-Jeanography.jpg",
                             @"http://www.eecloth.com/wp-content/uploads/2014/03/07/0/106-Hudson-Jeans-Palerme-Cuff-Knee-Short-for-Women-4.jpg",
@@ -64,6 +78,8 @@
                             @"http://i1.tribune.com.pk/wp-content/uploads/2012/08/423410-image-1345213752-109-640x480.JPG",
                             @"http://c776239.r39.cf2.rackcdn.com/Gilli-5246-Black-White-1.jpg",
                             @"http://cdn.is.bluefly.com/mgen/Bluefly/prodImage.ms?productCode=2070113&width=300&height=300.jpg"];
+     *
+     */
     
     self.merchandiseItems = [@[] mutableCopy];
     for (NSInteger i = 0; i < 10; i++)
