@@ -86,7 +86,6 @@
 		828DA792199DB9C2006FA328 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828DA791199DB9C2006FA328 /* MainMenuViewController.m */; };
 		828DA795199DBB79006FA328 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828DA794199DBB79006FA328 /* LeftMenuViewController.m */; };
 		8294C4801999921C00CDDB47 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294C47F1999921C00CDDB47 /* SignInViewController.m */; };
-		829ECA3A1978C40A00A888E5 /* PhotoScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 829ECA391978C40A00A888E5 /* PhotoScrollViewController.m */; };
 		82A0C7181969A5DC00C5B97F /* ReviewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C7171969A5DC00C5B97F /* ReviewItemViewController.m */; };
 		82A0C71B1969C3EC00C5B97F /* TKEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71A1969C3EC00C5B97F /* TKEditViewController.m */; };
 		82A0C71E1969C54E00C5B97F /* ItemFullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71D1969C54E00C5B97F /* ItemFullViewController.m */; };
@@ -244,8 +243,6 @@
 		828DA794199DBB79006FA328 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		8294C47E1999921C00CDDB47 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		8294C47F1999921C00CDDB47 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
-		829ECA381978C40A00A888E5 /* PhotoScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScrollViewController.h; sourceTree = "<group>"; };
-		829ECA391978C40A00A888E5 /* PhotoScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoScrollViewController.m; sourceTree = "<group>"; };
 		82A0C7161969A5DC00C5B97F /* ReviewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewItemViewController.h; sourceTree = "<group>"; };
 		82A0C7171969A5DC00C5B97F /* ReviewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewItemViewController.m; sourceTree = "<group>"; };
 		82A0C7191969C3EC00C5B97F /* TKEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKEditViewController.h; sourceTree = "<group>"; };
@@ -386,8 +383,6 @@
 				8222B58D197203B900F49905 /* CameraViewController.m */,
 				8222B597197225D900F49905 /* PhotoEditorViewController.h */,
 				8222B598197225D900F49905 /* PhotoEditorViewController.m */,
-				829ECA381978C40A00A888E5 /* PhotoScrollViewController.h */,
-				829ECA391978C40A00A888E5 /* PhotoScrollViewController.m */,
 				8222B59A19722B0F00F49905 /* PhotoSelectionViewController.h */,
 				8222B59B19722B0F00F49905 /* PhotoSelectionViewController.m */,
 				82D556CF196508AB006CE269 /* SupplyAnItemPageViewController.h */,
@@ -739,7 +734,6 @@
 				823177B6196660C600E3990A /* SupplyAnItemPage3ViewController.m in Sources */,
 				8222B599197225D900F49905 /* PhotoEditorViewController.m in Sources */,
 				8278D7B2196B8C89000B2B40 /* TKSearchResultTableViewCell.m in Sources */,
-				829ECA3A1978C40A00A888E5 /* PhotoScrollViewController.m in Sources */,
 				82A0C71E1969C54E00C5B97F /* ItemFullViewController.m in Sources */,
 				822335B01974E17D00C0D8BE /* PhotoCollectionViewController.m in Sources */,
 				82EC6399197AED71002CA430 /* PhotoAdjustViewController.m in Sources */,

@@ -86,11 +86,11 @@
     {
         MerchandiseItem *item = [[MerchandiseItem alloc] init];
         
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:10 + (1*i)] forKey:@"Mock Size 1"];
-        [dict setObject:[NSNumber numberWithInt:5 + (1*i)] forKey:@"Mock Size 2"];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInteger:10 + (1*i)] forKey:@"Mock Size 1"];
+        [dict setObject:[NSNumber numberWithInteger:5 + (1*i)] forKey:@"Mock Size 2"];
         
-        item.itemName = [NSString stringWithFormat:@"Mock Item Number %d", i];
-        item.styleNumber = [NSString stringWithFormat:@"%d%d%dMOCK%dSTYLENUMBER%d",i ,i ,i ,i ,i];
+        item.itemName = [NSString stringWithFormat:@"Mock Item With a Long Name Number %ld", (long)i];
+        item.styleNumber = [NSString stringWithFormat:@"%ld%ld%ldMOCK%ldSTYLENUMBER%ld",(long)i ,(long)i ,(long)i ,(long)i ,(long)i];
         
         NSUInteger randomIndex1 = arc4random() % [mockImages count];
         NSURL *url1 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex1]];
@@ -211,7 +211,7 @@
     }
     
     
-    NSString *string = [NSString stringWithFormat:@"%d", qty];
+    NSString *string = [NSString stringWithFormat:@"%ld", (long)qty];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string];
     float spacing = 1.0f;
     [attributedString addAttribute:NSKernAttributeName
@@ -236,8 +236,8 @@
     
     
     cell.productPhotoImageView.image = nil;
-    NSString *identifier = [NSString stringWithFormat:@"Cell%d" ,
-                            indexPath.row];
+    NSString *identifier = [NSString stringWithFormat:@"Cell%ld" ,
+                            (long)indexPath.row];
     
     if ([self.cachedImages objectForKey:identifier] != nil)
     {
@@ -248,9 +248,19 @@
         char const * s = [identifier  UTF8String];
         dispatch_queue_t queue = dispatch_queue_create(s, 0);
         dispatch_async(queue, ^{
-            if ([theItem.mainProductPhoto isKindOfClass:[NSURL class]])
+            NSURL *url = nil;
+            
+            if ([theItem.mainProductPhoto isKindOfClass:[NSString class]])
             {
-                NSURL *url = theItem.mainProductPhoto;
+                url = [NSURL URLWithString:theItem.mainProductPhoto];
+            }
+            else if ([theItem.mainProductPhoto isKindOfClass:[NSURL class]])
+            {
+                url = theItem.mainProductPhoto;
+            }
+            
+            if (url)
+            {
                 UIImage *img = nil;
                 NSData *data = [[NSData alloc] initWithContentsOfURL:url];
                 img = [[UIImage alloc] initWithData:data];

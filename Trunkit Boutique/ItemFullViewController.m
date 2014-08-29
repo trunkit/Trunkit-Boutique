@@ -9,6 +9,7 @@
 #import "ItemFullViewController.h"
 #import "UILabel+UILabel_TKExtensions.h"
 #import "PhotoPagesViewController.h"
+#import "PhotoSelectionViewController.h"
 
 @interface ItemFullViewController ()
 
@@ -63,8 +64,10 @@
 
 - (void)handleImageTap:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PhotoSelectionViewController *photosVC = [sb instantiateViewControllerWithIdentifier:@"PhotoSelectionViewControllerIdentifier"];
+    photosVC.merchandiseItem = self.merchandiseItem;
+    [self.navigationController pushViewController:photosVC animated:YES];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer

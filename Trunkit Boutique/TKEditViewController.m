@@ -152,18 +152,14 @@
 {
 }
 
-- (void)scrollToMakeTextFieldsVisible:(UITextField *)textField
+- (void)scrollToMakeViewVisible:(UIView *)textField
 {
-//    CGRect scrollToRect = textField.frame;
-//    CGFloat scrollY = scrollToRect.origin.y - 20;
-//    
-//    CGPoint scrollPoint = CGPointMake(0.0, scrollY);
-    [self.scrollView setContentOffset:[self textFieldOriginForEdit:textField] animated:YES];
+    [self.scrollView setContentOffset:[self viewOriginForEdit:textField] animated:YES];
 }
 
-- (CGPoint)textFieldOriginForEdit:(UITextField *)textField
+- (CGPoint)viewOriginForEdit:(UIView *)view
 {
-    CGRect scrollToRect = textField.frame;
+    CGRect scrollToRect = view.frame;
     CGFloat scrollY = scrollToRect.origin.y - 20;
     CGPoint scrollPoint = CGPointMake(0.0, scrollY);
     return scrollPoint;
@@ -225,6 +221,20 @@
 	//    }
 }
 
+#pragma mark Text View Delegate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    [self hideTextFieldSearchResults];
+    [self scrollToMakeViewVisible:textView];
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    return YES;
+}
+
 #pragma mark Text Field Delegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -244,7 +254,7 @@
             [self addChildViewController:tableViewController];
             
             CGFloat height = [UIScreen mainScreen].bounds.size.height - kOFFSET_FOR_KEYBOARD; // / [UIScreen mainScreen].scale;
-            CGPoint point = [self textFieldOriginForEdit:textField];
+            CGPoint point = [self viewOriginForEdit:textField];
             CGRect frame = CGRectMake(point.x + 6
                                       , point.y + (textField.frame.size.height * 1.5)
                                       , textField.frame.size.width
@@ -271,7 +281,7 @@
         }
     }
     
-    [self scrollToMakeTextFieldsVisible:textField];
+    [self scrollToMakeViewVisible:textField];
     return YES;
 }
 

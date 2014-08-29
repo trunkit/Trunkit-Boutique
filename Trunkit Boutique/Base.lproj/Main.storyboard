@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="739-DL-21o">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Items Table View Controller-->
@@ -201,7 +200,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3i-T5-wWk">
                                                 <rect key="frame" x="232" y="7" width="82" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.46000000000000002" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal" title="$10.00">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -490,9 +489,6 @@
                                 <state key="normal" title="Hidden Continue">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="0Ex-tF-51r" kind="push" identifier="NewItemFirstPageToNextControllerSegueIdentifier" id="0r9-2b-dBr"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -752,7 +748,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
-                                                    <outlet property="delegate" destination="3dd-fE-Q53" id="iMP-fH-QfY"/>
+                                                    <outlet property="delegate" destination="3dd-fE-Q53" id="w0G-hd-Y9X"/>
                                                 </connections>
                                             </textView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Fit (Optional)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wuV-8q-l7c">
@@ -916,70 +912,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ue6-e5-h98" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5327" y="244"/>
-        </scene>
-        <!--Choose Or Take Photo View Controller-->
-        <scene sceneID="StX-wF-7pb">
-            <objects>
-                <viewController id="0Ex-tF-51r" customClass="ChooseOrTakePhotoViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1a4-oS-vcV"/>
-                        <viewControllerLayoutGuide type="bottom" id="NfB-qp-eWE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="E3H-2v-06a">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VjA-be-R3n">
-                                <rect key="frame" x="117" y="66" width="86" height="92"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="ChooseExistingPhotoButtonImage.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="zkJ-Qk-07D" kind="push" id="hRW-jh-GRL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgV-me-yIV">
-                                <rect key="frame" x="121" y="255" width="78" height="66"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="TakePhotoButtonImage.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="ejb-U6-ubT" kind="push" id="Zwi-CD-2Px"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose Existing Photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLK-u8-cbN">
-                                <rect key="frame" x="20" y="166" width="280" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Take a Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBd-KR-tYt">
-                                <rect key="frame" x="20" y="329" width="280" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IC5-4I-HiH">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Bvf-Yb-0sL"/>
-                    <connections>
-                        <outlet property="chooseExistingPhotosLabel" destination="OLK-u8-cbN" id="CAW-5o-3bV"/>
-                        <outlet property="takeAPhotoLabel" destination="oBd-KR-tYt" id="j9X-mY-hwI"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Eef-gv-gtA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1510" y="652"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="dzI-Qc-l1K">
@@ -2381,7 +2313,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
-                                                    <outlet property="delegate" destination="eOZ-pl-ZEB" id="eOg-1f-o9i"/>
+                                                    <outlet property="delegate" destination="eOZ-pl-ZEB" id="99g-fK-zJz"/>
                                                 </connections>
                                             </textView>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5E-0i-ud1">
@@ -2735,83 +2667,6 @@
             </objects>
             <point key="canvasLocation" x="4225" y="1924"/>
         </scene>
-        <!--Photo Scroll View Controller-->
-        <scene sceneID="x40-d1-92Q">
-            <objects>
-                <viewController storyboardIdentifier="PhotoScrollViewControllerIdentifier" id="mBh-Eq-4VI" customClass="PhotoScrollViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="HQT-Ff-CZO"/>
-                        <viewControllerLayoutGuide type="bottom" id="qvE-ZR-z5Q"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="95c-mI-v2K">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gRN-vq-yMA">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NYF-YP-s2R">
-                                    <size key="itemSize" width="240" height="320"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="PhotoScrollViewCellIdentifier" id="H3O-nO-hjS" customClass="PhotoCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="320"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="320"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SampleSkinnyJeansWomen.png" translatesAutoresizingMaskIntoConstraints="NO" id="fLy-QM-z76">
-                                                    <rect key="frame" x="-17" y="0.0" width="274" height="320"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="fLy-QM-z76" secondAttribute="height" multiplier="83:97" id="VRi-Jh-iIf"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="fLy-QM-z76" firstAttribute="top" secondItem="H3O-nO-hjS" secondAttribute="top" id="8bm-EE-3d2"/>
-                                            <constraint firstAttribute="bottom" secondItem="fLy-QM-z76" secondAttribute="bottom" id="dPJ-WX-G0a"/>
-                                            <constraint firstAttribute="centerX" secondItem="fLy-QM-z76" secondAttribute="centerX" id="fsJ-VQ-kP3"/>
-                                        </constraints>
-                                        <size key="customSize" width="240" height="320"/>
-                                        <connections>
-                                            <outlet property="photoImageView" destination="fLy-QM-z76" id="La7-SV-y3g"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="mBh-Eq-4VI" id="FVn-f0-qmk"/>
-                                    <outlet property="delegate" destination="mBh-Eq-4VI" id="Apw-eo-LbD"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="qvE-ZR-z5Q" firstAttribute="top" secondItem="gRN-vq-yMA" secondAttribute="bottom" id="gLb-8w-g1F"/>
-                            <constraint firstItem="gRN-vq-yMA" firstAttribute="top" secondItem="95c-mI-v2K" secondAttribute="top" id="lyI-Oj-wzj"/>
-                            <constraint firstAttribute="trailing" secondItem="gRN-vq-yMA" secondAttribute="trailing" id="oIx-JR-3i4"/>
-                            <constraint firstItem="gRN-vq-yMA" firstAttribute="leading" secondItem="95c-mI-v2K" secondAttribute="leading" id="z94-Vx-vwp"/>
-                        </constraints>
-                    </view>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="320"/>
-                    <connections>
-                        <outlet property="collectionView" destination="gRN-vq-yMA" id="gME-iF-HGi"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GAG-D9-Ksf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4232" y="3254"/>
-        </scene>
         <!--Photo Pages View Controller-->
         <scene sceneID="92l-ME-y53">
             <objects>
@@ -2858,24 +2713,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UI8-CQ-XVx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5039" y="3254"/>
-        </scene>
-        <!--Crop View Controller-->
-        <scene sceneID="Hqy-g6-oFO">
-            <objects>
-                <viewController id="BKZ-Xr-vSV" customClass="TKCropViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Azw-AT-r7x"/>
-                        <viewControllerLayoutGuide type="bottom" id="zxf-YR-QBJ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="VKE-WQ-y2O">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W5S-1v-aBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3679" y="2783"/>
         </scene>
         <!--Photo Collection View Controller-->
         <scene sceneID="TwK-en-ZeR">
@@ -3055,7 +2892,7 @@
         <!--Photo Selection View Controller-->
         <scene sceneID="eKO-gu-F7w">
             <objects>
-                <viewController id="ntl-Z3-Ota" customClass="PhotoSelectionViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoSelectionViewControllerIdentifier" id="ntl-Z3-Ota" customClass="PhotoSelectionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N72-8S-gq8"/>
                         <viewControllerLayoutGuide type="bottom" id="9hN-f4-zGI"/>
@@ -3293,7 +3130,6 @@
         <image name="CameraRotateIcon.png" width="72" height="48"/>
         <image name="CarusoCaruso1.jpg" width="960" height="640"/>
         <image name="CheckMarkWhiteImageButton" width="42" height="31"/>
-        <image name="ChooseExistingPhotoButtonImage.png" width="439" height="497"/>
         <image name="CropMenuButtonImage" width="44" height="44"/>
         <image name="CropWhiteButtonImage" width="44" height="44"/>
         <image name="ExitButtonImage" width="36" height="36"/>
@@ -3306,7 +3142,6 @@
         <image name="SliderDotImage" width="18" height="18"/>
         <image name="SquareCropImageButton" width="40" height="41"/>
         <image name="SquarePortraitButtonImage" width="54" height="70"/>
-        <image name="TakePhotoButtonImage.png" width="439" height="408"/>
         <image name="TakePictureButtonImage" width="136" height="136"/>
         <image name="TextFieldAutoCompleteIcon.png" width="40" height="24"/>
         <image name="brightnessContrastImageButton" width="59" height="59"/>

@@ -8,7 +8,6 @@
 
 #import "SupplyAnItemPageViewController.h"
 #import "PhotoCollectionViewController.h"
-#import "PhotoScrollViewController.h"
 #import "PhotoPagesViewController.h"
 
 @interface PhotoSelectionViewController : SupplyAnItemPageViewController <PhotoCollectionDelegate>

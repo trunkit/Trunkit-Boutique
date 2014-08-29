@@ -98,4 +98,22 @@
 }
 */
 
+#pragma mark UITextView Delegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    self.descriptionTextViewPlaceholder.hidden = YES;
+}
+
+- (void)textViewDidChange:(UITextView *)txtView
+{
+    self.descriptionTextViewPlaceholder.hidden = ([txtView.text length] > 0);
+}
+
+- (void)textViewDidEndEditing:(UITextView *)txtView
+{
+    self.descriptionTextViewPlaceholder.hidden = ([txtView.text length] > 0);
+}
+
+
 @end

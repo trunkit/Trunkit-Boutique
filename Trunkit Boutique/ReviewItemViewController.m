@@ -72,6 +72,8 @@
     self.materialsTextField.text = self.merchandiseItem.materialsDescription;
     [self formatCurrencyField:self.priceTextField];
     
+    self.descriptionTextViewPlaceholder.hidden = ([self.descriptionTextView.text length] > 0);
+    
     [self setupPhotoPages];
 }
 
@@ -142,11 +144,6 @@
         [self.descriptionTextView becomeFirstResponder];
         return YES;
     }
-//    else if (textField == self.descriptionTextView)
-//    {
-//        [self.fitTextField becomeFirstResponder];
-//        return YES;
-//    }
     else if (textField == self.fitTextField)
     {
         [self.materialsTextField becomeFirstResponder];
