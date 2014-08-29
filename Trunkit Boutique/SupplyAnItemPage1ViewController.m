@@ -7,6 +7,8 @@
 //
 
 #import "SupplyAnItemPage1ViewController.h"
+#import "CameraViewController.h"
+#import "ChooseExistingPhotosViewController.h"
 
 @interface SupplyAnItemPage1ViewController ()
 
@@ -76,7 +78,25 @@
     self.merchandiseItem.styleNumber = self.styleNumberTextField.text;
     self.merchandiseItem.designerName = self.brandTextField.text;
     
-    [self performSegueWithIdentifier:@"NewItemFirstPageToNextControllerSegueIdentifier" sender:sender];
+    UIViewController *popToVC = nil;
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    if (![self.merchandiseItem.styleNumber hasSuffix:@"123"])
+    {
+        CameraViewController *cameraVC = [sb instantiateViewControllerWithIdentifier:@"CameraViewControllerIdentifier"];
+        cameraVC.merchandiseItem = self.merchandiseItem;
+        popToVC = cameraVC;
+    }
+    else
+    {
+        ChooseExistingPhotosViewController *existingPhotosVC = [sb instantiateViewControllerWithIdentifier:@"ChooseExistingPhotosViewControllerIdentifier"];
+        existingPhotosVC.merchandiseItem = self.merchandiseItem;
+        popToVC = existingPhotosVC;
+    }
+    
+    [self.navigationController pushViewController:popToVC animated:YES];
+    
+//    [self performSegueWithIdentifier:@"NewItemFirstPageToNextControllerSegueIdentifier" sender:sender];
 }
 
 /*

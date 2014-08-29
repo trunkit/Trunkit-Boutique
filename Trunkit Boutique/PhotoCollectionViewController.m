@@ -26,6 +26,22 @@
 @end
 
 
+@interface NSString (NSString_TKExtensions)
+
+- (NSString *)absoluteString;
+
+@end
+
+@implementation NSString (NSString_TKExtensions)
+
+- (NSString *)absoluteString
+{
+    return self;
+}
+
+@end
+
+
 
 @interface PhotoCollectionViewController ()
 
@@ -240,6 +256,8 @@
     // to make this clean!!!
     //
     
+    [cell setImage:nil]; // Prevents weird image refresh when URL doesn't fetch any data.
+    
     if ([photo isKindOfClass:[NSString class]])
     {
         photo = [NSURL URLWithString:photo];
@@ -296,36 +314,27 @@
                     UIImage *image = nil;
                     NSData *data = [[NSData alloc] initWithContentsOfURL:url];
                     image = [[UIImage alloc] initWithData:data];
+//                    if (!image)
+//                        [cell setImage:nil];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if ([collectionView indexPathForCell:cell].row == indexPath.row)
                         {
                             [cell setImage:image];
-                            [self.cachedImages setObject:image forKey:[photo absoluteString]];
+                            if (!image)
+                            {
+                                NSLog(@"WARNING! Request returned nil image for URL %@", url);
+                            }
+                            else
+                            {
+                                [self.cachedImages setObject:image forKey:[photo absoluteString]];
+                            }
                         }
                     });
                 });
                 
             }
         }
-        
-
-//    else if ([photo isKindOfClass:[NSURL class]])
-//    {
-//        asset = [self.cachedImages valueForKey:[photo absoluteString]];
-//        if (!asset)
-//        {
-//            ALAssetsLibrary *library = [ALAssetsLibrary defaultAssetsLibrary];
-//            [library assetForURL:photo
-//                     resultBlock:^(ALAsset *anAsset) {
-//                         [cell setAsset:anAsset];
-//                         [self.cachedImages setObject:anAsset forKey:[photo absoluteString]];
-//                     }
-//                    failureBlock:^(NSError *error )
-//             {
-//             }];
-//
-//        }
     }
     
     NSIndexSet *indexSet = [_selectedAssets indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {

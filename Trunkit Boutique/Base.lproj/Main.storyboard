@@ -1426,7 +1426,7 @@
         <!--Choose Existing Photos View Controller - Choose Existing Photos-->
         <scene sceneID="CnS-6y-ans">
             <objects>
-                <viewController id="zkJ-Qk-07D" customClass="ChooseExistingPhotosViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChooseExistingPhotosViewControllerIdentifier" id="zkJ-Qk-07D" customClass="ChooseExistingPhotosViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0oy-0u-gIg"/>
                         <viewControllerLayoutGuide type="bottom" id="k3t-an-5Jm"/>
@@ -3005,6 +3005,13 @@
                                     <action selector="backButtonTapped:" destination="VNo-Km-1v2" eventType="touchUpInside" id="TXt-Ft-Mk1"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Size &amp; Quantity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPL-5A-n77">
+                                <rect key="frame" x="69" y="30" width="183" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -3019,6 +3026,9 @@
                     <navigationItem key="navigationItem" id="q9V-5O-tR6"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="580"/>
+                    <connections>
+                        <outlet property="navigationTitleLabel" destination="FPL-5A-n77" id="xlI-CR-Bis"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ndd-FD-aRW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
