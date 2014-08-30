@@ -31,7 +31,7 @@
     [super viewDidLoad];
     UIFont *placeholerrFont = [UIFont fontWithName:@"HelveticaLTStd-LightCond" size:18.0];
     self.descriptionTextViewPlaceholder.font = placeholerrFont;
-    [self applyThemeToLabel:self.descriptionTextViewPlaceholder withFontSize:16.0];
+    [self applyThemeToLabel:self.descriptionTextViewPlaceholder withFontSize:18.0];
 
 //    UILabel *customFontLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.frame.size.width,40)];
 //    customFontLabel.text = [self navigationItemTitle];
@@ -93,9 +93,15 @@
     // WTF
     if (self.scrollView.frame.origin.y == 20)
     {
+        NSLog(@"WARNING: Using hack to fix scrollview layout");
         self.scrollView.frame = CGRectMake(0.0, 0.0, self.scrollView.frame.size.width, self.scrollView.frame.size.height+20);
     }
-    self.scrollView.contentSize = self.detailsContainerView.frame.size;
+    else
+    {
+        self.scrollView.contentSize = self.detailsContainerView.frame.size;
+        [self.scrollView setContentOffset:CGPointZero animated:NO];
+    }
+
 //    [self.scrollView setContentOffset:CGPointMake(0, 0)];
     
 
