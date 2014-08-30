@@ -405,11 +405,20 @@
     
     // If the user just typed the number in, e.g. 12.34 or 42, prepend the currency symbol:
     NSString *currencySymbol = [currentUserLocale objectForKey:NSLocaleCurrencySymbol];
+
+    if ([[textField.text stringByReplacingOccurrencesOfString:currencySymbol withString:@""] floatValue] == 0.0f)
+    {
+        textField.text = @"";
+        return;
+    }
+    
+
     
     NSRange strRange = [textField.text rangeOfString:currencySymbol];
     if (strRange.location == NSNotFound)
     {
-        NSString *numberStr = [NSNumberFormatter localizedStringFromNumber:[NSDecimalNumber numberWithFloat:[textField.text floatValue]]
+        CGFloat theValue = [textField.text floatValue];
+        NSString *numberStr = [NSNumberFormatter localizedStringFromNumber:[NSDecimalNumber numberWithFloat:theValue]
                                                                numberStyle:NSNumberFormatterCurrencyStyle];
         textField.text = numberStr;
     }
