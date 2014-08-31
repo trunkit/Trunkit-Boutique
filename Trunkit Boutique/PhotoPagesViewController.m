@@ -12,6 +12,7 @@
 @interface PhotoPagesViewController ()
 
 @property (strong, nonatomic) NSArray *photos;
+@property (strong, nonatomic) PhotoSlideViewController *nextSlideController;
 
 @end
 
@@ -40,12 +41,47 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.controlView.frame = self.view.bounds;
+    [self.view addSubview:self.controlView];
+    [self initControlViewWithCurrentIndex:0];
 
 //    UIPageControl *pageControlAppearance = [UIPageControl appearanceWhenContainedIn:[UIPageViewController class], nil];
 //    pageControlAppearance.pageIndicatorTintColor = [UIColor lightGrayColor];
 //    pageControlAppearance.currentPageIndicatorTintColor = [UIColor darkGrayColor];
     
     
+}
+
+- (void)initControlViewWithCurrentIndex:(NSInteger)index
+{
+    for (UIView *aDot in self.controlView.subviews)
+    {
+        [aDot removeFromSuperview];
+    }
+    
+    NSInteger pagesCount = self.photos.count;
+    CGFloat dotWidth = 7.0f;
+    CGFloat spacing = 8.0f;
+    NSInteger xIncrement = spacing + dotWidth;
+    CGFloat xStartOffset = ((-1 * xIncrement) * (pagesCount / 2.0f));
+    
+    CGRect firstFrame = CGRectMake((self.view.frame.size.width /2) + xStartOffset, self.view.frame.size.height - 30, dotWidth, dotWidth);
+    
+    for (NSInteger i = 0; i < pagesCount; i++)
+    {
+        CGRect frame = firstFrame;
+        frame.origin.x += i * xIncrement;
+        UIImageView *dot = [self pageControlImageViewWithFrame:frame selected:(index == i)];
+        [self.controlView addSubview:dot];
+    }
+}
+
+- (UIImageView *)pageControlImageViewWithFrame:(CGRect)frame selected:(BOOL)selected
+{
+    UIImageView *view = [[UIImageView alloc] initWithFrame:frame];
+    view.image = [UIImage imageNamed:(selected) ? @"PageControlStroke" : @"PageControlFill"];
+    return view;
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,6 +136,7 @@
                         animated:NO
                       completion:^(BOOL finished) {
                       }];
+        [self initControlViewWithCurrentIndex:0];
     });
 
 }
@@ -116,20 +153,6 @@
         NSMutableArray *tempPhotos = [_photos mutableCopy];
         [tempPhotos removeObject:photo];
         self.photos = [NSArray arrayWithArray:tempPhotos];
-        
-//        NSMutableArray *tempPhotos = [[NSMutableArray alloc] init];
-//        NSInteger index = 0;
-//        
-//        for (id aPhoto in _photos)
-//        {
-//            if (aPhoto != photo)
-//            {
-//                [tempPhotos addObject:[self viewControllerForPhotoAtIndex:index]];
-//            }
-//            index++;
-//        }
-//        self.photos = [NSArray arrayWithArray:tempPhotos];
-
     }
 }
 
@@ -151,6 +174,27 @@
 
 #pragma mark Delegate
 
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed
+{
+    if (completed)
+    {
+//        NSLog(@"%s - %@", __PRETTY_FUNCTION__, previousViewControllers);
+        PhotoSlideViewController *previousSlideController = [previousViewControllers objectAtIndex:0];
+        if (self.nextSlideController.slideIndex != previousSlideController.slideIndex)
+        {
+            [self initControlViewWithCurrentIndex:self.nextSlideController.slideIndex];
+        }
+    }
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+//    NSLog(@"%s - %@", __PRETTY_FUNCTION__, pendingViewControllers);
+    self.nextSlideController = [pendingViewControllers objectAtIndex:0];
+}
 
 #pragma mark Data Source
 
@@ -198,7 +242,7 @@
 //- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 //{
 //    return 0;
-////    return self.photos.count;
+//    return self.photos.count;
 //}
 
 - (PhotoSlideViewController *)viewControllerForPhotoAtIndex:(NSInteger)index

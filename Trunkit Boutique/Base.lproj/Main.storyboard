@@ -2674,8 +2674,16 @@
                 <pageViewController storyboardIdentifier="PhotoPagesViewControllerIdentifier" autoresizesArchivedViewToFullSize="NO" modalTransitionStyle="crossDissolve" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="mid" doubleSided="YES" id="Iqy-LD-EUw" customClass="PhotoPagesViewController" sceneMemberID="viewController">
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="320"/>
+                    <connections>
+                        <outlet property="controlView" destination="KFN-2k-5ba" id="Gpj-Il-Vxg"/>
+                    </connections>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSP-W1-cN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" id="KFN-2k-5ba">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="4656" y="3254"/>
         </scene>

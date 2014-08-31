@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) MerchandiseItem *merchandiseItem;
 @property (readwrite, nonatomic) BOOL usesMerchandiseProductPhotos;
+@property (strong, nonatomic) IBOutlet UIView *controlView;
 
 - (void)addPhoto:(id)photo;
 - (void)removePhoto:(id)photo;
