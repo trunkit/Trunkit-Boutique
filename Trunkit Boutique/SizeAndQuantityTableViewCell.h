@@ -12,7 +12,7 @@
 @interface SizeAndQuantityTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) MerchandiseItem *merchandiseItem;
-@property (readwrite) NSInteger sizeIndex;
+@property (readwrite) NSString *sizeKey;
 
 @property (strong, nonatomic) IBOutlet UITextField *sizeTextField;
 @property (strong, nonatomic) IBOutlet UITextField *quantityTextField;
@@ -20,5 +20,7 @@
 - (IBAction)sizeTextFieldDidChange:(id)sender;
 - (IBAction)quantityTextFieldDidChange:(id)sender;
 - (IBAction)minusButtonTapped:(id)sender;
+
+- (void)becomeFirstResponder;
 
 @end
