@@ -34,8 +34,8 @@
 - (IBAction)sizeTextFieldDidChange:(id)sender
 {
 //    NSLog(@"%s", __PRETTY_FUNCTION__);
-    NSString *oldSize = [self.merchandiseItem.quantityPerSizes.allKeys objectAtIndex:self.sizeIndex];
-    [self.merchandiseItem.quantityPerSizes removeObjectForKey:oldSize];
+    [self.merchandiseItem.quantityPerSizes removeObjectForKey:_sizeKey];
+    self.sizeKey = self.sizeTextField.text;
     if (self.sizeTextField.text.length)
     {
         [self.merchandiseItem.quantityPerSizes setObject:[NSNumber numberWithInt:[self.quantityTextField.text intValue]] forKey:self.sizeTextField.text];
@@ -58,5 +58,9 @@
     [self quantityTextFieldDidChange:nil];
 }
 
+- (void)becomeFirstResponder
+{
+    [self.sizeTextField becomeFirstResponder];
+}
 
 @end

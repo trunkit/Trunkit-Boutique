@@ -10,7 +10,25 @@
 #import "SizeAndQuantityTableViewCell.h"
 #import "UILabel+UILabel_TKExtensions.h"
 
+static NSInteger compareSizes (NSString *size1, NSString *size2, void *context)
+{
+    if (!size1.length || [size1 isEqualToString:@"new size"])
+    {
+        return NSOrderedDescending;
+    }
+    
+    if (!size2.length || [size2 isEqualToString:@"new size"])
+    {
+        return NSOrderedAscending;
+    }
+    
+    return [size1 caseInsensitiveCompare:size2];
+}
+
 @interface SizeAndQuantityTableViewController ()
+
+@property (strong, nonatomic) NSArray *cachedSortedSizes;
+@property (readwrite, nonatomic) BOOL addingSize;
 
 @end
 
@@ -41,6 +59,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         _hasMinusButton = YES;
+        _addingSize = NO;
     }
     return self;
 }
@@ -69,6 +88,12 @@
     {
         [self addSizeButtonTapped:nil];
     }
+    [self initCachedSortedSizes];
+}
+
+- (void)initCachedSortedSizes
+{
+    self.cachedSortedSizes = [self.merchandiseItem.quantityPerSizes.allKeys sortedArrayUsingFunction:compareSizes context:NULL];
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,7 +111,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.merchandiseItem.quantityPerSizes.allKeys.count + 1;
+    return self.cachedSortedSizes.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -95,7 +120,7 @@
     
     NSString *cellId = (_hasMinusButton) ? @"SizeAndQuantityWithMinusCellReusableIdentifier" : @"SizeAndQuantityCellReusableIdentifier";
     SizeAndQuantityTableViewCell *cell = nil;
-    if ([indexPath indexAtPosition:1] == self.merchandiseItem.quantityPerSizes.count)
+    if ([indexPath indexAtPosition:1] == self.cachedSortedSizes.count)
     {
         cell = [tableView dequeueReusableCellWithIdentifier:@"AddSizeAndQuantityCellReusableIdentifier" forIndexPath:indexPath];
         
@@ -125,7 +150,7 @@
         [self applyThemeToTextField:sizeTextField];
         [self applyThemeToTextField:quantityTextField];
         
-        NSString *key = [self.merchandiseItem.quantityPerSizes.allKeys objectAtIndex:[indexPath indexAtPosition:1]];
+        NSString *key = [self.cachedSortedSizes objectAtIndex:[indexPath indexAtPosition:1]];
         
         NSString *quantity = @"";
         if ([(NSNumber *)[self.merchandiseItem.quantityPerSizes valueForKey:key] integerValue] != 0)
@@ -136,7 +161,13 @@
         quantityTextField.text = quantity;
         
         cell.merchandiseItem = self.merchandiseItem;
-        cell.sizeIndex = [indexPath indexAtPosition:1];
+        cell.sizeKey = key;
+        
+        if (_addingSize && [key isEqualToString:@"new size"])
+        {
+            [cell becomeFirstResponder];
+            _addingSize = NO;
+        }
     }
     
     return cell;
@@ -195,8 +226,14 @@
 
 - (IBAction)addSizeButtonTapped:(id)sender
 {
+    [self.view endEditing:YES];
+    
     [self.merchandiseItem.quantityPerSizes setObject:[NSNumber numberWithInt:0] forKey:@"new size"];
-    [self.tableView reloadData];
+    [self initCachedSortedSizes];
+    _addingSize = YES;
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
 }
 
 #pragma mark - Theming

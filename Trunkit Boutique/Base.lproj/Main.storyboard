@@ -286,7 +286,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JqY-ia-rPj">
-                                <rect key="frame" x="0.0" y="54" width="320" height="453"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="438"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
@@ -343,14 +343,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dJQ-Nh-n9y" firstAttribute="top" secondItem="JqY-ia-rPj" secondAttribute="bottom" constant="73" id="7hq-2F-2A2"/>
+                            <constraint firstItem="dJQ-Nh-n9y" firstAttribute="top" secondItem="JqY-ia-rPj" secondAttribute="bottom" constant="78" id="7hq-2F-2A2"/>
                             <constraint firstItem="dJQ-Nh-n9y" firstAttribute="top" secondItem="mFo-sG-NAh" secondAttribute="bottom" constant="13" id="8tS-Ea-G6B"/>
                             <constraint firstAttribute="trailing" secondItem="Bvu-Gb-zj9" secondAttribute="trailing" id="AYR-ZV-BT0"/>
                             <constraint firstItem="JqY-ia-rPj" firstAttribute="leading" secondItem="bIg-py-Xle" secondAttribute="leading" id="IP9-qc-T2q"/>
                             <constraint firstAttribute="trailing" secondItem="mFo-sG-NAh" secondAttribute="trailing" constant="6" id="VVG-85-FF8"/>
                             <constraint firstItem="Bvu-Gb-zj9" firstAttribute="leading" secondItem="bIg-py-Xle" secondAttribute="leading" id="YOI-Vm-xDQ"/>
                             <constraint firstAttribute="trailing" secondItem="JqY-ia-rPj" secondAttribute="trailing" id="vXI-gl-SuU"/>
-                            <constraint firstItem="JqY-ia-rPj" firstAttribute="top" secondItem="Bvu-Gb-zj9" secondAttribute="bottom" constant="-10" id="wQs-Qt-B94"/>
+                            <constraint firstItem="JqY-ia-rPj" firstAttribute="top" secondItem="Bvu-Gb-zj9" secondAttribute="bottom" id="wQs-Qt-B94"/>
                             <constraint firstItem="mFo-sG-NAh" firstAttribute="leading" secondItem="bIg-py-Xle" secondAttribute="leading" constant="6" id="xnw-FB-yFD"/>
                             <constraint firstItem="Bvu-Gb-zj9" firstAttribute="top" secondItem="bIg-py-Xle" secondAttribute="top" id="yRO-ue-rEW"/>
                         </constraints>
@@ -377,7 +377,7 @@
                         <viewControllerLayoutGuide type="bottom" id="8EH-JI-tMs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="We0-iG-o1d">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="453"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="438"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1949,7 +1949,7 @@
         <scene sceneID="Gna-mw-tCJ">
             <objects>
                 <tableViewController storyboardIdentifier="SizeAndQuantityTableViewControllerIdentifier" id="fDf-Pc-Oza" customClass="SizeAndQuantityTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="1" sectionFooterHeight="1" id="B8R-3q-hQT">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="1" sectionFooterHeight="1" id="B8R-3q-hQT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1989,36 +1989,36 @@
                                     <outlet property="sizeTextField" destination="M6l-Vf-L5e" id="jvC-qA-p2a"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SizeAndQuantityWithMinusCellReusableIdentifier" rowHeight="69" id="Wvy-hp-1Lv" customClass="SizeAndQuantityTableViewCell">
-                                <rect key="frame" x="0.0" y="69" width="320" height="69"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SizeAndQuantityWithMinusCellReusableIdentifier" rowHeight="50" id="Wvy-hp-1Lv" customClass="SizeAndQuantityTableViewCell">
+                                <rect key="frame" x="0.0" y="69" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wvy-hp-1Lv" id="quZ-2J-hdi">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" tag="1001" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Size" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bcG-a9-0ZL">
-                                            <rect key="frame" x="6" y="15" width="197" height="40"/>
+                                            <rect key="frame" x="6" y="5" width="197" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
-                                                <action selector="sizeTextFieldDidChange:" destination="Wvy-hp-1Lv" eventType="editingChanged" id="Sle-tf-6h7"/>
+                                                <action selector="sizeTextFieldDidChange:" destination="Wvy-hp-1Lv" eventType="editingDidEnd" id="QXL-NO-HIo"/>
                                                 <action selector="sizeTextFieldDidChange:" destination="Wvy-hp-1Lv" eventType="valueChanged" id="sn4-bJ-QwW"/>
                                             </connections>
                                         </textField>
                                         <textField opaque="NO" clipsSubviews="YES" tag="1002" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Qty" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VQY-XZ-s3n">
-                                            <rect key="frame" x="201" y="15" width="56" height="40"/>
+                                            <rect key="frame" x="201" y="5" width="56" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             <connections>
+                                                <action selector="quantityTextFieldDidChange:" destination="Wvy-hp-1Lv" eventType="editingDidEnd" id="0cr-GR-HBO"/>
                                                 <action selector="quantityTextFieldDidChange:" destination="Wvy-hp-1Lv" eventType="valueChanged" id="4EZ-dc-8mD"/>
-                                                <action selector="quantityTextFieldDidChange:" destination="Wvy-hp-1Lv" eventType="editingChanged" id="L0P-YW-CEy"/>
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBE-Q9-hFH">
-                                            <rect key="frame" x="262" y="15" width="52" height="40"/>
+                                            <rect key="frame" x="262" y="5" width="52" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
@@ -2038,15 +2038,15 @@
                                     <outlet property="sizeTextField" destination="bcG-a9-0ZL" id="XlH-g1-bSv"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddSizeAndQuantityCellReusableIdentifier" rowHeight="69" id="cV4-jm-9dt">
-                                <rect key="frame" x="0.0" y="138" width="320" height="69"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddSizeAndQuantityCellReusableIdentifier" rowHeight="50" id="cV4-jm-9dt">
+                                <rect key="frame" x="0.0" y="119" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cV4-jm-9dt" id="2wc-ok-vwn">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" tag="2001" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VmV-fV-fl1">
-                                            <rect key="frame" x="6" y="16" width="308" height="45"/>
+                                            <rect key="frame" x="6" y="4" width="308" height="45"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <state key="normal" title="Add Size">
