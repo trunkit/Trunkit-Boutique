@@ -90,15 +90,10 @@
 
 @property (strong, nonatomic) UITableView *myTableView;
 
-//@property (strong, nonatomic) UIImage *suppliedImage;
-//@property (strong, nonatomic) UIImage *helpImage;
-//@property (strong, nonatomic) UIImage *termsImage;
-//@property (strong, nonatomic) UIImage *signoutImage;
 @property (strong, nonatomic) UIImage *suppliedInvertedImage;
 @property (strong, nonatomic) UIImage *helpInvertedImage;
 @property (strong, nonatomic) UIImage *termsInvertedImage;
 @property (strong, nonatomic) UIImage *signoutInvertedImage;
-
 
 @end
 
@@ -136,17 +131,24 @@
     self.helpInvertedImage = [[UIImage imageNamed:@"helpMenuItemImage"] negativeImage];
     self.termsInvertedImage = [[UIImage imageNamed:@"termsMenuItemImage"] negativeImage];
     self.signoutInvertedImage = [[UIImage imageNamed:@"signOutMenuImteImage"] negativeImage];
+    
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
 }
 
 - (void)setFixedStatusBar
 {
     self.myTableView = self.tableView;
     
-    self.view = [[UIView alloc] initWithFrame:self.view.bounds];
+    CGRect frame = self.view.bounds;
+    self.view = [[UIView alloc] initWithFrame:frame];
     self.view.backgroundColor = self.myTableView.backgroundColor;
     [self.view addSubview:self.myTableView];
     
-    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAX(self.view.frame.size.width,self.view.frame.size.height), 20)];
+    CGRect tableViewFrame = self.myTableView.frame;
+    tableViewFrame.origin.y -= 2;
+    self.myTableView.frame = tableViewFrame;
+    
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAX(frame.size.width, frame.size.height), 20)];
     statusBarView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:statusBarView];
 }
