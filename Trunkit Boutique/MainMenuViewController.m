@@ -82,12 +82,15 @@
 
 - (void) configureSlideLayer:(CALayer *)layer
 {
-    layer.shadowColor = [UIColor blackColor].CGColor;
-    layer.shadowOpacity = 1;
-    layer.shadowOffset = CGSizeMake(0, 0);
-    layer.shadowRadius = 5;
-    layer.masksToBounds = NO;
-    layer.shadowPath =[UIBezierPath bezierPathWithRect:self.view.layer.bounds].CGPath;
+    layer.borderColor = [UIColor blackColor].CGColor;
+    layer.borderWidth = 2.0f;
+    
+//    layer.shadowColor = [UIColor blackColor].CGColor;
+//    layer.shadowOpacity = 1;
+//    layer.shadowOffset = CGSizeMake(0, 0);
+//    layer.shadowRadius = 5;
+//    layer.masksToBounds = NO;
+//    layer.shadowPath =[UIBezierPath bezierPathWithRect:self.view.layer.bounds].CGPath;
 }
 
 - (AMPrimaryMenu)primaryMenu
