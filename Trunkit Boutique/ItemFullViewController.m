@@ -62,6 +62,26 @@
 
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    UIFont *regularFont = [UIFont fontWithName:@"HelveticaLTStd-LightCond" size:16.0];
+    NSString *desc = self.descriptionTextView.text;
+    desc = [desc stringByAppendingString:@"\n\n\n\n"];
+    CGSize maxSize = CGSizeMake(self.descriptionTextView.frame.size.width, 999);
+    CGRect textViewRext = [desc boundingRectWithSize:maxSize
+                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                          attributes:@{NSFontAttributeName:regularFont}
+                                             context:NULL];
+    
+    CGRect frame = self.descriptionTextView.frame;
+    frame.size.height = textViewRext.size.height + textViewRext.origin.y;
+    self.descriptionTextView.frame = frame;
+//    [self.detailsContainerView sizeToFit];
+
+}
+
 - (void)handleImageTap:(UIPanGestureRecognizer *)gestureRecognizer
 {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -108,12 +128,6 @@
     self.photoPagesViewController = vc2;
     vc2.view.frame = self.itemPhotosContainerView.bounds;
     [self.itemPhotosContainerView addSubview:vc2.view];
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    
 }
 
 - (void)didReceiveMemoryWarning

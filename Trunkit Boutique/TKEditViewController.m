@@ -90,6 +90,9 @@
 {
     [super viewDidLayoutSubviews];
     
+    [self.detailsContainerView sizeToFit];
+    self.scrollView.contentSize = self.detailsContainerView.frame.size;
+
     // WTF
     if (self.scrollView.frame.origin.y == 20)
     {
@@ -98,7 +101,6 @@
     }
     else
     {
-        self.scrollView.contentSize = self.detailsContainerView.frame.size;
         [self.scrollView setContentOffset:CGPointZero animated:NO];
     }
 
