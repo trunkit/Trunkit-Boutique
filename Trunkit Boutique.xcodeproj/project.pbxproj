@@ -90,6 +90,7 @@
 		82A0C7181969A5DC00C5B97F /* ReviewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C7171969A5DC00C5B97F /* ReviewItemViewController.m */; };
 		82A0C71B1969C3EC00C5B97F /* TKEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71A1969C3EC00C5B97F /* TKEditViewController.m */; };
 		82A0C71E1969C54E00C5B97F /* ItemFullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71D1969C54E00C5B97F /* ItemFullViewController.m */; };
+		82B7983619B7EF34002AD686 /* PhotoFullscreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82B7983519B7EF34002AD686 /* PhotoFullscreenViewController.m */; };
 		82BE82A519A59894006126A0 /* TKImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BE82A419A59894006126A0 /* TKImage.m */; };
 		82BE82A819A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BE82A719A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.m */; };
 		82CCD55C1999BB970053E08B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CCD55B1999BB970053E08B /* CoreMedia.framework */; };
@@ -251,6 +252,8 @@
 		82A0C71A1969C3EC00C5B97F /* TKEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKEditViewController.m; sourceTree = "<group>"; };
 		82A0C71C1969C54E00C5B97F /* ItemFullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemFullViewController.h; sourceTree = "<group>"; };
 		82A0C71D1969C54E00C5B97F /* ItemFullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemFullViewController.m; sourceTree = "<group>"; };
+		82B7983419B7EF34002AD686 /* PhotoFullscreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoFullscreenViewController.h; sourceTree = "<group>"; };
+		82B7983519B7EF34002AD686 /* PhotoFullscreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoFullscreenViewController.m; sourceTree = "<group>"; };
 		82BE82A319A59894006126A0 /* TKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImage.h; sourceTree = "<group>"; };
 		82BE82A419A59894006126A0 /* TKImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImage.m; sourceTree = "<group>"; };
 		82BE82A619A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+TKSingleton.h"; sourceTree = "<group>"; };
@@ -456,6 +459,8 @@
 				82BE82A719A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.m */,
 				8283EEFD19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.h */,
 				8283EEFE19AECE2200CD2401 /* EditItemSizeAndQuantityViewController.m */,
+				82B7983419B7EF34002AD686 /* PhotoFullscreenViewController.h */,
+				82B7983519B7EF34002AD686 /* PhotoFullscreenViewController.m */,
 			);
 			path = "Trunkit Boutique";
 			sourceTree = "<group>";
@@ -763,6 +768,7 @@
 				821FAB4A198455D000A4ACA5 /* SuppliedItemsViewController.m in Sources */,
 				821C3EED197F68F300568E85 /* SizeAndQuantityTableViewCell.m in Sources */,
 				82EC639C197B092C002CA430 /* UIImage+TKImageScale.m in Sources */,
+				82B7983619B7EF34002AD686 /* PhotoFullscreenViewController.m in Sources */,
 				82FF6BD6196871CD0005553E /* SupplyAnItemPage4ViewController.m in Sources */,
 				828DA78F199DB86D006FA328 /* UIViewController+AMSlideMenu.m in Sources */,
 				8278D7B8196B8F73000B2B40 /* TextFieldSearchResultsTableViewController.m in Sources */,
