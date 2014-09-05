@@ -68,18 +68,25 @@
     
     UIFont *regularFont = [UIFont fontWithName:@"HelveticaLTStd-LightCond" size:16.0];
     NSString *desc = self.descriptionTextView.text;
-    desc = [desc stringByAppendingString:@"\n\n\n\n"];
-    CGSize maxSize = CGSizeMake(self.descriptionTextView.frame.size.width, 999);
+//    desc = [desc stringByAppendingString:@"\n\n\n\n"];
+    CGSize maxSize = CGSizeMake(self.descriptionTextView.frame.size.width, 99999);
     CGRect textViewRext = [desc boundingRectWithSize:maxSize
                                              options:NSStringDrawingUsesLineFragmentOrigin
                                           attributes:@{NSFontAttributeName:regularFont}
                                              context:NULL];
     
     CGRect frame = self.descriptionTextView.frame;
-    frame.size.height = textViewRext.size.height + textViewRext.origin.y;
+    frame.size.height = textViewRext.size.height; // + textViewRext.origin.y;
     self.descriptionTextView.frame = frame;
-//    [self.detailsContainerView sizeToFit];
-
+//    [self.descriptionTextView setNeedsDisplay];
+    
+//    NSLog(@"TextView Y/Height = %f - %f", frame.origin.y, frame.size.height);
+//    NSLog(@"Container Y/height = %f - %f", self.detailsContainerView.frame.origin.y, self.detailsContainerView.frame.size.height);
+    
+    CGRect containerFrame = self.detailsContainerView.frame;
+    containerFrame.size.height = frame.size.height + frame.origin.y + 30;
+    self.detailsContainerView.frame = containerFrame;
+    self.scrollView.contentSize = self.detailsContainerView.frame.size;
 }
 
 - (void)handleImageTap:(UIPanGestureRecognizer *)gestureRecognizer
