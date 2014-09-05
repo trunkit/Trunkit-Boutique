@@ -25,8 +25,8 @@
         self.backgroundColor = [UIColor clearColor];
         self.exclusiveTouch = YES;
         
-        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        [self addGestureRecognizer:gestureRecognizer];
+//        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+//        [self addGestureRecognizer:gestureRecognizer];
     }
     
     return self;
