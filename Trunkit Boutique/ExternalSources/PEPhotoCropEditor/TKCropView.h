@@ -34,13 +34,7 @@
 
 - (void)setRotationAngle:(CGFloat)rotationAngle snap:(BOOL)snap;
 
-- (void)resetZoomingRect;
 
-@property (nonatomic) CGRect savedZoomingRect;
-@property (nonatomic) CGRect savedScrollRect;
-@property (nonatomic) CGRect savedImageRect;
-
-- (void)setCropAspectRatio:(CGFloat)aspectRatio andCenter:(BOOL)center zoom:(BOOL)zoomFlag;
 - (UIImage *)imageCroppedWithImage:(UIImage *)image;
 
 @end

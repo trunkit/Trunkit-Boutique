@@ -65,8 +65,6 @@ static const CGFloat MarginLeft = 0.0f;
 
 - (void)commonInit
 {
-    self.savedZoomingRect = CGRectZero;
-    
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.backgroundColor = [UIColor clearColor];
     
@@ -194,63 +192,34 @@ static const CGFloat MarginLeft = 0.0f;
 - (void)setupImageView
 {
     CGRect cropRect = AVMakeRectWithAspectRatioInsideRect(self.image.size, self.insetRect);
-    CGRect scrollRect = (CGRectEqualToRect(self.savedScrollRect, CGRectZero)) ? cropRect : self.savedScrollRect;
     
-//    self.scrollView.frame = cropRect;
-//    self.scrollView.contentSize = cropRect.size;
-    self.scrollView.frame = scrollRect;
-    self.scrollView.contentSize = scrollRect.size;
+    self.scrollView.frame = cropRect;
+    self.scrollView.contentSize = cropRect.size;
     
-    CGRect zoomingRect = (CGRectEqualToRect(self.savedZoomingRect, CGRectZero)) ? self.scrollView.bounds : self.savedZoomingRect;
-    
-//    self.zoomingView = [[UIView alloc] initWithFrame:self.scrollView.bounds];
-    self.zoomingView = [[UIView alloc] initWithFrame:zoomingRect];
+    self.zoomingView = [[UIView alloc] initWithFrame:self.scrollView.bounds];
     self.zoomingView.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:self.zoomingView];
-
-    CGRect imageRect = (CGRectEqualToRect(self.savedImageRect, CGRectZero)) ? self.zoomingView.bounds : self.savedImageRect;
-
-//    self.imageView = [[UIImageView alloc] initWithFrame:self.zoomingView.bounds];
-    self.imageView = [[UIImageView alloc] initWithFrame:imageRect];
+    
+    self.imageView = [[UIImageView alloc] initWithFrame:self.zoomingView.bounds];
     self.imageView.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     self.imageView.image = self.image;
     [self.zoomingView addSubview:self.imageView];
 }
 
-- (void)resetZoomingRect
-{
-//    CGRect cropRect = AVMakeRectWithAspectRatioInsideRect(self.image.size, self.insetRect);
-//    self.scrollView.frame = cropRect;
-//    self.scrollView.contentSize = cropRect.size;
-    
-//    CGRect zoomingRect = self.scrollView.bounds;
-//    self.zoomingView.frame = zoomingRect;
-}
-
 #pragma mark -
 
 - (void)setImage:(UIImage *)image
 {
-    BOOL initLayout = (!_image);
     _image = image;
     
-    if (initLayout)
-    {
-        self.savedZoomingRect = (initLayout) ? CGRectZero : self.zoomingView.frame;
-        self.savedScrollRect = (initLayout) ? CGRectZero : self.scrollView.frame;
-        self.savedImageRect = (initLayout) ? CGRectZero : self.imageView.frame;
-        
-        [self.imageView removeFromSuperview];
-        self.imageView = nil;
-        [self.zoomingView removeFromSuperview];
-        self.zoomingView = nil;
-        [self setNeedsLayout];
-    }
-    else
-    {
-        self.imageView.image = _image;
-    }
+    [self.imageView removeFromSuperview];
+    self.imageView = nil;
+    
+    [self.zoomingView removeFromSuperview];
+    self.zoomingView = nil;
+    
+    [self setNeedsLayout];
 }
 
 - (void)setKeepingCropAspectRatio:(BOOL)keepingCropAspectRatio
@@ -261,15 +230,9 @@ static const CGFloat MarginLeft = 0.0f;
 
 - (void)setCropAspectRatio:(CGFloat)aspectRatio andCenter:(BOOL)center
 {
-    [self setCropAspectRatio:aspectRatio andCenter:center zoom:YES];
-}
-
-- (void)setCropAspectRatio:(CGFloat)aspectRatio andCenter:(BOOL)center zoom:(BOOL)zoomFlag
-{
     CGRect cropRect = self.scrollView.frame;
-    CGFloat width = _image.size.width / _image.scale;
-    CGFloat height = _image.size.height / _image.scale;
-    
+    CGFloat width = CGRectGetWidth(cropRect);
+    CGFloat height = CGRectGetHeight(cropRect);
     if (aspectRatio <= 1.0f) {
         width = height * aspectRatio;
         if (width > CGRectGetWidth(self.imageView.bounds)) {
@@ -284,15 +247,8 @@ static const CGFloat MarginLeft = 0.0f;
         }
     }
     cropRect.size = CGSizeMake(width, height);
-    
-    // FIXME: Works but dirty
-    CGRect zoomRect = CGRectMake(80.0, 0.0, 160.0, 320.0);
-    
-    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.scrollView.bounds = cropRect;
-        [self.scrollView zoomToRect:zoomRect animated:NO];
-        [self layoutCropRectViewWithCropRect:cropRect];
-    } completion:NULL];
+
+    [self zoomToCropRect:cropRect andCenter:center];
 }
 
 - (void)setCropAspectRatio:(CGFloat)aspectRatio
@@ -517,15 +473,18 @@ static const CGFloat MarginLeft = 0.0f;
                                  scaledHeight);
     
     CGRect zoomRect = [self convertRect:toRect toView:self.zoomingView];
-    zoomRect.size.width = CGRectGetWidth(cropRect) / (self.scrollView.zoomScale * scale);
-    zoomRect.size.height = CGRectGetHeight(cropRect) / (self.scrollView.zoomScale * scale);
+    CGFloat zoomScale = self.scrollView.zoomScale;
+    zoomScale = 1; // Remove this to re-enable auto-zoom along with the pan gesture
+    
+    zoomRect.size.width = CGRectGetWidth(cropRect) / (zoomScale * scale);
+    zoomRect.size.height = CGRectGetHeight(cropRect) / (zoomScale * scale);
     
     if(center) {
         CGRect imageViewBounds = self.imageView.bounds;
         zoomRect.origin.y = (CGRectGetHeight(imageViewBounds) / 2) - (CGRectGetHeight(zoomRect) / 2);
         zoomRect.origin.x = (CGRectGetWidth(imageViewBounds) / 2) - (CGRectGetWidth(zoomRect) / 2);
     }
-    
+
     [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.scrollView.bounds = cropRect;
         [self.scrollView zoomToRect:zoomRect animated:NO];
