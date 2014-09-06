@@ -54,7 +54,7 @@
 - (IBAction)minusButtonTapped:(id)sender
 {
     NSInteger qty = [self.quantityTextField.text integerValue];
-    self.quantityTextField.text = [NSString stringWithFormat:@"%d", (qty == 0) ? 0 : (qty - 1)];
+    self.quantityTextField.text = [NSString stringWithFormat:@"%ld", (qty == 0) ? 0 : (qty - 1)];
     [self quantityTextFieldDidChange:nil];
 }
 
