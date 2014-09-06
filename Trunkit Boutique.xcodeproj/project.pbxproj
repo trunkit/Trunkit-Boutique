@@ -375,6 +375,7 @@
 		82375FFC1963A6C700010A00 /* Trunkit Boutique */ = {
 			isa = PBXGroup;
 			children = (
+				82375FFD1963A6C700010A00 /* Supporting Files */,
 				8233B7E3196E3A6E00333FE9 /* Model */,
 				823760051963A6C700010A00 /* AppDelegate.h */,
 				823760061963A6C700010A00 /* AppDelegate.m */,
@@ -382,7 +383,6 @@
 				8237600B1963A6C700010A00 /* ViewController.h */,
 				8237600C1963A6C700010A00 /* ViewController.m */,
 				8237600E1963A6C700010A00 /* Images.xcassets */,
-				82375FFD1963A6C700010A00 /* Supporting Files */,
 				823760321963ADC300010A00 /* ItemsTableViewController.h */,
 				823760331963ADC300010A00 /* ItemsTableViewController.m */,
 				8222B58C197203B900F49905 /* CameraViewController.h */,
