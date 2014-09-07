@@ -43,7 +43,7 @@
     self.photoCollectionExpanderController = vc;
     
     vc.view.frame = self.collectionContainerView.bounds;
-    vc.itemPhotosContainerView = self.itemPhotosContainerView;
+//    vc.itemPhotosContainerView = self.itemPhotosContainerView;
     [self.collectionContainerView addSubview:vc.view];
     
     
@@ -126,7 +126,7 @@
     if ([segue.identifier isEqualToString:@"PhotoSelectionToPhotoCollectionEmbededSegueIdentifier"])
     {
         TKSwipeToExpandViewController *vc = (TKSwipeToExpandViewController *)segue.destinationViewController;
-        vc.itemPhotosContainerView = self.itemPhotosContainerView;
+//        vc.itemPhotosContainerView = self.itemPhotosContainerView;
     }
 //    if ([segue.destinationViewController isKindOfClass:[TKSwipeToExpandViewController class]])
 //    {

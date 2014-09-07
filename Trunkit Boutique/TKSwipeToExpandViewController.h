@@ -21,7 +21,7 @@ typedef enum
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *photoCollectionContainerHeightCon;
 
 @property (strong, nonatomic) IBOutlet UIView *containerView;
-@property (strong, nonatomic) UIView *itemPhotosContainerView;
+//@property (strong, nonatomic) UIView *itemPhotosContainerView;
 
 //@property (strong, nonatomic) IBOutlet UIView *sizingView;
 

@@ -2629,31 +2629,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGO-2Y-H0s">
-                                <rect key="frame" x="0.0" y="390" width="320" height="110"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="40c-N2-sVH">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="100"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </containerView>
-                                </subviews>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="40c-N2-sVH">
+                                <rect key="frame" x="0.0" y="400" width="320" height="100"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="40c-N2-sVH" secondAttribute="bottom" id="BO4-hw-0Af"/>
-                                    <constraint firstAttribute="height" constant="110" id="Hfy-Lk-bsk"/>
-                                    <constraint firstAttribute="trailing" secondItem="40c-N2-sVH" secondAttribute="trailing" id="OVR-Xa-KxH"/>
-                                    <constraint firstItem="40c-N2-sVH" firstAttribute="leading" secondItem="BGO-2Y-H0s" secondAttribute="leading" id="Un3-D2-ikO"/>
-                                    <constraint firstItem="40c-N2-sVH" firstAttribute="top" secondItem="BGO-2Y-H0s" secondAttribute="top" constant="10" id="Zzl-KE-pbh"/>
+                                    <constraint firstAttribute="height" constant="100" id="pAU-zD-AsA"/>
                                 </constraints>
-                            </view>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BGO-2Y-H0s" firstAttribute="leading" secondItem="9Qc-Jy-jei" secondAttribute="leading" id="eTK-iK-T1S"/>
-                            <constraint firstAttribute="trailing" secondItem="BGO-2Y-H0s" secondAttribute="trailing" id="mbs-UQ-nMd"/>
-                            <constraint firstItem="qGg-dz-WuA" firstAttribute="top" secondItem="BGO-2Y-H0s" secondAttribute="bottom" id="onb-6x-ec8"/>
+                            <constraint firstItem="qGg-dz-WuA" firstAttribute="top" secondItem="40c-N2-sVH" secondAttribute="bottom" id="GHm-v3-fV5"/>
+                            <constraint firstItem="40c-N2-sVH" firstAttribute="leading" secondItem="9Qc-Jy-jei" secondAttribute="leading" id="SDy-7v-gtw"/>
+                            <constraint firstAttribute="trailing" secondItem="40c-N2-sVH" secondAttribute="trailing" id="uXd-Cv-Y2s"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -2661,7 +2650,7 @@
                     <size key="freeformSize" width="320" height="500"/>
                     <connections>
                         <outlet property="containerView" destination="40c-N2-sVH" id="bu3-qi-FVn"/>
-                        <outlet property="photoCollectionContainerHeightCon" destination="Hfy-Lk-bsk" id="tyB-2T-K4y"/>
+                        <outlet property="photoCollectionContainerHeightCon" destination="pAU-zD-AsA" id="Snj-q3-4T1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5pr-2x-Xtl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2925,13 +2914,13 @@
                                     <action selector="backButtonTapped:" destination="ntl-Z3-Ota" eventType="touchUpInside" id="CRm-YP-y34"/>
                                 </connections>
                             </button>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qk1-uR-tE0">
-                                <rect key="frame" x="6" y="56" width="308" height="506"/>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wty-93-5Os">
+                                <rect key="frame" x="0.0" y="56" width="320" height="396"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </containerView>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wty-93-5Os">
-                                <rect key="frame" x="0.0" y="56" width="320" height="396"/>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qk1-uR-tE0">
+                                <rect key="frame" x="6" y="56" width="308" height="506"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </containerView>
