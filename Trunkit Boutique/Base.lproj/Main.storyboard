@@ -2625,7 +2625,7 @@
                         <viewControllerLayoutGuide type="top" id="nfO-ZR-dLI"/>
                         <viewControllerLayoutGuide type="bottom" id="qGg-dz-WuA"/>
                     </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="9Qc-Jy-jei">
+                    <view key="view" opaque="NO" clipsSubviews="YES" contentMode="center" id="9Qc-Jy-jei">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
