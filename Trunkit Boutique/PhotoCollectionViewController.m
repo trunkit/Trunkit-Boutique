@@ -45,7 +45,6 @@
 
 @interface PhotoCollectionViewController ()
 
-@property(nonatomic, strong) IBOutlet TKCollectionView *collectionView;
 @property(strong, nonatomic) NSMutableArray *photos;
 //@property(nonatomic, strong) NSArray *assets;
 @property (strong, nonatomic) NSMutableDictionary *cachedImages;
@@ -77,6 +76,7 @@
 //    [feedPanRecognizer setMinimumNumberOfTouches:1];
 //    [feedPanRecognizer setMaximumNumberOfTouches:3];
 //    [feedPanRecognizer setDelaysTouchesBegan:YES];
+//    [feedPanRecognizer setDelegate:self];
 //	[self.collectionView addGestureRecognizer:feedPanRecognizer];
     
 //    NSArray *recos = self.collectionView.gestureRecognizers;
@@ -96,9 +96,10 @@
 //
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 //{
+//    NSLog(@"%s", __PRETTY_FUNCTION__);
 //    return YES;
 //}
-
+//
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];

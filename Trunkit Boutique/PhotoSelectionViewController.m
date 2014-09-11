@@ -13,9 +13,7 @@
 
 @interface PhotoSelectionViewController ()
 
-//@property (strong, nonatomic) IBOutlet NSLayoutConstraint *photoCollectionContainerHeightCon;
 @property (strong, nonatomic) PhotoCollectionViewController *photosCollectionController;
-//@property (strong, nonatomic) PhotoScrollViewController *photoScrollViewController;
 @property (strong, nonatomic) PhotoPagesViewController  *photoPagesViewController;
 @property (strong, nonatomic) TKSwipeToExpandViewController *photoCollectionExpanderController;
 
@@ -38,21 +36,18 @@
     [self applyThemeToBlackButton:self.takeButton withFontSize:14.0];
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-	TKSwipeToExpandViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TKSwipeToExpandViewControllerIdentifier"];
-	[self addChildViewController:vc];
-    self.photoCollectionExpanderController = vc;
-    
-    vc.view.frame = self.collectionContainerView.bounds;
-    vc.itemPhotosContainerView = self.itemPhotosContainerView;
-    [self.collectionContainerView addSubview:vc.view];
+	TKSwipeToExpandViewController *expander = [sb instantiateViewControllerWithIdentifier:@"TKSwipeToExpandViewControllerIdentifier"];
+    self.photoCollectionExpanderController = expander;
+    expander.view.frame = self.collectionContainerView.bounds;
+    [self.collectionContainerView addSubview:expander.view];
     
     
     PhotoCollectionViewController *collection = [sb instantiateViewControllerWithIdentifier:@"PhotoCollectionViewControllerIdentifier"];
-//    [vc addChildViewController:vc3];
     self.photosCollectionController = collection;
     collection.delegate = self;
-    collection.view.frame = vc.containerView.bounds;
-    [vc.containerView addSubview:collection.view];
+    collection.view.frame = expander.containerView.bounds;
+    [expander.containerView addSubview:collection.view];
+    expander.collectionView = collection.collectionView;
     
     // FIXME: Add persisted selected photos
 
@@ -65,8 +60,8 @@
     PhotoPagesViewController *pages = [sb instantiateViewControllerWithIdentifier:@"PhotoPagesViewControllerIdentifier"];
     pages.merchandiseItem = self.merchandiseItem;
     self.photoPagesViewController = pages;
-    pages.view.frame = self.itemPhotosContainerView.bounds;
-    [self.itemPhotosContainerView addSubview:pages.view];
+    pages.view.frame = expander.pagesContainerView.bounds;
+    [expander.pagesContainerView addSubview:pages.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -85,14 +80,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-//    self.photoScrollViewController.view.frame = self.itemPhotosContainerView.bounds;
-    self.photoPagesViewController.view.frame = self.itemPhotosContainerView.bounds;
-    self.photoCollectionExpanderController.view.frame = self.collectionContainerView.bounds;
 }
 
 #pragma mark - PhotoCollection Delegate
@@ -118,22 +105,6 @@
 }
 
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    [super prepareForSegue:segue sender:sender];
-    if ([segue.identifier isEqualToString:@"PhotoSelectionToPhotoCollectionEmbededSegueIdentifier"])
-    {
-        TKSwipeToExpandViewController *vc = (TKSwipeToExpandViewController *)segue.destinationViewController;
-        vc.itemPhotosContainerView = self.itemPhotosContainerView;
-    }
-//    if ([segue.destinationViewController isKindOfClass:[TKSwipeToExpandViewController class]])
-//    {
-//        TKSwipeToExpandViewController *vc = (TKSwipeToExpandViewController *)segue.destinationViewController;
-//        vc.itemPhotosContainerView = self.itemPhotosContainerView;
-//    }
-}
 
 - (IBAction)takeButtonTapped:(id)sender
 {

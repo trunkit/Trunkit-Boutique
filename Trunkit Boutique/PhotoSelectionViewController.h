@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *takeButton;
 @property (strong, nonatomic) IBOutlet UIView *collectionContainerView;
-@property (strong, nonatomic) IBOutlet UIView *itemPhotosContainerView;
 
 - (IBAction)takeButtonTapped:(id)sender;
 - (IBAction)takeButtonFromReviewTapped:(id)sender;

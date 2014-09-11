@@ -260,4 +260,12 @@
     return newVC;
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    NSLog(@"%s - %@ - %@", __PRETTY_FUNCTION__, gestureRecognizer, otherGestureRecognizer);
+    return YES;
+}
+
+
+
 @end

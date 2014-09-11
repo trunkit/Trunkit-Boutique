@@ -11,7 +11,9 @@
 @interface TKSwipeToExpandViewController ()
 
 @property (readwrite, nonatomic) TKSwipeToExpandViewPosition currentPosition;
-//@property (nonatomic) CGRect originalFrame;
+@property (readwrite, nonatomic) CGFloat collapsedHeight;
+@property (readwrite, nonatomic) CGPoint downPoint;
+@property (readwrite, nonatomic) BOOL panGestureComplete;
 
 @end
 
@@ -20,20 +22,38 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
+        [self commonInit];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (void)commonInit
+{
+    _currentPosition = TKSwipeToExpandViewPositionCollapsed;
+    _panGestureComplete = YES;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _currentPosition = TKSwipeToExpandViewPositionCollapsed;
+    _collapsedHeight = self.photoCollectionContainerHeightCon.constant;
     
-	UIPanGestureRecognizer *feedPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerSwipe:)];
+	UIPanGestureRecognizer *feedPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [feedPanRecognizer setMinimumNumberOfTouches:1];
     [feedPanRecognizer setMaximumNumberOfTouches:3];
+    [feedPanRecognizer setDelegate:self];
     [feedPanRecognizer setDelaysTouchesBegan:YES];
 	[self.view addGestureRecognizer:feedPanRecognizer];
 }
@@ -43,110 +63,104 @@
     return NO;
 }
 
-
-//- (void)viewDidLayoutSubviews
-//{
-//    [super viewDidLayoutSubviews];
-//    if (_currentPosition == TKSwipeToExpandViewPositionCollapsed)
-//        _originalFrame = [self viewToExpand].frame;
-//    
-//}
-
-//- (UIView *)viewToExpand
-//{
-////    return self.sizingView;
-//    return self.view.superview;
-////    return self.view;
-//}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)handleTwoFingerSwipe:(UIPanGestureRecognizer *)gestureRecognizer
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    //NSLog(@"%s", __PRETTY_FUNCTION__);
-    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
-        return;
-    
-    
-    
-    
-    /*
-     *
-     
-    CGRect toFrame = CGRectZero;
-    
-    NSLog(@"View bounds : (%f, %f, %f, %f)", [self viewToExpand].bounds.origin.x, [self viewToExpand].bounds.origin.y, [self viewToExpand].bounds.size.width, [self viewToExpand].bounds.size.height);
-    NSLog(@"View frame : (%f, %f, %f, %f)", [self viewToExpand].frame.origin.x, [self viewToExpand].frame.origin.y, [self viewToExpand].frame.size.width, [self viewToExpand].frame.size.height);
-    
-    if (self.currentPosition == TKSwipeToExpandViewPositionCollapsed)
-    {
-        toFrame = self.originalFrame;
-        toFrame.size.height = self.originalFrame.origin.y + self.originalFrame.size.height;// - 64;
-        toFrame.origin.y = 64;
-//        toFrame.size.height = 300;
-//        toFrame.origin.y = 0;
-        self.currentPosition = TKSwipeToExpandViewPositionExpanded;
-    }
-    else
-    {
-        toFrame = self.originalFrame;
-        self.currentPosition = TKSwipeToExpandViewPositionCollapsed;
-    }
-    [self viewToExpand].frame = toFrame;
-    CGRect toSelfFrame = self.sizingView.frame;
-    toSelfFrame.size.height = toFrame.size.height;
-
-    self.sizingView.frame = toSelfFrame;
-//    [self.sizingView setNeedsDisplay];
-//    [self.sizingView setNeedsLayout];
-     
-     */
-    
-
-    if (self.currentPosition == TKSwipeToExpandViewPositionCollapsed)
-    {
-        self.currentPosition = TKSwipeToExpandViewPositionExpanded;
-    }
-    else
-    {
-        self.currentPosition = TKSwipeToExpandViewPositionCollapsed;
-    }
-
-    [UIView animateWithDuration:0.5
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^(void){
-                         self.photoCollectionContainerHeightCon.constant = (_currentPosition == TKSwipeToExpandViewPositionCollapsed)
-                         ? 110 : (self.view.frame.size.height);
-                         
-                         self.itemPhotosContainerView.alpha = (_currentPosition == TKSwipeToExpandViewPositionCollapsed) ? 1.0 : 0.0;
-                         
-                         [self.view layoutIfNeeded];
-//                         [self.sizingView layoutIfNeeded];
-//                         [[self viewToExpand] layoutSubviews];
-//                         [self.view layoutSubviews];
-                         
-                     }completion:^(BOOL finished) {
-//                         [self.view layoutSubviews];
-//                         CGRect containerFrame = toFrame;
-//                         containerFrame.size.height -= 30;
-//                         self.containerView.frame = containerFrame;
-                     }];
+    return YES;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(void)handlePan:(UIPanGestureRecognizer *)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    CGPoint location = [sender locationInView:self.view];
+    CGFloat collapsedY = self.view.bounds.size.height - _collapsedHeight;
+    
+    if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan)
+    {
+        _downPoint = location;
+    }
+    else if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateChanged)
+    {
+        BOOL pan = ((location.y > 0) && (location.y < collapsedY)) ? YES : NO;
+        CGFloat deltaY = location.y;
+        CGFloat minDragLength = 0.0f;
+        if (_currentPosition == TKSwipeToExpandViewPositionExpanded)
+        {
+            minDragLength = 50.0f;
+            deltaY = location.y - _downPoint.y;
+            if ((deltaY < minDragLength) || (_downPoint.y > 100))
+            {
+                pan = NO;
+            }
+        }
+        else
+        {
+            if (_downPoint.y < collapsedY)
+            {
+                pan = NO;
+            }
+        }
+        
+        if (pan)
+        {
+            [self moveCollectionContainerToY:location.y - ((_currentPosition == TKSwipeToExpandViewPositionExpanded) ? (minDragLength + _downPoint.y) : 0)];
+            _panGestureComplete = NO;
+            [self.collectionView setScrollEnabled:NO];
+        }
+    }
+    
+    if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded)
+    {
+        if (!_panGestureComplete)
+        {
+            CGPoint velocity = [sender velocityInView:self.view];
+            TKSwipeToExpandViewPosition positionAfterAnimation = TKSwipeToExpandViewPositionCollapsed;
+            CGFloat newHeight = _collapsedHeight;
+            
+            if (velocity.y <= 0)
+            {
+                newHeight = self.view.bounds.size.height;
+                positionAfterAnimation = TKSwipeToExpandViewPositionExpanded;
+            }
+            
+            CGFloat velocityY = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y);
+            CGFloat animationDuration = (ABS(velocityY)*.0002)+.2;
+            
+            [UIView animateWithDuration:animationDuration
+                                  delay:0.0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^(void){
+                                 CGFloat toY = 0;
+                                 if (positionAfterAnimation == TKSwipeToExpandViewPositionCollapsed)
+                                 {
+                                     toY = self.view.frame.size.height - _collapsedHeight;
+                                 }
+                                 [self moveCollectionContainerToY:toY];
+                             }completion:^(BOOL finished) {
+                                 if (finished)
+                                 {
+                                     self.currentPosition = positionAfterAnimation;
+                                     _panGestureComplete = YES;
+                                 }
+                                 [self.collectionView setScrollEnabled:YES];
+                             }];
+        }
+    }
 }
-*/
+
+- (void)moveCollectionContainerToY:(CGFloat)y
+{
+    CGFloat height = self.view.frame.size.height - y;
+    self.photoCollectionContainerHeightCon.constant = height;
+    CGRect frame = self.containerView.frame;
+    frame.origin.y = y;
+    frame.size.height = height;
+    self.containerView.frame = frame;
+    [self.view layoutIfNeeded];
+}
 
 @end

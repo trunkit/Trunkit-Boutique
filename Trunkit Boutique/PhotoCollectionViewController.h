@@ -22,6 +22,8 @@
 
 @interface PhotoCollectionViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
+@property(nonatomic, strong) IBOutlet TKCollectionView *collectionView;
+
 @property (strong, nonatomic) NSMutableArray *selectedAssets;
 @property (weak, nonatomic) id<PhotoCollectionDelegate> delegate;
 
