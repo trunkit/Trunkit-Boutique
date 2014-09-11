@@ -24,8 +24,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        _currentPosition = TKSwipeToExpandViewPositionCollapsed;
-        _panGestureComplete = YES;
+        [self commonInit];
     }
     return self;
 }
@@ -35,10 +34,15 @@
     self = [super initWithCoder:aDecoder];
     if (self)
     {
-        _currentPosition = TKSwipeToExpandViewPositionCollapsed;
-        _panGestureComplete = YES;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)commonInit
+{
+    _currentPosition = TKSwipeToExpandViewPositionCollapsed;
+    _panGestureComplete = YES;
 }
 
 - (void)viewDidLoad
@@ -46,7 +50,7 @@
     [super viewDidLoad];
     _collapsedHeight = self.photoCollectionContainerHeightCon.constant;
     
-	UIPanGestureRecognizer *feedPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+	UIPanGestureRecognizer *feedPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [feedPanRecognizer setMinimumNumberOfTouches:1];
     [feedPanRecognizer setMaximumNumberOfTouches:3];
     [feedPanRecognizer setDelegate:self];
@@ -70,7 +74,7 @@
     return YES;
 }
 
--(void)move:(UIPanGestureRecognizer *)sender
+-(void)handlePan:(UIPanGestureRecognizer *)sender
 {
     CGPoint location = [sender locationInView:self.view];
     CGFloat collapsedY = self.view.bounds.size.height - _collapsedHeight;
