@@ -2629,28 +2629,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="40c-N2-sVH">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R2U-Do-JUk">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="398"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ks8-ec-tSm">
                                 <rect key="frame" x="0.0" y="400" width="320" height="100"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="pAU-zD-AsA"/>
+                                    <constraint firstAttribute="height" constant="100" id="z71-wA-gps"/>
                                 </constraints>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qGg-dz-WuA" firstAttribute="top" secondItem="40c-N2-sVH" secondAttribute="bottom" id="GHm-v3-fV5"/>
-                            <constraint firstItem="40c-N2-sVH" firstAttribute="leading" secondItem="9Qc-Jy-jei" secondAttribute="leading" id="SDy-7v-gtw"/>
-                            <constraint firstAttribute="trailing" secondItem="40c-N2-sVH" secondAttribute="trailing" id="uXd-Cv-Y2s"/>
+                            <constraint firstAttribute="trailing" secondItem="R2U-Do-JUk" secondAttribute="trailing" id="4Ii-9E-doe"/>
+                            <constraint firstItem="R2U-Do-JUk" firstAttribute="leading" secondItem="9Qc-Jy-jei" secondAttribute="leading" id="B6F-18-NDC"/>
+                            <constraint firstAttribute="trailing" secondItem="Ks8-ec-tSm" secondAttribute="trailing" id="CxN-5h-0hp"/>
+                            <constraint firstItem="qGg-dz-WuA" firstAttribute="top" secondItem="Ks8-ec-tSm" secondAttribute="bottom" id="QkS-iW-N1A"/>
+                            <constraint firstItem="qGg-dz-WuA" firstAttribute="top" secondItem="R2U-Do-JUk" secondAttribute="bottom" constant="102" id="WBW-AY-AOr"/>
+                            <constraint firstItem="R2U-Do-JUk" firstAttribute="top" secondItem="9Qc-Jy-jei" secondAttribute="top" id="bZz-kl-9lg"/>
+                            <constraint firstItem="Ks8-ec-tSm" firstAttribute="leading" secondItem="9Qc-Jy-jei" secondAttribute="leading" id="yPH-7a-Ivr"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="500"/>
                     <connections>
-                        <outlet property="containerView" destination="40c-N2-sVH" id="bu3-qi-FVn"/>
-                        <outlet property="photoCollectionContainerHeightCon" destination="pAU-zD-AsA" id="Snj-q3-4T1"/>
+                        <outlet property="containerView" destination="Ks8-ec-tSm" id="wUB-4G-9Vy"/>
+                        <outlet property="pagesContainerView" destination="R2U-Do-JUk" id="ra3-cL-Bps"/>
+                        <outlet property="photoCollectionContainerHeightCon" destination="z71-wA-gps" id="35X-W1-8T2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5pr-2x-Xtl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2920,7 +2930,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </containerView>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qk1-uR-tE0">
-                                <rect key="frame" x="6" y="56" width="308" height="506"/>
+                                <rect key="frame" x="6" y="64" width="308" height="498"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </containerView>
@@ -2976,7 +2986,7 @@
                             <constraint firstAttribute="trailing" secondItem="yNp-Il-lNq" secondAttribute="trailing" id="FFa-yT-juK"/>
                             <constraint firstItem="yNp-Il-lNq" firstAttribute="top" secondItem="MKk-ac-daM" secondAttribute="top" id="Nmf-yG-NFj"/>
                             <constraint firstItem="T3f-8M-Omj" firstAttribute="leading" secondItem="MKk-ac-daM" secondAttribute="leading" constant="1" id="RiL-BM-5md"/>
-                            <constraint firstItem="Qk1-uR-tE0" firstAttribute="top" secondItem="N72-8S-gq8" secondAttribute="bottom" constant="36" id="TVu-QZ-bTy"/>
+                            <constraint firstItem="Qk1-uR-tE0" firstAttribute="top" secondItem="N72-8S-gq8" secondAttribute="bottom" constant="44" id="TVu-QZ-bTy"/>
                             <constraint firstItem="Wty-93-5Os" firstAttribute="top" secondItem="yNp-Il-lNq" secondAttribute="bottom" constant="-8" id="XhS-aX-Tdx"/>
                             <constraint firstItem="yNp-Il-lNq" firstAttribute="leading" secondItem="MKk-ac-daM" secondAttribute="leading" id="Zwn-ms-0ha"/>
                             <constraint firstItem="6au-iD-cug" firstAttribute="top" secondItem="N72-8S-gq8" secondAttribute="bottom" constant="1" id="gE6-lX-Mkf"/>

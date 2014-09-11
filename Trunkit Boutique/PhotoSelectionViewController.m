@@ -38,21 +38,21 @@
     [self applyThemeToBlackButton:self.takeButton withFontSize:14.0];
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-	TKSwipeToExpandViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TKSwipeToExpandViewControllerIdentifier"];
-	[self addChildViewController:vc];
-    self.photoCollectionExpanderController = vc;
+	TKSwipeToExpandViewController *expander = [sb instantiateViewControllerWithIdentifier:@"TKSwipeToExpandViewControllerIdentifier"];
+//	[self addChildViewController:vc];
+    self.photoCollectionExpanderController = expander;
     
-    vc.view.frame = self.collectionContainerView.bounds;
+    expander.view.frame = self.collectionContainerView.bounds;
 //    vc.itemPhotosContainerView = self.itemPhotosContainerView;
-    [self.collectionContainerView addSubview:vc.view];
+    [self.collectionContainerView addSubview:expander.view];
     
     
     PhotoCollectionViewController *collection = [sb instantiateViewControllerWithIdentifier:@"PhotoCollectionViewControllerIdentifier"];
 //    [vc addChildViewController:vc3];
     self.photosCollectionController = collection;
     collection.delegate = self;
-    collection.view.frame = vc.containerView.bounds;
-    [vc.containerView addSubview:collection.view];
+    collection.view.frame = expander.containerView.bounds;
+    [expander.containerView addSubview:collection.view];
     
     // FIXME: Add persisted selected photos
 
@@ -66,7 +66,7 @@
     pages.merchandiseItem = self.merchandiseItem;
     self.photoPagesViewController = pages;
     pages.view.frame = self.itemPhotosContainerView.bounds;
-    [self.itemPhotosContainerView addSubview:pages.view];
+    [expander.pagesContainerView addSubview:pages.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated
