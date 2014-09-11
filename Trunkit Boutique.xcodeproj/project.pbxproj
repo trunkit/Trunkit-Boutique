@@ -61,7 +61,6 @@
 		8237603A1963B3A400010A00 /* Helvetica Light Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 823760381963B3A400010A00 /* Helvetica Light Condensed.otf */; };
 		8237603B1963B3A400010A00 /* helvetica-condensed-bold-1361523385.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 823760391963B3A400010A00 /* helvetica-condensed-bold-1361523385.ttf */; };
 		82442E5919AAD00B00776292 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 82442E5819AAD00B00776292 /* MBProgressHUD.m */; };
-		824DB52F19B4CA3C00CB250A /* MerchandiseItem.js in Sources */ = {isa = PBXBuildFile; fileRef = 824DB52E19B4CA3C00CB250A /* MerchandiseItem.js */; };
 		82558D9C199F03DF009AFE61 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82558D9B199F03DF009AFE61 /* HelpViewController.m */; };
 		825F076419873A9000C1C0BA /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 825F076219873A9000C1C0BA /* menu.png */; };
 		825F076519873A9000C1C0BA /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 825F076319873A9000C1C0BA /* menu@2x.png */; };
@@ -779,7 +778,6 @@
 				8222B58E197203B900F49905 /* CameraViewController.m in Sources */,
 				82442E5919AAD00B00776292 /* MBProgressHUD.m in Sources */,
 				82D556CE1964FB57006CE269 /* SupplyAnItemPage1ViewController.m in Sources */,
-				824DB52F19B4CA3C00CB250A /* MerchandiseItem.js in Sources */,
 				823760071963A6C700010A00 /* AppDelegate.m in Sources */,
 				8233B7E6196E3A9400333FE9 /* MerchandiseItem.m in Sources */,
 				82EC63A9197B15B8002CA430 /* TKCropView.m in Sources */,
