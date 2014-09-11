@@ -45,7 +45,6 @@
 
 @interface PhotoCollectionViewController ()
 
-@property(nonatomic, strong) IBOutlet TKCollectionView *collectionView;
 @property(strong, nonatomic) NSMutableArray *photos;
 //@property(nonatomic, strong) NSArray *assets;
 @property (strong, nonatomic) NSMutableDictionary *cachedImages;

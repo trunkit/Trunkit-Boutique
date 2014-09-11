@@ -109,6 +109,7 @@
         {
             [self moveCollectionContainerToY:location.y - ((_currentPosition == TKSwipeToExpandViewPositionExpanded) ? (minDragLength + _downPoint.y) : 0)];
             _panGestureComplete = NO;
+            [self.collectionView setScrollEnabled:NO];
         }
     }
     
@@ -145,6 +146,7 @@
                                      self.currentPosition = positionAfterAnimation;
                                      _panGestureComplete = YES;
                                  }
+                                 [self.collectionView setScrollEnabled:YES];
                              }];
         }
     }

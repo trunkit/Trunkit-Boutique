@@ -47,6 +47,7 @@
     collection.delegate = self;
     collection.view.frame = expander.containerView.bounds;
     [expander.containerView addSubview:collection.view];
+    expander.collectionView = collection.collectionView;
     
     // FIXME: Add persisted selected photos
 

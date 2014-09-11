@@ -23,4 +23,6 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) IBOutlet UIView *pagesContainerView;
 
+@property (strong, nonatomic) UICollectionView *collectionView;
+
 @end
