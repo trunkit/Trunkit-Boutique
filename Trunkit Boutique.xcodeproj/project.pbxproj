@@ -89,6 +89,9 @@
 		82A0C7181969A5DC00C5B97F /* ReviewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C7171969A5DC00C5B97F /* ReviewItemViewController.m */; };
 		82A0C71B1969C3EC00C5B97F /* TKEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71A1969C3EC00C5B97F /* TKEditViewController.m */; };
 		82A0C71E1969C54E00C5B97F /* ItemFullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A0C71D1969C54E00C5B97F /* ItemFullViewController.m */; };
+		82B725A519C28DE100217FE2 /* MockSuppliedItems.js in Resources */ = {isa = PBXBuildFile; fileRef = 82B725A419C28DC500217FE2 /* MockSuppliedItems.js */; };
+		82B725A919C293B000217FE2 /* NSObject+Motis.m in Sources */ = {isa = PBXBuildFile; fileRef = 82B725A819C293B000217FE2 /* NSObject+Motis.m */; };
+		82B725AB19C29C7600217FE2 /* MockItemPhotos.js in Resources */ = {isa = PBXBuildFile; fileRef = 82B725AA19C29C1D00217FE2 /* MockItemPhotos.js */; };
 		82B7983619B7EF34002AD686 /* PhotoFullscreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82B7983519B7EF34002AD686 /* PhotoFullscreenViewController.m */; };
 		82BE82A519A59894006126A0 /* TKImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BE82A419A59894006126A0 /* TKImage.m */; };
 		82BE82A819A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BE82A719A6BB70006126A0 /* ALAssetsLibrary+TKSingleton.m */; };
@@ -251,6 +254,10 @@
 		82A0C71A1969C3EC00C5B97F /* TKEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKEditViewController.m; sourceTree = "<group>"; };
 		82A0C71C1969C54E00C5B97F /* ItemFullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemFullViewController.h; sourceTree = "<group>"; };
 		82A0C71D1969C54E00C5B97F /* ItemFullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemFullViewController.m; sourceTree = "<group>"; };
+		82B725A419C28DC500217FE2 /* MockSuppliedItems.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = MockSuppliedItems.js; path = Model/Mock/MockSuppliedItems.js; sourceTree = "<group>"; };
+		82B725A719C293B000217FE2 /* NSObject+Motis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Motis.h"; sourceTree = "<group>"; };
+		82B725A819C293B000217FE2 /* NSObject+Motis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Motis.m"; sourceTree = "<group>"; };
+		82B725AA19C29C1D00217FE2 /* MockItemPhotos.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = MockItemPhotos.js; path = Model/Mock/MockItemPhotos.js; sourceTree = "<group>"; };
 		82B7983419B7EF34002AD686 /* PhotoFullscreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoFullscreenViewController.h; sourceTree = "<group>"; };
 		82B7983519B7EF34002AD686 /* PhotoFullscreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoFullscreenViewController.m; sourceTree = "<group>"; };
 		82BE82A319A59894006126A0 /* TKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImage.h; sourceTree = "<group>"; };
@@ -325,6 +332,7 @@
 		8233B7E3196E3A6E00333FE9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				82B725A319C28D9200217FE2 /* MockData */,
 				8233B7E4196E3A9400333FE9 /* MerchandiseItem.h */,
 				8233B7E5196E3A9400333FE9 /* MerchandiseItem.m */,
 			);
@@ -581,9 +589,28 @@
 			path = "Trunkit Boutique/AMSlideMenu";
 			sourceTree = SOURCE_ROOT;
 		};
+		82B725A319C28D9200217FE2 /* MockData */ = {
+			isa = PBXGroup;
+			children = (
+				82B725A419C28DC500217FE2 /* MockSuppliedItems.js */,
+				82B725AA19C29C1D00217FE2 /* MockItemPhotos.js */,
+			);
+			name = MockData;
+			sourceTree = "<group>";
+		};
+		82B725A619C293B000217FE2 /* Motis */ = {
+			isa = PBXGroup;
+			children = (
+				82B725A719C293B000217FE2 /* NSObject+Motis.h */,
+				82B725A819C293B000217FE2 /* NSObject+Motis.m */,
+			);
+			path = Motis;
+			sourceTree = "<group>";
+		};
 		82EC6383197AE852002CA430 /* ExternalSources */ = {
 			isa = PBXGroup;
 			children = (
+				82B725A619C293B000217FE2 /* Motis */,
 				82442E5619AAD00B00776292 /* MDProgressHUD */,
 				828DA779199DB86D006FA328 /* AMSlideMenu */,
 			);
@@ -686,8 +713,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8237600F1963A6C700010A00 /* Images.xcassets in Resources */,
+				82B725A519C28DE100217FE2 /* MockSuppliedItems.js in Resources */,
 				826B06321989C45D003AF419 /* takepicture.png in Resources */,
 				821FAB41198414C500A4ACA5 /* BebasNeue.otf in Resources */,
+				82B725AB19C29C7600217FE2 /* MockItemPhotos.js in Resources */,
 				825F076419873A9000C1C0BA /* menu.png in Resources */,
 				821FAB40198414C200A4ACA5 /* Bebas.ttf in Resources */,
 				8237603B1963B3A400010A00 /* helvetica-condensed-bold-1361523385.ttf in Resources */,
@@ -762,6 +791,7 @@
 				82EC63A8197B15B8002CA430 /* TKCropRectView.m in Sources */,
 				828DA789199DB86D006FA328 /* AMSlideMenuContentSegue.m in Sources */,
 				8222B59C19722B0F00F49905 /* PhotoSelectionViewController.m in Sources */,
+				82B725A919C293B000217FE2 /* NSObject+Motis.m in Sources */,
 				828DA78D199DB86D006FA328 /* AMSlideMenuRightMenuSegue.m in Sources */,
 				828DA78B199DB86D006FA328 /* AMSlideMenuLeftTableViewController.m in Sources */,
 				821FAB4A198455D000A4ACA5 /* SuppliedItemsViewController.m in Sources */,
@@ -937,7 +967,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f6c3c0d-8be7-4e52-81f4-b98d4699c7cd";
+				PROVISIONING_PROFILE = "27f043fb-4452-4278-82f9-e68563140bce";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -956,7 +986,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f6c3c0d-8be7-4e52-81f4-b98d4699c7cd";
+				PROVISIONING_PROFILE = "27f043fb-4452-4278-82f9-e68563140bce";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

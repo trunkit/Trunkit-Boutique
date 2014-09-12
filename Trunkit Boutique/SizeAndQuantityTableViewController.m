@@ -155,7 +155,8 @@ static NSInteger compareSizes (NSString *size1, NSString *size2, void *context)
         NSString *quantity = @"";
         if ([(NSNumber *)[self.merchandiseItem.quantityPerSizes valueForKey:key] integerValue] != 0)
         {
-            quantity = [[self.merchandiseItem.quantityPerSizes valueForKey:key] stringValue];
+//            quantity = [[self.merchandiseItem.quantityPerSizes valueForKey:key] stringValue];
+            quantity = [self.merchandiseItem.quantityPerSizes valueForKey:key];
         }
         sizeTextField.text = ([key isEqualToString:@"new size"]) ? @"" : key;
         quantityTextField.text = quantity;

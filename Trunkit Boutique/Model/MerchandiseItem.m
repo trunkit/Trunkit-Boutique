@@ -11,6 +11,20 @@
 
 @implementation MerchandiseItem
 
++ (NSDictionary*)mts_mapping
+{
+    return @{@"name": mts_key(itemName),
+             @"price": mts_key(unitPrice),
+             @"description": mts_key(itemLongDescription),
+             @"fit": mts_key(fitDescription),
+             @"construction": mts_key(materialsDescription),
+             @"boutique_id": mts_key(supplierName),
+             @"primary_category_id": mts_key(designerName),
+             @"secondary_category_id": mts_key(designerName),
+             @"sizes": mts_key(quantityPerSizes),
+             };
+}
+
 - (id)init
 {
     self = [super init];

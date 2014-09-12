@@ -48,67 +48,85 @@
 
 - (void)setupMockModel
 {
-    /*
-     *
-    NSArray *mockImages = @[@"http://www.rag-bone.com/store/productimages/details/6624_dusty_olive_l_z.jpg",
-                            @"http://www.rag-bone.com/store/productimages/details/6627_black_l_z.jpg",
-                            @"http://www.rag-bone.com/store/productimages/regular/6677_black_l.jpg",
-                            @"http://www.rag-bone.com/store/ProductImages/details/6677_black_s.jpg",
-                            @"http://www.rag-bone.com/store/ProductImages/details/6677_black_s_z.jpg",
-                            @"http://www.rag-bone.com/store/productimages/regular/6429_white_l.jpg",
-                            @"http://www.rag-bone.com/store/ProductImages/details/6429_white_s_z.jpg",
-                            @"http://www.rag-bone.com/store/productimages/details/6655_royal_red_l_z.jpg",
-                            @"http://www.rag-bone.com/store/productimages/regular/6646_almond_l.jpg",
-                            @"http://www.rag-bone.com/store/ProductImages/details/6656_black_sp.jpg",
-                            @"http://www.rag-bone.com/store/ProductImages/details/6639_flynt_green_sp_z.jpg"];
-     *
-     */
-
-    NSArray *mockImages = @[@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg",
-                            @"http://whatkatewore.com/wp-content/uploads/2011/09/Kate-Hudson-Jeans-Jeanography.jpg",
-                            @"http://www.eecloth.com/wp-content/uploads/2014/03/07/0/106-Hudson-Jeans-Palerme-Cuff-Knee-Short-for-Women-4.jpg",
-                            @"https://s3.amazonaws.com/assets.svpply.com/large/2614718.jpg?1402501163",
-                            @"http://www.stylegag.com/wp-content/uploads/2014/02/2012-women-new-designer-casual-dresses-gentlewomen-a-plus-size-bust-skirt-print-lace-decoration-bohemia.jpg",
-                            @"http://cache.net-a-porter.com/images/products/35202/35202_fr_xl.jpg",
-                            @"http://s7d2.scene7.com/is/image/DVF/S890401T14BBLACK?$Demandware%20Large%20Rectangle$",
-                            @"http://www.maykool.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/k/skirts-designer-asymmetric-hem-black-skirt-004705.jpg",
-                            @"http://1.bp.blogspot.com/-pz-VlK1GywY/TfdW5ul-rsI/AAAAAAAAAJg/gWt1i99FOS0/s400/summer_shoes_trehds_2011.jpg",
-                            @"http://cdn.shopify.com/s/files/1/0115/5332/products/1024_lyon_blue_1024x1024.jpg?v=1398297639",
-                            @"http://img.alibaba.com/wsphoto/v0/519213392/free-ship-EMS-luxury-trend-nackline-point-shirt-black-white-wedding-groom-shirt-M-L-XL.jpg",
-                            @"http://blog.youdesignit.com/images/prophecy_opt.jpg",
-                            @"https://trishsformalaffair.com/wp-content/uploads/2014/07/zagairi-boulevard-of-dreams-mens-long-sleeve-designer-shirt.jpg",
-                            @"http://i1.tribune.com.pk/wp-content/uploads/2012/08/423410-image-1345213752-109-640x480.JPG",
-                            @"http://c776239.r39.cf2.rackcdn.com/Gilli-5246-Black-White-1.jpg",
-                            @"http://cdn.is.bluefly.com/mgen/Bluefly/prodImage.ms?productCode=2070113&width=300&height=300.jpg"];
-    
     self.merchandiseItems = [@[] mutableCopy];
-    for (NSInteger i = 0; i < 10; i++)
+
+    NSString *mockFeedFile = [[NSBundle mainBundle] pathForResource:@"MockSuppliedItems" ofType:@"js"];
+    NSString *mockItemPhotosFile = [[NSBundle mainBundle] pathForResource:@"MockItemPhotos" ofType:@"js"];
+    NSData *feedData = [NSData dataWithContentsOfFile:mockFeedFile];
+    NSError *error = nil;
+    
+    NSArray *feedArray = [NSJSONSerialization JSONObjectWithData:feedData options:NSJSONReadingMutableContainers error:&error];
+    if (error)
     {
-        MerchandiseItem *item = [[MerchandiseItem alloc] init];
-        
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInteger:10 + (1*i)] forKey:@"Mock Size 1"];
-        [dict setObject:[NSNumber numberWithInteger:5 + (1*i)] forKey:@"Mock Size 2"];
-        
-        item.itemName = [NSString stringWithFormat:@"Mock Item With a Long Name Number %ld", (long)i];
-        item.styleNumber = [NSString stringWithFormat:@"%ld%ld%ldMOCK%ldSTYLENUMBER%ld",(long)i ,(long)i ,(long)i ,(long)i ,(long)i];
-        
-        NSUInteger randomIndex1 = arc4random() % [mockImages count];
-        NSURL *url1 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex1]];
-        item.productPhotos = [@[url1] mutableCopy];
-        NSUInteger randomIndex2 = arc4random() % [mockImages count];
-        NSURL *url2 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex2]];
-        [item.productPhotos addObject:url2];
-        
-        
-        item.designerName = @"Mock Designer";
-        item.supplierName = @"Trunkit Mock Boutique";
-        item.fitDescription = @"This is the text for describing how the clothes fit.";
-        item.materialsDescription = @"This is the text for describing the materials.";
-        item.unitPrice = 109 + (30 * i);
-        item.itemLongDescription = @"This is the text for describing the item.";
-        item.quantityPerSizes = dict;
-        [self.merchandiseItems addObject:item];
+        NSLog(@"ERROR Serializing feed: %@", error);
     }
+    else
+    {
+        for (NSDictionary *dict in feedArray)
+        {
+            MerchandiseItem *item = [[MerchandiseItem alloc] init];
+            [item mts_setValuesForKeysWithDictionary:dict];
+            
+            if ([[dict objectForKey:@"id"] longValue] == 95)
+            {
+                NSData *itemPhotosData = [NSData dataWithContentsOfFile:mockItemPhotosFile];
+                error = nil;
+                NSArray *itemPhotos = [NSJSONSerialization JSONObjectWithData:itemPhotosData options:NSJSONReadingMutableContainers error:&error];
+                
+                if (error)
+                {
+                    NSLog(@"ERROR Serializing item photos: %@", error);
+                }
+                else
+                {
+                    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES];
+                    itemPhotos = [itemPhotos sortedArrayUsingDescriptors:@[sort]];
+                    
+                    for (NSDictionary *photoDict in itemPhotos)
+                    {
+                        NSDictionary *urlDict = [photoDict objectForKey:@"url"];
+                        NSString *photoURL = [urlDict objectForKey:@"url"];
+                        //                    NSInteger photoPosition = [[urlDict objectForKey:@"position"] integerValue];
+                        [item.productPhotos addObject:photoURL];
+                    }
+                }
+            }
+            else
+            {
+                NSArray *mockImages = [self _TEMP_randomPhotos];
+                NSUInteger randomIndex1 = arc4random() % [mockImages count];
+                NSURL *url1 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex1]];
+                item.productPhotos = [@[url1] mutableCopy];
+                NSUInteger randomIndex2 = arc4random() % [mockImages count];
+                NSURL *url2 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex2]];
+                [item.productPhotos addObject:url2];
+                
+            }
+            
+            [self.merchandiseItems addObject:item];
+        }
+    }
+}
+
+- (NSArray *)_TEMP_randomPhotos
+{
+    return @[@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg",
+             @"http://whatkatewore.com/wp-content/uploads/2011/09/Kate-Hudson-Jeans-Jeanography.jpg",
+             @"http://www.eecloth.com/wp-content/uploads/2014/03/07/0/106-Hudson-Jeans-Palerme-Cuff-Knee-Short-for-Women-4.jpg",
+             @"https://s3.amazonaws.com/assets.svpply.com/large/2614718.jpg?1402501163",
+             @"http://www.stylegag.com/wp-content/uploads/2014/02/2012-women-new-designer-casual-dresses-gentlewomen-a-plus-size-bust-skirt-print-lace-decoration-bohemia.jpg",
+             @"http://cache.net-a-porter.com/images/products/35202/35202_fr_xl.jpg",
+             @"http://s7d2.scene7.com/is/image/DVF/S890401T14BBLACK?$Demandware%20Large%20Rectangle$",
+             @"http://www.maykool.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/k/skirts-designer-asymmetric-hem-black-skirt-004705.jpg",
+             @"http://1.bp.blogspot.com/-pz-VlK1GywY/TfdW5ul-rsI/AAAAAAAAAJg/gWt1i99FOS0/s400/summer_shoes_trehds_2011.jpg",
+             @"http://cdn.shopify.com/s/files/1/0115/5332/products/1024_lyon_blue_1024x1024.jpg?v=1398297639",
+             @"http://img.alibaba.com/wsphoto/v0/519213392/free-ship-EMS-luxury-trend-nackline-point-shirt-black-white-wedding-groom-shirt-M-L-XL.jpg",
+             @"http://blog.youdesignit.com/images/prophecy_opt.jpg",
+             @"https://trishsformalaffair.com/wp-content/uploads/2014/07/zagairi-boulevard-of-dreams-mens-long-sleeve-designer-shirt.jpg",
+             @"http://i1.tribune.com.pk/wp-content/uploads/2012/08/423410-image-1345213752-109-640x480.JPG",
+             @"http://c776239.r39.cf2.rackcdn.com/Gilli-5246-Black-White-1.jpg",
+             @"http://cdn.is.bluefly.com/mgen/Bluefly/prodImage.ms?productCode=2070113&width=300&height=300.jpg"];
+
 }
 
 - (void)addMerchandiseItem:(MerchandiseItem *)item
