@@ -7,6 +7,7 @@
 //
 
 #import "SignInViewController.h"
+#import "Flurry.h"
 
 @interface SignInViewController ()
 
@@ -31,6 +32,9 @@
     [self applyThemeToBlackButton:self.loginButton];
     
     [self checkUserIsCached];
+    
+    [Flurry logEvent:@"Signin_Loaded"];
+
 }
 
 - (void)checkUserIsCached
@@ -73,6 +77,8 @@
 
 - (IBAction)signinButtonTapped:(id)sender
 {
+    [Flurry logEvent:@"Signin_ButtonTapped"];
+
 //    [self performSegueWithIdentifier:@"SignInControllerToSuppliedItemsSegueIdentifier" sender:sender];
     [self performSegueWithIdentifier:@"SignInToMainMenuSegueIdentifier" sender:sender];
 }
