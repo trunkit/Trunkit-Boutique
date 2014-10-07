@@ -94,6 +94,9 @@
     [photoPages setUsesMerchandiseProductPhotos:YES];
     photoPages.view.frame = self.itemPhotosContainerView.bounds;
     [self.itemPhotosContainerView addSubview:photoPages.view];
+    
+    // Acts buggy in iOS 8, so disabling for now
+    self.itemPhotosContainerView.userInteractionEnabled = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
