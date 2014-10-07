@@ -205,7 +205,6 @@
     UILabel *itemTitleLabel = (UILabel *)[cell.contentView viewWithTag:1001];
     UILabel *itemSubtitleLabel = (UILabel *)[cell.contentView viewWithTag:1002];
     UIButton *itemQuantityButton = (UIButton *)[cell.contentView viewWithTag:3001];
-    UIImageView *itemImageView = (UIImageView *)[cell.contentView viewWithTag:2001];
     
     UIFont *boldFont = [UIFont fontWithName:@"BebasNeue" size:18.0];
 	UIFont *regularFont = [UIFont fontWithName:@"HelveticaLTStd-LightCond" size:16.0];
@@ -243,16 +242,7 @@
     itemSubtitleLabel.text = [NSString stringWithFormat:@"Designed By %@", theItem.designerName];
     
     cell.merchandiseItem = theItem;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(handleItemPhotoTap:)];
-    [itemImageView addGestureRecognizer:tap];
-    
-    //Enable the image to be clicked
-    itemImageView.userInteractionEnabled = YES;
-    
-    
-    
-    
+    cell.delegate = self;
     cell.productPhotoImageView.image = nil;
     NSString *identifier = [NSString stringWithFormat:@"Cell%ld" ,
                             (long)indexPath.row];
@@ -356,7 +346,6 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *vc = segue.destinationViewController;
@@ -364,32 +353,24 @@
     {
         ((TKEditViewController *)vc).merchandiseItem = self.itemToPassToDestinationController;
     }
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 
-- (void)handleItemPhotoTap:(UITapGestureRecognizer *)recognizer
-{
-    ItemTableViewCell *cell = (ItemTableViewCell*)recognizer.view.superview.superview.superview.superview.superview;
-    MerchandiseItem *item = cell.merchandiseItem;
-    NSLog(@"%s - %@", __PRETTY_FUNCTION__, item);
-    self.itemToPassToDestinationController = item;
-    [self performSegueWithIdentifier:@"ItemsTableViewToItemFullViewSegueIdentifier" sender:self];
-}
+#pragma mark Cell Delegate
 
-- (IBAction)handleItemCountTap:(id)sender
+- (void)itemTableViewCellCountButtonTapped:(ItemTableViewCell *)cell
 {
-    NSLog(@"%@", (id)((UIButton *)sender).superview.superview.superview.superview.superview);
-//    NSLog(@"%@", (id)((UIButton *)sender).superview);
-//    NSLog(@"%@", (id)((UIButton *)sender).superview.superview);
-//    NSLog(@"%@", (id)((UIButton *)sender).superview.superview.superview);
-//    NSLog(@"%@", (id)((UIButton *)sender).superview.superview.superview.superview.superview);
-    
-    ItemTableViewCell *cell = (id)((UIButton *)sender).superview.superview.superview.superview;
     MerchandiseItem *item = cell.merchandiseItem;
-    NSLog(@"%s - %@", __PRETTY_FUNCTION__, item);
+//    NSLog(@"%s - %@", __PRETTY_FUNCTION__, item);
     self.itemToPassToDestinationController = item;
     [self performSegueWithIdentifier:@"ItemsTableViewToSizingAndQuantitySegueIdentifier" sender:self];
+}
+
+- (void)itemTableViewCellProductImageTapped:(ItemTableViewCell *)cell
+{
+    MerchandiseItem *item = cell.merchandiseItem;
+//    NSLog(@"%s - %@", __PRETTY_FUNCTION__, item);
+    self.itemToPassToDestinationController = item;
+    [self performSegueWithIdentifier:@"ItemsTableViewToItemFullViewSegueIdentifier" sender:self];
 }
 
 @end

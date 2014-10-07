@@ -10,7 +10,7 @@
 #import "MerchandiseItem.h"
 #import "ItemTableViewCell.h"
 
-@interface ItemsTableViewController : UITableViewController
+@interface ItemsTableViewController : UITableViewController <ItemTableViewCellDelegate>
 
 @property (strong, nonatomic) NSMutableArray *merchandiseItems;
 
