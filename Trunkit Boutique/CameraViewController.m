@@ -9,6 +9,7 @@
 #import "CameraViewController.h"
 #import "PhotoEditorViewController.h"
 //#import <QuartzCore/QuartzCore.h>
+#import "ALAssetsLibrary+TKSingleton.h"
 
 static CGFloat optionAvailableAlpha = 0.6;
 static CGFloat optionUnavailableAlpha = 0.2;
@@ -47,16 +48,12 @@ static CGFloat optionUnavailableAlpha = 0.2;
     
     self.viewFinderFormat = (self.captureView.frame.size.width == self.captureView.frame.size.height) ? TKCameraViewFinderFormatSquare : TKCameraViewFinderFormatPortrait;
     
-
-    
-    // FIXME Need to use assets now
-//    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
+    [self setLastPhotoThumbnail];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // FIXME Need to use assets now
-//    self.thumbnailImageView.image = self.merchandiseItem.lastTakenPhoto;
+    [self setLastPhotoThumbnail];
     [_captureSession startRunning];
 }
 
@@ -393,5 +390,45 @@ static CGFloat optionUnavailableAlpha = 0.2;
     return [UIColor colorWithRed:0 green:.478431 blue:1 alpha:1];
 }
 
+
+#pragma mark Camera Roll
+
+- (void)setLastPhotoThumbnail
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSAssert(![NSThread isMainThread], @"This would create a deadlock (main thread waiting for main thread to complete)");
+        
+        ALAssetsLibrary *assetsLibrary = [ALAssetsLibrary defaultAssetsLibrary];
+        
+        // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
+        [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+            
+            // Within the group enumeration block, filter to enumerate just photos.
+            [group setAssetsFilter:[ALAssetsFilter allPhotos]];
+            
+            // Chooses the photo at the last index
+            [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop) {
+                
+                // The end of the enumeration is signaled by asset == nil.
+                if (alAsset) {
+	                    
+                    // Stop the enumerations
+                    *stop = YES; *innerStop = YES;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.thumbnailImageView.image = [UIImage imageWithCGImage:[alAsset thumbnail]];
+                        [self.thumbnailButton setImage:[UIImage imageWithCGImage:[alAsset thumbnail]] forState:UIControlStateNormal];
+                    });
+
+                    // Do something interesting with the AV asset.
+                    //                [self sendTweet:latestPhoto];
+                }
+            }];
+        } failureBlock: ^(NSError *error) {
+            // Typically you should handle an error more gracefully than this.
+            NSLog(@"No groups");
+        }];
+    });
+}
 
 @end

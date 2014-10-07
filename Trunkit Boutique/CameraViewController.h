@@ -26,6 +26,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIView *captureView;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (strong, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (strong, nonatomic) IBOutlet UIButton *thumbnailButton;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *viewFinderAspectRatioConstraint;
 
 @property (strong, nonatomic) UIViewController *popToControllerOnAccept;

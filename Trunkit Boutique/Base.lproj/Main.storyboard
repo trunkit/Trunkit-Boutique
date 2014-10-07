@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="739-DL-21o">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Items Table View Controller-->
@@ -927,17 +929,24 @@
                                     <action selector="squarePortraitButtonTapped:" destination="ejb-U6-ubT" eventType="touchUpInside" id="x3d-LH-Kwy"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q82-aJ-P9g">
-                                <rect key="frame" x="24" y="506" width="35" height="35"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sua-iN-ZsX">
+                                <rect key="frame" x="16" y="509" width="20" height="42"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Lti-tN-mNu"/>
-                                    <constraint firstAttribute="width" constant="35" id="c1P-Sf-b5n"/>
+                                    <constraint firstAttribute="width" constant="55" id="JBL-oD-Zgn"/>
+                                    <constraint firstAttribute="height" constant="55" id="RCu-tk-74Z"/>
                                 </constraints>
-                            </imageView>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="2FP-JY-hon" kind="push" id="rYx-OH-5HH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sua-iN-ZsX" firstAttribute="leading" secondItem="IMc-Gi-Rsh" secondAttribute="leadingMargin" id="1PB-a0-gFG"/>
                             <constraint firstAttribute="centerX" secondItem="5xV-p3-3Ag" secondAttribute="centerX" id="2h1-C8-BsB"/>
                             <constraint firstAttribute="trailing" secondItem="zU9-q4-0Ws" secondAttribute="trailing" constant="-1" id="71A-Gy-9xL"/>
                             <constraint firstItem="zU9-q4-0Ws" firstAttribute="leading" secondItem="IMc-Gi-Rsh" secondAttribute="leading" id="O5d-Zf-ljy"/>
@@ -947,11 +956,10 @@
                             <constraint firstAttribute="trailing" secondItem="41W-bJ-DIg" secondAttribute="trailing" constant="14" id="aQh-90-trb"/>
                             <constraint firstItem="rLI-k5-Q8N" firstAttribute="top" secondItem="5xV-p3-3Ag" secondAttribute="bottom" constant="6" id="bkG-0E-uGk"/>
                             <constraint firstItem="zU9-q4-0Ws" firstAttribute="top" secondItem="p7u-gC-o0X" secondAttribute="bottom" id="geJ-1d-CKU"/>
-                            <constraint firstItem="Q82-aJ-P9g" firstAttribute="leading" secondItem="IMc-Gi-Rsh" secondAttribute="leading" constant="24" id="inD-V8-5eg"/>
+                            <constraint firstItem="rLI-k5-Q8N" firstAttribute="top" secondItem="sua-iN-ZsX" secondAttribute="bottom" constant="17" id="lMj-nZ-fW2"/>
                             <constraint firstAttribute="trailing" secondItem="p7u-gC-o0X" secondAttribute="trailing" id="lNo-sk-yH7"/>
                             <constraint firstItem="5xV-p3-3Ag" firstAttribute="top" secondItem="zU9-q4-0Ws" secondAttribute="bottom" constant="1" id="pMr-Nk-VrT"/>
                             <constraint firstItem="p7u-gC-o0X" firstAttribute="top" secondItem="IMc-Gi-Rsh" secondAttribute="top" id="w32-R0-vud"/>
-                            <constraint firstItem="rLI-k5-Q8N" firstAttribute="top" secondItem="Q82-aJ-P9g" secondAttribute="bottom" constant="27" id="wAS-Tm-5Cs"/>
                             <constraint firstItem="p7u-gC-o0X" firstAttribute="leading" secondItem="IMc-Gi-Rsh" secondAttribute="leading" id="wUY-o4-TA1"/>
                         </constraints>
                     </view>
@@ -959,13 +967,13 @@
                     <connections>
                         <outlet property="captureView" destination="zU9-q4-0Ws" id="f25-rD-usW"/>
                         <outlet property="flashButton" destination="6Xw-lq-gXI" id="9Uf-Kh-Q8f"/>
-                        <outlet property="thumbnailImageView" destination="Q82-aJ-P9g" id="S1A-le-viK"/>
+                        <outlet property="thumbnailButton" destination="sua-iN-ZsX" id="rJa-bm-CWZ"/>
                         <segue destination="i1A-f8-kNO" kind="push" identifier="CameraToPhotoAcceptanceSegueIdentifier" id="a3U-8M-XVX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aP1-f7-YrB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2646" y="1408"/>
+            <point key="canvasLocation" x="2820" y="1194"/>
         </scene>
         <!--Photo Editor View Controller-->
         <scene sceneID="t51-vr-aAn">
@@ -1095,7 +1103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kdh-Ne-nPt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3119" y="1408"/>
+            <point key="canvasLocation" x="3680" y="1480"/>
         </scene>
         <!--Photo Selection View Controller-->
         <scene sceneID="moe-X8-hXS">
@@ -3063,6 +3071,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="MrD-fz-yKZ"/>
         <segue reference="hZO-yZ-XE6"/>
+        <segue reference="rYx-OH-5HH"/>
         <segue reference="6we-p8-kzk"/>
     </inferredMetricsTieBreakers>
 </document>

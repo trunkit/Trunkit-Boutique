@@ -67,51 +67,15 @@
 {
     [super viewDidLoad];
     
-//    _assets = [@[] mutableCopy];
     _photos = [@[] mutableCopy];
     _cachedImages = [[NSMutableDictionary alloc] init];
     _selectedAssets = [@[] mutableCopy];
-    
-//    UIPanGestureRecognizer *feedPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerSwipe:)];
-//    [feedPanRecognizer setMinimumNumberOfTouches:1];
-//    [feedPanRecognizer setMaximumNumberOfTouches:3];
-//    [feedPanRecognizer setDelaysTouchesBegan:YES];
-//    [feedPanRecognizer setDelegate:self];
-//	[self.collectionView addGestureRecognizer:feedPanRecognizer];
-    
-//    NSArray *recos = self.collectionView.gestureRecognizers;
-//    NSLog(@"RECOS = %@", recos);
-}
-//
-//- (void)handlePan:(UIPanGestureRecognizer *)gestureRecognizer
-//{
-//    [super handlePan:gestureRecognizer];
-//    
-//}
-//
-//- (void)handleTwoFingerSwipe:(UIPanGestureRecognizer *)gestureRecognizer
-//{
-//    NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-//{
-//    NSLog(@"%s", __PRETTY_FUNCTION__);
-//    return YES;
-//}
-//
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-//    NSLog(@"Collection View frame : (%f, %f, %f, %f)", self.collectionView.frame.origin.x, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
-
 }
 
 - (void)setSessionPhotos:(NSMutableArray *)sessionPhotos
 {
     _sessionPhotos = sessionPhotos;
     self.photos = [_sessionPhotos mutableCopy];
-//    self.photos = [@[] mutableCopy];
     [self.collectionView reloadData];
     
     __block NSMutableArray *tmpAssets = [@[] mutableCopy];
@@ -125,10 +89,10 @@
         
         [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
             NSLog(@"GROUP = %@", group);
-            if (![[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:TK_PHOTO_ALBUM_NAME])
-            {
-                return;
-            }
+//            if (![[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:TK_PHOTO_ALBUM_NAME])
+//            {
+//                return;
+//            }
             
             [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if(result)
