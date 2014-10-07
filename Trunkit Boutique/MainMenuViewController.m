@@ -7,6 +7,7 @@
 //
 
 #import "MainMenuViewController.h"
+#import "Flurry.h"
 
 @interface MainMenuViewController ()
 
@@ -26,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [Flurry logEvent:@"MainMenu_Loaded"];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(menuButtonGotTapped:) name:@"TK_SHOW_MENU" object:nil];

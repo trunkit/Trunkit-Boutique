@@ -8,6 +8,7 @@
 
 #import "TKEditViewController.h"
 #import "UILabel+UILabel_TKExtensions.h"
+#import "Flurry.h"
 
 #define kOFFSET_FOR_KEYBOARD        216.0f
 
@@ -29,6 +30,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [Flurry logEvent:@"NewEditController_Opened"];
+
+    
     UIFont *placeholerrFont = [UIFont fontWithName:@"HelveticaLTStd-LightCond" size:18.0];
     self.descriptionTextViewPlaceholder.font = placeholerrFont;
     [self applyThemeToLabel:self.descriptionTextViewPlaceholder withFontSize:18.0];
