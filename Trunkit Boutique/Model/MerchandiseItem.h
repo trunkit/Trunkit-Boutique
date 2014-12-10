@@ -33,6 +33,8 @@
 @property (strong, nonatomic) NSMutableArray *productPhotos;
 @property (readonly, nonatomic) id mainProductPhoto;
 
+@property (readwrite, nonatomic) NSUInteger itemId;
+
 - (NSURL *)lastTakenPhoto;
 
 @end

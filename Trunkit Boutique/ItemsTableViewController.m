@@ -38,129 +38,30 @@
 {
     [super viewDidLoad];
     self.cachedImages = [[NSMutableDictionary alloc] init];
-    [self setupMockModel];
-    [self _TEMP_getItems];
+    [self reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.tableView reloadData];
 }
 
-- (void)_TEMP_getItems
+- (void)reloadData
 {
-    NSString *_TEMP_api_key = @"sZxEXrF5czuBd2o-C_LK";
-    NSString *itemsRootAPI = @"https://www.trunkit.com/items.json";
-    NSString *getItemsAPI = [itemsRootAPI stringByAppendingString:[NSString stringWithFormat:@"?api_key=%@", _TEMP_api_key]];
-    NSURL *getItemsURL = [NSURL URLWithString:getItemsAPI];
-    
-    NSURLSession *urlSession = [NSURLSession sharedSession];
-    [[urlSession dataTaskWithURL:getItemsURL
-               completionHandler:^(NSData *data,
-                                   NSURLResponse *response,
-                                   NSError *error) {
-                   if (error) {
-                       NSLog(@"Error in request with URL %@: %@", getItemsURL, error);
-                       return;
-                   }
-                   NSLog(@"RESPONSE: %@", response);
-                   
-                   NSError *serializeError = nil;
-                   NSArray *feedArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&serializeError];
-                   if (serializeError) {
-                       NSLog(@"Error serializing feed: %@", serializeError);
-                       return;
-                   }
-                   for (NSDictionary *aDict in feedArray) {
-                       MerchandiseItem *item = [[MerchandiseItem alloc] init];
-                       [item mts_setValuesForKeysWithDictionary:aDict];
-                       NSLog(@"Fetched Item: %@", item);
-                   }
-                   
-               }] resume];
-}
+    MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progressHUD];
+    progressHUD.mode = MBProgressHUDModeIndeterminate;
+    progressHUD.labelText = @"Loading Items..";
+    [progressHUD show:YES];
 
-- (void)setupMockModel
-{
-    self.merchandiseItems = [@[] mutableCopy];
-
-    NSString *mockFeedFile = [[NSBundle mainBundle] pathForResource:@"MockSuppliedItems" ofType:@"js"];
-    NSString *mockItemPhotosFile = [[NSBundle mainBundle] pathForResource:@"MockItemPhotos" ofType:@"js"];
-    NSData *feedData = [NSData dataWithContentsOfFile:mockFeedFile];
-    NSError *error = nil;
-    
-    NSArray *feedArray = [NSJSONSerialization JSONObjectWithData:feedData options:NSJSONReadingMutableContainers error:&error];
-    if (error)
-    {
-        NSLog(@"ERROR Serializing feed: %@", error);
-    }
-    else
-    {
-        for (NSDictionary *dict in feedArray)
-        {
-            MerchandiseItem *item = [[MerchandiseItem alloc] init];
-            [item mts_setValuesForKeysWithDictionary:dict];
-            
-            if ([[dict objectForKey:@"id"] longValue] == 95)
-            {
-                NSData *itemPhotosData = [NSData dataWithContentsOfFile:mockItemPhotosFile];
-                error = nil;
-                NSArray *itemPhotos = [NSJSONSerialization JSONObjectWithData:itemPhotosData options:NSJSONReadingMutableContainers error:&error];
-                
-                if (error)
-                {
-                    NSLog(@"ERROR Serializing item photos: %@", error);
-                }
-                else
-                {
-                    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES];
-                    itemPhotos = [itemPhotos sortedArrayUsingDescriptors:@[sort]];
-                    
-                    for (NSDictionary *photoDict in itemPhotos)
-                    {
-                        NSDictionary *urlDict = [photoDict objectForKey:@"url"];
-                        NSString *photoURL = [urlDict objectForKey:@"url"];
-                        //                    NSInteger photoPosition = [[urlDict objectForKey:@"position"] integerValue];
-                        [item.productPhotos addObject:photoURL];
-                    }
-                }
-            }
-            else
-            {
-                NSArray *mockImages = [self _TEMP_randomPhotos];
-                NSUInteger randomIndex1 = arc4random() % [mockImages count];
-                NSURL *url1 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex1]];
-                item.productPhotos = [@[url1] mutableCopy];
-                NSUInteger randomIndex2 = arc4random() % [mockImages count];
-                NSURL *url2 = [NSURL URLWithString:[mockImages objectAtIndex:randomIndex2]];
-                [item.productPhotos addObject:url2];
-                
-            }
-            
-            [self.merchandiseItems addObject:item];
-        }
-    }
-}
-
-- (NSArray *)_TEMP_randomPhotos
-{
-    return @[@"http://assets.tobi.com/files/images/377/30827/37578/women/1/800x800.jpg",
-             @"http://whatkatewore.com/wp-content/uploads/2011/09/Kate-Hudson-Jeans-Jeanography.jpg",
-             @"http://www.eecloth.com/wp-content/uploads/2014/03/07/0/106-Hudson-Jeans-Palerme-Cuff-Knee-Short-for-Women-4.jpg",
-             @"https://s3.amazonaws.com/assets.svpply.com/large/2614718.jpg?1402501163",
-             @"http://www.stylegag.com/wp-content/uploads/2014/02/2012-women-new-designer-casual-dresses-gentlewomen-a-plus-size-bust-skirt-print-lace-decoration-bohemia.jpg",
-             @"http://cache.net-a-porter.com/images/products/35202/35202_fr_xl.jpg",
-             @"http://s7d2.scene7.com/is/image/DVF/S890401T14BBLACK?$Demandware%20Large%20Rectangle$",
-             @"http://www.maykool.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/k/skirts-designer-asymmetric-hem-black-skirt-004705.jpg",
-             @"http://1.bp.blogspot.com/-pz-VlK1GywY/TfdW5ul-rsI/AAAAAAAAAJg/gWt1i99FOS0/s400/summer_shoes_trehds_2011.jpg",
-             @"http://cdn.shopify.com/s/files/1/0115/5332/products/1024_lyon_blue_1024x1024.jpg?v=1398297639",
-             @"http://img.alibaba.com/wsphoto/v0/519213392/free-ship-EMS-luxury-trend-nackline-point-shirt-black-white-wedding-groom-shirt-M-L-XL.jpg",
-             @"http://blog.youdesignit.com/images/prophecy_opt.jpg",
-             @"https://trishsformalaffair.com/wp-content/uploads/2014/07/zagairi-boulevard-of-dreams-mens-long-sleeve-designer-shirt.jpg",
-             @"http://i1.tribune.com.pk/wp-content/uploads/2012/08/423410-image-1345213752-109-640x480.JPG",
-             @"http://c776239.r39.cf2.rackcdn.com/Gilli-5246-Black-White-1.jpg",
-             @"http://cdn.is.bluefly.com/mgen/Bluefly/prodImage.ms?productCode=2070113&width=300&height=300.jpg"];
-
+    TrunkitService *service = [[TrunkitService alloc] init];
+    [service queryItems:^(BOOL success, NSArray *records, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [progressHUD hide:YES];
+            self.merchandiseItems = [records mutableCopy];
+            [self.tableView reloadData];
+        });
+        NSLog(@"Service returned: %@", records);
+    }];
 }
 
 - (void)addMerchandiseItem:(MerchandiseItem *)item
@@ -290,49 +191,95 @@
         char const * s = [identifier  UTF8String];
         dispatch_queue_t queue = dispatch_queue_create(s, 0);
         dispatch_async(queue, ^{
-            NSURL *url = nil;
+            TrunkitService *service = [[TrunkitService alloc] init];
+            [service queryItemWithId:theItem.itemId
+                     completionBlock:^(BOOL success, NSArray *records, NSError *error){
+                         if (!success) {
+                             NSLog(@"ERROR in item request: %@", error);
+                             return;
+                         }
+                         if (!records.count)
+                         {
+                             NSLog(@"Request returned no record.");
+                         }
+                         else
+                         {
+                             NSDictionary *itemDict = [records firstObject];
+                             NSArray *photos = [itemDict objectForKey:@"photos"];
+                             for (NSDictionary *aPhoto in photos) {
+                                 NSDictionary *URLDict = [aPhoto objectForKey:@"url"];
+                                 NSString *photoURLStr = [URLDict objectForKey:@"url"];
+                                 NSURL *photoURL = [NSURL URLWithString:photoURLStr];
+                                 [theItem.productPhotos addObject:photoURL];
+//                                 theItem.productPhotos = [@[photoURL] mutableCopy];
+                             }
+                             
+                             NSURL *url = theItem.mainProductPhoto;
+                             if (!url)
+                             {
+                                 NSLog(@"WARNING: No photo URL found for item %@", theItem);
+                             }
+                             else
+                             {
+                                 UIImage *img = nil;
+                                 NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+                                 img = [[UIImage alloc] initWithData:data];
+                                 
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     if ([tableView indexPathForCell:cell].row == indexPath.row)
+                                     {
+                                         [self.cachedImages setValue:img forKey:identifier];
+                                         cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
+                                     }
+                                 });
+                             }
+                         }
+                     }];
             
-            if ([theItem.mainProductPhoto isKindOfClass:[NSString class]])
-            {
-                url = [NSURL URLWithString:theItem.mainProductPhoto];
-            }
-            else if ([theItem.mainProductPhoto isKindOfClass:[NSURL class]])
-            {
-                url = theItem.mainProductPhoto;
-            }
             
-            if (url)
-            {
-                UIImage *img = nil;
-                NSData *data = [[NSData alloc] initWithContentsOfURL:url];
-                img = [[UIImage alloc] initWithData:data];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([tableView indexPathForCell:cell].row == indexPath.row)
-                    {
-                        [self.cachedImages setValue:img forKey:identifier];
-                        cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
-                    }
-                });
-            }
-            else
-            {
-                NSLog(@"WARNING: We are executing code that should be soon deprecated. At this point, any product photo is expected to be a NSURL only.");
-                if ([theItem.mainProductPhoto isKindOfClass:[ALAsset class]])
-                {
-                    ALAsset *asset = (ALAsset *)theItem.mainProductPhoto;
-                    UIImage *img = [UIImage imageWithCGImage:[asset.defaultRepresentation fullScreenImage]];
-
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([tableView indexPathForCell:cell].row == indexPath.row)
-                        {
-                            [self.cachedImages setValue:img forKey:identifier];
-                            cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
-                        }
-                    });
-                }
-            }
+//            NSURL *url = nil;
+//            
+//            if ([theItem.mainProductPhoto isKindOfClass:[NSString class]])
+//            {
+//                url = [NSURL URLWithString:theItem.mainProductPhoto];
+//            }
+//            else if ([theItem.mainProductPhoto isKindOfClass:[NSURL class]])
+//            {
+//                url = theItem.mainProductPhoto;
+//            }
+//            
+//            if (url)
+//            {
+//                UIImage *img = nil;
+//                NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+//                img = [[UIImage alloc] initWithData:data];
+//                
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    if ([tableView indexPathForCell:cell].row == indexPath.row)
+//                    {
+//                        [self.cachedImages setValue:img forKey:identifier];
+//                        cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
+//                    }
+//                });
+//            }
+//            else
+//            {
+//                NSLog(@"WARNING: We are executing code that should be soon deprecated. At this point, any product photo is expected to be a NSURL only.");
+//                if ([theItem.mainProductPhoto isKindOfClass:[ALAsset class]])
+//                {
+//                    ALAsset *asset = (ALAsset *)theItem.mainProductPhoto;
+//                    UIImage *img = [UIImage imageWithCGImage:[asset.defaultRepresentation fullScreenImage]];
+//
+//                    
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        if ([tableView indexPathForCell:cell].row == indexPath.row)
+//                        {
+//                            [self.cachedImages setValue:img forKey:identifier];
+//                            cell.productPhotoImageView.image = [self.cachedImages valueForKey:identifier];
+//                        }
+//                    });
+//                }
+//            }
         });
     
     }

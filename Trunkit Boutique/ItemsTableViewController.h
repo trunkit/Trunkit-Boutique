@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MerchandiseItem.h"
 #import "ItemTableViewCell.h"
+#import "TrunkitService.h"
+#import "MBProgressHUD.h"
 
 @interface ItemsTableViewController : UITableViewController <ItemTableViewCellDelegate>
 

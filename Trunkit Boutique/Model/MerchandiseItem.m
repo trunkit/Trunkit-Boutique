@@ -22,6 +22,7 @@
              @"primary_category_id": mts_key(designerName),
              @"secondary_category_id": mts_key(designerName),
              @"sizes": mts_key(quantityPerSizes),
+             @"id": mts_key(itemId)
              };
 }
 
@@ -102,7 +103,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, name: %@>", NSStringFromClass([self class]), self, _itemName];
+    return [NSString stringWithFormat:@"<%@: %p, id:%lu name: %@>", NSStringFromClass([self class]), self, _itemId, _itemName];
 }
 
 @end

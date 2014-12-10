@@ -92,6 +92,7 @@
 		82A3137919C7BC630011DD95 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3137819C7BC630011DD95 /* SystemConfiguration.framework */; };
 		82A3137B19C7BC6B0011DD95 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3137A19C7BC6B0011DD95 /* Security.framework */; };
 		82A3137F19C7BC980011DD95 /* libFlurry_5.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3137E19C7BC980011DD95 /* libFlurry_5.3.0.a */; };
+		82AA7B301A38992F0094F690 /* TrunkitService.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AA7B2F1A38992F0094F690 /* TrunkitService.m */; };
 		82B725A519C28DE100217FE2 /* MockSuppliedItems.js in Resources */ = {isa = PBXBuildFile; fileRef = 82B725A419C28DC500217FE2 /* MockSuppliedItems.js */; };
 		82B725A919C293B000217FE2 /* NSObject+Motis.m in Sources */ = {isa = PBXBuildFile; fileRef = 82B725A819C293B000217FE2 /* NSObject+Motis.m */; };
 		82B725AB19C29C7600217FE2 /* MockItemPhotos.js in Resources */ = {isa = PBXBuildFile; fileRef = 82B725AA19C29C1D00217FE2 /* MockItemPhotos.js */; };
@@ -261,6 +262,8 @@
 		82A3137A19C7BC6B0011DD95 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		82A3137D19C7BC980011DD95 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = Flurry/Flurry.h; sourceTree = "<group>"; };
 		82A3137E19C7BC980011DD95 /* libFlurry_5.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_5.3.0.a; path = Flurry/libFlurry_5.3.0.a; sourceTree = "<group>"; };
+		82AA7B2E1A38992F0094F690 /* TrunkitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrunkitService.h; sourceTree = "<group>"; };
+		82AA7B2F1A38992F0094F690 /* TrunkitService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrunkitService.m; sourceTree = "<group>"; };
 		82B725A419C28DC500217FE2 /* MockSuppliedItems.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = MockSuppliedItems.js; path = Model/Mock/MockSuppliedItems.js; sourceTree = "<group>"; };
 		82B725A719C293B000217FE2 /* NSObject+Motis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Motis.h"; sourceTree = "<group>"; };
 		82B725A819C293B000217FE2 /* NSObject+Motis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Motis.m"; sourceTree = "<group>"; };
@@ -345,6 +348,8 @@
 				82B725A319C28D9200217FE2 /* MockData */,
 				8233B7E4196E3A9400333FE9 /* MerchandiseItem.h */,
 				8233B7E5196E3A9400333FE9 /* MerchandiseItem.m */,
+				82AA7B2E1A38992F0094F690 /* TrunkitService.h */,
+				82AA7B2F1A38992F0094F690 /* TrunkitService.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -790,6 +795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				821FAB471984236E00A4ACA5 /* UILabel+UILabel_TKExtensions.m in Sources */,
+				82AA7B301A38992F0094F690 /* TrunkitService.m in Sources */,
 				82EC63AC197B15B8002CA430 /* UIImage+TKCrop.m in Sources */,
 				82D556D4196509E7006CE269 /* SupplyAnItemPage2ViewController.m in Sources */,
 				82EC63AA197B15B8002CA430 /* TKCropViewController.m in Sources */,
