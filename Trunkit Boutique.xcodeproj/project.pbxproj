@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FBFF4891A38FC3A00D21C8B /* Brand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFF4881A38FC3A00D21C8B /* Brand.m */; };
+		4FBFF48C1A39002E00D21C8B /* ReferenceData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFF48B1A39002E00D21C8B /* ReferenceData.m */; };
 		821C3EED197F68F300568E85 /* SizeAndQuantityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C3EEC197F68F300568E85 /* SizeAndQuantityTableViewCell.m */; };
 		821DF18B19887296008E5FCB /* BackIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 821DF18A19887296008E5FCB /* BackIcon@2x.png */; };
 		821DF18E1988A517008E5FCB /* TextFieldAutoCompleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 821DF18C1988A517008E5FCB /* TextFieldAutoCompleteIcon.png */; };
@@ -132,6 +134,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4FBFF4871A38FC3A00D21C8B /* Brand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Brand.h; path = Model/Brand.h; sourceTree = "<group>"; };
+		4FBFF4881A38FC3A00D21C8B /* Brand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Brand.m; path = Model/Brand.m; sourceTree = "<group>"; };
+		4FBFF48A1A39002E00D21C8B /* ReferenceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReferenceData.h; path = Model/ReferenceData.h; sourceTree = "<group>"; };
+		4FBFF48B1A39002E00D21C8B /* ReferenceData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReferenceData.m; path = Model/ReferenceData.m; sourceTree = "<group>"; };
 		821C3EEB197F68F300568E85 /* SizeAndQuantityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SizeAndQuantityTableViewCell.h; sourceTree = "<group>"; };
 		821C3EEC197F68F300568E85 /* SizeAndQuantityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SizeAndQuantityTableViewCell.m; sourceTree = "<group>"; };
 		821DF18A19887296008E5FCB /* BackIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackIcon@2x.png"; sourceTree = "<group>"; };
@@ -350,6 +356,10 @@
 				8233B7E5196E3A9400333FE9 /* MerchandiseItem.m */,
 				82AA7B2E1A38992F0094F690 /* TrunkitService.h */,
 				82AA7B2F1A38992F0094F690 /* TrunkitService.m */,
+				4FBFF4871A38FC3A00D21C8B /* Brand.h */,
+				4FBFF4881A38FC3A00D21C8B /* Brand.m */,
+				4FBFF48A1A39002E00D21C8B /* ReferenceData.h */,
+				4FBFF48B1A39002E00D21C8B /* ReferenceData.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -830,8 +840,10 @@
 				828DA78F199DB86D006FA328 /* UIViewController+AMSlideMenu.m in Sources */,
 				8278D7B8196B8F73000B2B40 /* TextFieldSearchResultsTableViewController.m in Sources */,
 				828DA78A199DB86D006FA328 /* AMSlideMenuLeftMenuSegue.m in Sources */,
+				4FBFF4891A38FC3A00D21C8B /* Brand.m in Sources */,
 				828DA795199DBB79006FA328 /* LeftMenuViewController.m in Sources */,
 				8237600D1963A6C700010A00 /* ViewController.m in Sources */,
+				4FBFF48C1A39002E00D21C8B /* ReferenceData.m in Sources */,
 				822E2A5C198F015E00B170EA /* TKCollectionView.m in Sources */,
 				8222B58E197203B900F49905 /* CameraViewController.m in Sources */,
 				82442E5919AAD00B00776292 /* MBProgressHUD.m in Sources */,

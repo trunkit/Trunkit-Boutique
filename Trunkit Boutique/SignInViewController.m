@@ -78,6 +78,8 @@
 - (IBAction)signinButtonTapped:(id)sender
 {
     [Flurry logEvent:@"Signin_ButtonTapped"];
+    
+    [[ReferenceData sharedReferenceData] reloadData];
 
 //    [self performSegueWithIdentifier:@"SignInControllerToSuppliedItemsSegueIdentifier" sender:sender];
     [self performSegueWithIdentifier:@"SignInToMainMenuSegueIdentifier" sender:sender];

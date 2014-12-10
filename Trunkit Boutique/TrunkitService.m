@@ -85,4 +85,43 @@
                }] resume];
 }
 
+- (void)queryBrands:(QueryCompletionBlock)completionBlock
+{
+    NSString *brandsRootAPI = @"https://www.trunkit.com/brands.json";
+    NSString *getBrandsAPI = [brandsRootAPI stringByAppendingString:[NSString stringWithFormat:@"?api_key=%@", [self apiKey]]];
+    NSURL *getBrandsURL = [NSURL URLWithString:getBrandsAPI];
+    NSURLSession *urlSession = [NSURLSession sharedSession];
+    [[urlSession dataTaskWithURL:getBrandsURL
+               completionHandler:^(NSData *data,
+                                   NSURLResponse *response,
+                                   NSError *error) {
+                   NSArray *records = nil;
+                   
+                   if (error) {
+                       NSLog(@"Error in request with URL %@: %@", getBrandsURL, error);
+                   }
+                   else
+                   {
+                       NSMutableArray *workArray = [@[] mutableCopy];
+                       
+                       NSError *serializeError = nil;
+                       NSArray *brandsArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&serializeError];
+                       if (serializeError) {
+                           //TODO: Add to the returned error
+                           NSLog(@"Error serializing brands: %@", serializeError);
+                       }
+                       else
+                       {
+                           for (NSDictionary *aDict in brandsArray) {
+                               Brand *brand = [[Brand alloc] init];
+                               [brand mts_setValuesForKeysWithDictionary:aDict];
+                               [workArray addObject:brand];
+                           }
+                           records = [NSArray arrayWithArray:workArray];
+                       }
+                   }
+                   completionBlock((!error), records, error);
+               }] resume];
+}
+
 @end

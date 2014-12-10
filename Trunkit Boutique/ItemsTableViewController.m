@@ -60,7 +60,6 @@
             self.merchandiseItems = [records mutableCopy];
             [self.tableView reloadData];
         });
-        NSLog(@"Service returned: %@", records);
     }];
 }
 
