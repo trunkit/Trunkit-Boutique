@@ -39,11 +39,45 @@
     [super viewDidLoad];
     self.cachedImages = [[NSMutableDictionary alloc] init];
     [self setupMockModel];
+    [self _TEMP_getItems];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView reloadData];
+}
+
+- (void)_TEMP_getItems
+{
+    NSString *_TEMP_api_key = @"sZxEXrF5czuBd2o-C_LK";
+    NSString *itemsRootAPI = @"https://www.trunkit.com/items.json";
+    NSString *getItemsAPI = [itemsRootAPI stringByAppendingString:[NSString stringWithFormat:@"?api_key=%@", _TEMP_api_key]];
+    NSURL *getItemsURL = [NSURL URLWithString:getItemsAPI];
+    
+    NSURLSession *urlSession = [NSURLSession sharedSession];
+    [[urlSession dataTaskWithURL:getItemsURL
+               completionHandler:^(NSData *data,
+                                   NSURLResponse *response,
+                                   NSError *error) {
+                   if (error) {
+                       NSLog(@"Error in request with URL %@: %@", getItemsURL, error);
+                       return;
+                   }
+                   NSLog(@"RESPONSE: %@", response);
+                   
+                   NSError *serializeError = nil;
+                   NSArray *feedArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&serializeError];
+                   if (serializeError) {
+                       NSLog(@"Error serializing feed: %@", serializeError);
+                       return;
+                   }
+                   for (NSDictionary *aDict in feedArray) {
+                       MerchandiseItem *item = [[MerchandiseItem alloc] init];
+                       [item mts_setValuesForKeysWithDictionary:aDict];
+                       NSLog(@"Fetched Item: %@", item);
+                   }
+                   
+               }] resume];
 }
 
 - (void)setupMockModel

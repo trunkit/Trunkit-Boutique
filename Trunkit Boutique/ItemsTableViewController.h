@@ -14,8 +14,6 @@
 
 @property (strong, nonatomic) NSMutableArray *merchandiseItems;
 
-- (IBAction)handleItemCountTap:(id)sender;
-
 - (void)addMerchandiseItem:(MerchandiseItem *)item;
 
 @end

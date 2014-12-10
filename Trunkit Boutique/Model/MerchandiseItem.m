@@ -100,4 +100,9 @@
     return _styleNumber;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p, name: %@>", NSStringFromClass([self class]), self, _itemName];
+}
+
 @end
