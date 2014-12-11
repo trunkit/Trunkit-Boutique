@@ -117,7 +117,12 @@
 }
 
 //- (BOOL)textFieldShouldReturn:(UITextField *)textField
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+//{
+//    return [self textFieldShouldEndEditing:textField];
+//}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     if (textField == self.itemNameTextField)
     {

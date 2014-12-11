@@ -106,7 +106,7 @@
     }
     else
     {
-        [self.scrollView setContentOffset:CGPointZero animated:NO];
+//        [self.scrollView setContentOffset:CGPointZero animated:NO];
     }
 
 //    [self.scrollView setContentOffset:CGPointMake(0, 0)];
@@ -167,7 +167,9 @@
 
 - (void)scrollToMakeViewVisible:(UIView *)textField
 {
-    [self.scrollView setContentOffset:[self viewOriginForEdit:textField] animated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:[self viewOriginForEdit:textField] animated:YES];
+    });
 }
 
 - (CGPoint)viewOriginForEdit:(UIView *)view
@@ -175,6 +177,7 @@
     CGRect scrollToRect = view.frame;
     CGFloat scrollY = scrollToRect.origin.y - 20;
     CGPoint scrollPoint = CGPointMake(0.0, scrollY);
+//    NSLog(@"SCROLL TO (%f, %f)", scrollPoint.x, scrollPoint.y);
     return scrollPoint;
 }
 
@@ -253,6 +256,7 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     [self hideTextFieldSearchResults];
+    [self scrollToMakeViewVisible:textField];
     
     TKReferenceValueType referenceValueType = [self referenceValueTypeForTextField:textField];
     if (referenceValueType != TKReferenceValueNoneType)
@@ -298,7 +302,6 @@
         }
     }
     
-    [self scrollToMakeViewVisible:textField];
     return YES;
 }
 
