@@ -116,7 +116,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     if (textField == self.itemNameTextField)
     {
@@ -135,15 +136,6 @@
     }
     else if (textField == self.brandTextField)
     {
-        NSString *brandText = self.brandTextField.text;
-        if (brandText.length)
-        {
-            Brand *brand = [[ReferenceData sharedReferenceData] brandForName:brandText];
-            if (!brand)
-            {
-                return NO;
-            }
-        }
         [self.categoryTextField becomeFirstResponder];
         return YES;
     }
@@ -176,6 +168,63 @@
     return (textField == self.priceTextField);
 }
 
+- (BOOL)validateBrand:(NSString *)brandText
+{
+    if (!brandText.length)
+    {
+        self.merchandiseItem.brandId = nil;
+    }
+    else
+    {
+        Brand *brand = [[ReferenceData sharedReferenceData] brandForName:brandText];
+        if (!brand)
+        {
+            self.merchandiseItem.brandId = nil;
+            return NO;
+        }
+        self.merchandiseItem.brandId = [NSString stringWithFormat:@"%lu", brand.id];
+    }
+    return YES;
+}
+
+- (BOOL)validateCategory:(NSString *)categoryText
+{
+    if (!categoryText.length)
+    {
+        self.merchandiseItem.itemCategoryId = nil;
+    }
+    else
+    {
+        ItemCategory *category = [[ReferenceData sharedReferenceData] categoryForName:categoryText];
+        if (!category)
+        {
+            self.merchandiseItem.itemCategoryId = nil;
+            return NO;
+        }
+        self.merchandiseItem.itemCategoryId = [NSString stringWithFormat:@"%lu", category.id];
+    }
+    return YES;
+}
+
+- (BOOL)validateSubCategory:(NSString *)categoryText
+{
+    if (!categoryText.length)
+    {
+        self.merchandiseItem.itemSubCategoryId = nil;
+    }
+    else
+    {
+        ItemCategory *category = [[ReferenceData sharedReferenceData] categoryForName:categoryText];
+        if (!category)
+        {
+            self.merchandiseItem.itemSubCategoryId = nil;
+            return NO;
+        }
+        self.merchandiseItem.itemSubCategoryId = [NSString stringWithFormat:@"%lu", category.id];
+    }
+    return YES;
+}
+
 - (TKReferenceValueType)referenceValueTypeForTextField:(UITextField *)textField
 {
     if (textField == self.brandTextField)
@@ -197,6 +246,39 @@
 
 - (IBAction)supplyButtonTapped:(id)sender
 {
+    if (![self validateBrand:self.brandTextField.text])
+    {
+        NSLog(@"ERROR: Entered brand name failed validation.");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Brand Name"
+                                                        message:@"The brand name you entered is not a valid brand, please re-enter the brand by selecting one of the possible matches."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if (![self validateCategory:self.categoryTextField.text])
+    {
+        NSLog(@"ERROR: Entered category name failed validation.");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Category Name"
+                                                        message:@"The category name you entered is not a valid category, please re-enter the category by selecting one of the possible matches."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if (![self validateCategory:self.subCategoryTextField.text])
+    {
+        NSLog(@"ERROR: Entered subcategory name failed validation.");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid SubCategory Name"
+                                                        message:@"The sub-category name you entered is not a valid category, please re-enter the sub-category by selecting one of the possible matches."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
     NSArray *controllers = self.navigationController.viewControllers;
     for (UIViewController *aController in controllers)
     {
