@@ -7,8 +7,11 @@
 //
 
 #import "TextFieldSearchResultsTableViewController.h"
+#import "ReferenceData.h"
 
 @interface TextFieldSearchResultsTableViewController ()
+
+@property (strong, nonatomic) NSMutableArray *allMatches;
 
 @end
 
@@ -26,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupMockModel];
+    [self setUpModel];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -34,29 +37,27 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)setupMockModel
+- (void)setUpModel
 {
-    NSString *referenceType = nil;
+    NSArray *allValues = nil;
+    ReferenceData *srd = [ReferenceData sharedReferenceData];
+    
     switch (self.referenceValueType) {
         case TKReferenceValueBrandType:
-            referenceType = @"Brand";
+            allValues = [srd brands];
             break;
         case TKReferenceValueCategoryType:
-            referenceType = @"Category";
+            allValues = [srd mainCategories];
             break;
         case TKReferenceValueSubCategoryType:
-            referenceType = @"SubCategory";
+            allValues = [srd subCategoriesForCategoryId:self.parentCategoryId];
             break;
             
         default:
             break;
     }
-    NSMutableArray *mockArray = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < 100; i++) {
-        NSString *aMatch = [NSString stringWithFormat:@"%@ test #%lu", referenceType, (long)i];
-        [mockArray addObject:aMatch];
-    }
-    self.matches = mockArray;
+    self.allMatches = [allValues mutableCopy];
+    self.matches = self.allMatches;
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +80,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"\nself = %@\n, delegate = %@", self, self.tableView.delegate);
+//    NSLog(@"\nself = %@\n, delegate = %@", self, self.tableView.delegate);
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextFieldSearchResultCellReusableIdentifier"
                                                             forIndexPath:indexPath];
     
@@ -90,7 +91,7 @@
     UILabel *label = (UILabel *)[cell.contentView viewWithTag:1001];
     [self applyThemeToLabel:label];
     
-    NSString *resultName = [self.matches objectAtIndex:[indexPath indexAtPosition:1]];
+    NSString *resultName = [[self.matches objectAtIndex:[indexPath indexAtPosition:1]] name];
     label.text = resultName;
     
 //    UITextField *sizeTextField = (UITextField *)[cell.contentView viewWithTag:1001];
@@ -102,17 +103,25 @@
 - (void)setMatchesForString:(NSString *)string
 {
     if (!string.length)
-        return;
+    {
+        self.matches = self.allMatches;
+    }
+    else
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name CONTAINS[cd] %@", string];
+        NSArray *matchesForString = [NSArray arrayWithArray:[self.allMatches filteredArrayUsingPredicate:predicate]];
+        
+        self.matches = matchesForString.mutableCopy;
+    }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", string];
-    NSArray *matchesForString = [NSArray arrayWithArray:[self.matches filteredArrayUsingPredicate:predicate]];
+    [self.tableView reloadData];
     
-    if (!matchesForString.count)
-        return;
-    
-    NSString *firstMatch = [matchesForString objectAtIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.matches indexOfObject:firstMatch] inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    if (!matchesForString.count)
+//        return;
+//    
+//    NSString *firstMatch = [matchesForString objectAtIndex:0];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.matches indexOfObject:firstMatch] inSection:0];
+//    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 /*
@@ -172,11 +181,13 @@
 
 #pragma mark - TableView Delegate
 
+//FIXME This isn't beeing called properly because of the tap gesture on TKEdit
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    NSString *selectedText = [self.matches objectAtIndex:[indexPath indexAtPosition:1]];
+    NSString *selectedText = [[self.matches objectAtIndex:[indexPath indexAtPosition:1]] name];
     NSLog(@"SELECTED %@", selectedText);
     self.textField.text = selectedText;
 }
+
 @end

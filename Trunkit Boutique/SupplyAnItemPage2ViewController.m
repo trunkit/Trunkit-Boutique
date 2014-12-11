@@ -33,8 +33,8 @@
     [self applyThemeToTextField:self.itemNameTextField];
     [self applyThemeToTextField:self.priceTextField];
     
-    self.categoryTextField.text = self.merchandiseItem.itemCategory;
-    self.subCategoryTextField.text = self.merchandiseItem.itemSubCategory;
+    self.categoryTextField.text = self.merchandiseItem.categoryName;
+    self.subCategoryTextField.text = self.merchandiseItem.subCategoryName;
     self.itemNameTextField.text = self.merchandiseItem.itemName;
 //    self.priceTextField.text = (self.merchandiseItem.unitPrice == 0) ? @"" : [NSString stringWithFormat:@"$%0.2f", self.merchandiseItem.unitPrice];
     self.priceTextField.text = [NSString stringWithFormat:@"$%0.2f", self.merchandiseItem.unitPrice];

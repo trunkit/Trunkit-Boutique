@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MerchandiseItem.h"
 #import "Brand.h"
+#import "ItemCategory.h"
 
 typedef void (^QueryCompletionBlock)(BOOL success, NSArray *records, NSError *error);
 
@@ -18,6 +19,6 @@ typedef void (^QueryCompletionBlock)(BOOL success, NSArray *records, NSError *er
 - (void)queryItemWithId:(NSUInteger)itemId completionBlock:(QueryCompletionBlock)completionBlock;
 
 - (void)queryBrands:(QueryCompletionBlock)completionBlock;
-
+- (void)queryCategories:(QueryCompletionBlock)completionBlock;
 
 @end

@@ -63,6 +63,7 @@
 		8237603A1963B3A400010A00 /* Helvetica Light Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 823760381963B3A400010A00 /* Helvetica Light Condensed.otf */; };
 		8237603B1963B3A400010A00 /* helvetica-condensed-bold-1361523385.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 823760391963B3A400010A00 /* helvetica-condensed-bold-1361523385.ttf */; };
 		82442E5919AAD00B00776292 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 82442E5819AAD00B00776292 /* MBProgressHUD.m */; };
+		824FDEC31A391B2500DE648B /* ItemCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 824FDEC21A391B2500DE648B /* ItemCategory.m */; };
 		82558D9C199F03DF009AFE61 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82558D9B199F03DF009AFE61 /* HelpViewController.m */; };
 		825F076419873A9000C1C0BA /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 825F076219873A9000C1C0BA /* menu.png */; };
 		825F076519873A9000C1C0BA /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 825F076319873A9000C1C0BA /* menu@2x.png */; };
@@ -217,6 +218,8 @@
 		82442E5719AAD00B00776292 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		82442E5819AAD00B00776292 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		824DB52E19B4CA3C00CB250A /* MerchandiseItem.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = MerchandiseItem.js; path = Doc/MerchandiseItem.js; sourceTree = "<group>"; };
+		824FDEC11A391B2500DE648B /* ItemCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemCategory.h; path = Model/ItemCategory.h; sourceTree = "<group>"; };
+		824FDEC21A391B2500DE648B /* ItemCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemCategory.m; path = Model/ItemCategory.m; sourceTree = "<group>"; };
 		82558D9A199F03DF009AFE61 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		82558D9B199F03DF009AFE61 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		825F076219873A9000C1C0BA /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
@@ -360,6 +363,8 @@
 				4FBFF4881A38FC3A00D21C8B /* Brand.m */,
 				4FBFF48A1A39002E00D21C8B /* ReferenceData.h */,
 				4FBFF48B1A39002E00D21C8B /* ReferenceData.m */,
+				824FDEC11A391B2500DE648B /* ItemCategory.h */,
+				824FDEC21A391B2500DE648B /* ItemCategory.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -862,6 +867,7 @@
 				823760341963ADC300010A00 /* ItemsTableViewController.m in Sources */,
 				82BE82A519A59894006126A0 /* TKImage.m in Sources */,
 				822E2A59198E80A500B170EA /* PhotoSlideViewController.m in Sources */,
+				824FDEC31A391B2500DE648B /* ItemCategory.m in Sources */,
 				822335AD1974E0B400C0D8BE /* PhotoCollectionViewCell.m in Sources */,
 				823760031963A6C700010A00 /* main.m in Sources */,
 			);

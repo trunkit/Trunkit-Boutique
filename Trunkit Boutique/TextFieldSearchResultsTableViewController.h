@@ -15,10 +15,11 @@ typedef enum {
     TKReferenceValueSubCategoryType,
 } TKReferenceValueType;
 
-@interface TextFieldSearchResultsTableViewController : UITableViewController
+@interface TextFieldSearchResultsTableViewController : UITableViewController <UITableViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *matches;
-@property (readwrite) TKReferenceValueType referenceValueType;
+@property (readwrite, nonatomic) TKReferenceValueType referenceValueType;
+@property (readwrite, nonatomic) NSUInteger parentCategoryId;
 @property (weak, nonatomic) UITextField *textField;
 
 - (void)setMatchesForString:(NSString *)string;

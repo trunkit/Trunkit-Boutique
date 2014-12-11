@@ -78,11 +78,19 @@
 - (IBAction)signinButtonTapped:(id)sender
 {
     [Flurry logEvent:@"Signin_ButtonTapped"];
-    
-    [[ReferenceData sharedReferenceData] reloadData];
 
-//    [self performSegueWithIdentifier:@"SignInControllerToSuppliedItemsSegueIdentifier" sender:sender];
-    [self performSegueWithIdentifier:@"SignInToMainMenuSegueIdentifier" sender:sender];
+    MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progressHUD];
+    progressHUD.mode = MBProgressHUDModeIndeterminate;
+    progressHUD.labelText = @"Loading Reference Data";
+    [progressHUD show:YES];
+
+    [[ReferenceData sharedReferenceData] reloadDataWithCompletionBlock:^(BOOL success, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [progressHUD hide:YES];
+            [self performSegueWithIdentifier:@"SignInToMainMenuSegueIdentifier" sender:sender];
+        });
+    }];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "ReviewItemViewController.h"
 #import "SuppliedItemsViewController.h"
 #import "PhotoPagesViewController.h"
+#import "ReferenceData.h"
 
 @interface ReviewItemViewController ()
 
@@ -65,8 +66,8 @@
     self.styleNumberTextField.text = self.merchandiseItem.styleNumber;
     self.priceTextField.text = [NSString stringWithFormat:@"$%0.2f", self.merchandiseItem.unitPrice];
     self.brandTextField.text = self.merchandiseItem.designerName;
-    self.categoryTextField.text = self.merchandiseItem.itemCategory;
-    self.subCategoryTextField.text = self.merchandiseItem.itemSubCategory;
+    self.categoryTextField.text = self.merchandiseItem.categoryName;
+    self.subCategoryTextField.text = self.merchandiseItem.subCategoryName;
     self.descriptionTextView.text = self.merchandiseItem.itemLongDescription;
     self.fitTextField.text = self.merchandiseItem.fitDescription;
     self.materialsTextField.text = self.merchandiseItem.materialsDescription;
@@ -134,6 +135,15 @@
     }
     else if (textField == self.brandTextField)
     {
+        NSString *brandText = self.brandTextField.text;
+        if (brandText.length)
+        {
+            Brand *brand = [[ReferenceData sharedReferenceData] brandForName:brandText];
+            if (!brand)
+            {
+                return NO;
+            }
+        }
         [self.categoryTextField becomeFirstResponder];
         return YES;
     }
@@ -171,13 +181,18 @@
     if (textField == self.brandTextField)
         return TKReferenceValueBrandType;
 
-//    if (textField == self.categoryTextField)
-//        return TKReferenceValueCategoryType;
-//    
-//    if (textField == self.subCategoryTextField)
-//        return TKReferenceValueSubCategoryType;
+    if (textField == self.categoryTextField)
+        return TKReferenceValueCategoryType;
+    
+    if (textField == self.subCategoryTextField)
+        return TKReferenceValueSubCategoryType;
     
     return TKReferenceValueNoneType;
+}
+
+- (NSUInteger)parentCategoryId
+{
+    return [self.merchandiseItem.itemCategoryId integerValue];
 }
 
 - (IBAction)supplyButtonTapped:(id)sender

@@ -15,8 +15,14 @@
 @property (strong, nonatomic) NSString *styleNumber;
 @property (strong, nonatomic) NSString *designerName;
 
+//FIXME: Remove these 2
 @property (strong,nonatomic) NSString *itemCategory;
 @property (strong,nonatomic) NSString *itemSubCategory;
+
+@property (strong, nonatomic) NSString *brandId;
+@property (strong, nonatomic) NSString *itemCategoryId;
+@property(strong, nonatomic) NSString *itemSubCategoryId;
+
 
 @property (strong, nonatomic) NSString *supplierName;
 @property (strong, nonatomic) NSString *fitDescription;
@@ -34,6 +40,10 @@
 @property (readonly, nonatomic) id mainProductPhoto;
 
 @property (readwrite, nonatomic) NSUInteger itemId;
+
+- (NSString *)designerName;
+- (NSString *)categoryName;
+- (NSString *)subCategoryName;
 
 - (NSURL *)lastTakenPhoto;
 

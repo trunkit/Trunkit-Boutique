@@ -263,6 +263,10 @@
             TextFieldSearchResultsTableViewController *tableViewController = [sb instantiateViewControllerWithIdentifier:@"TextFieldSearchResultsTableViewControllerIdentifier"];
             
             tableViewController.referenceValueType = referenceValueType;
+            if ([self parentCategoryId] != NSNotFound)
+            {
+                tableViewController.parentCategoryId = [self parentCategoryId];
+            }
             tableViewController.textField = textField;
             [self addChildViewController:tableViewController];
             
@@ -314,6 +318,11 @@
 - (TKReferenceValueType)referenceValueTypeForTextField:(UITextField *)textField
 {
     return TKReferenceValueNoneType; //override
+}
+
+- (NSUInteger)parentCategoryId
+{
+    return NSNotFound;
 }
 
 - (IBAction)textFieldTextDidChange:(UITextField *)textField

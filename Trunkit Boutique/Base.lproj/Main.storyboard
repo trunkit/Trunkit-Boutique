@@ -519,6 +519,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
+                                                    <action selector="textFieldTextDidChange:" destination="9LZ-eo-fdF" eventType="editingChanged" id="IcQ-ql-750"/>
                                                     <outlet property="delegate" destination="9LZ-eo-fdF" id="Gjh-J9-SSf"/>
                                                 </connections>
                                             </textField>
@@ -527,6 +528,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
+                                                    <action selector="textFieldTextDidChange:" destination="9LZ-eo-fdF" eventType="editingChanged" id="x0J-F9-2Mo"/>
                                                     <outlet property="delegate" destination="9LZ-eo-fdF" id="FQw-eL-bf0"/>
                                                 </connections>
                                             </textField>
@@ -2114,6 +2116,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
+                                                    <action selector="textFieldTextDidChange:" destination="eOZ-pl-ZEB" eventType="editingChanged" id="4jL-WN-PHj"/>
                                                     <outlet property="delegate" destination="eOZ-pl-ZEB" id="Lk0-JX-6ph"/>
                                                 </connections>
                                             </textField>
@@ -2125,6 +2128,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
+                                                    <action selector="textFieldTextDidChange:" destination="eOZ-pl-ZEB" eventType="editingChanged" id="PfQ-3c-PoS"/>
                                                     <outlet property="delegate" destination="eOZ-pl-ZEB" id="LNY-Ea-KUe"/>
                                                 </connections>
                                             </textField>
@@ -2136,6 +2140,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
+                                                    <action selector="textFieldTextDidChange:" destination="eOZ-pl-ZEB" eventType="editingChanged" id="LbL-JE-24k"/>
                                                     <outlet property="delegate" destination="eOZ-pl-ZEB" id="JrO-UL-0Qg"/>
                                                 </connections>
                                             </textField>

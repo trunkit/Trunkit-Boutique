@@ -8,6 +8,11 @@
 
 #import "MerchandiseItem.h"
 #import "ALAssetsLibrary+TKSingleton.h"
+#import "ReferenceData.h"
+
+@interface MerchandiseItem()
+
+@end
 
 @implementation MerchandiseItem
 
@@ -19,8 +24,9 @@
              @"fit": mts_key(fitDescription),
              @"construction": mts_key(materialsDescription),
              @"boutique_id": mts_key(supplierName),
-             @"primary_category_id": mts_key(designerName),
-             @"secondary_category_id": mts_key(designerName),
+             @"brand_id": mts_key(brandId),
+             @"primary_category_id": mts_key(itemCategoryId),
+             @"secondary_category_id": mts_key(itemSubCategoryId),
              @"sizes": mts_key(quantityPerSizes),
              @"id": mts_key(itemId)
              };
@@ -37,6 +43,21 @@
         self.unitPrice = 0.0f;
     }
     return self;
+}
+
+- (NSString *)designerName
+{
+    return [[ReferenceData sharedReferenceData] nameForBrandId:[self.brandId integerValue]];
+}
+
+- (NSString *)categoryName
+{
+    return [[ReferenceData sharedReferenceData] nameForCategoryId:[self.itemCategoryId integerValue]];
+}
+
+- (NSString *)subCategoryName
+{
+    return [[ReferenceData sharedReferenceData] nameForCategoryId:[self.itemSubCategoryId integerValue]];
 }
 
 - (id)mainProductPhoto

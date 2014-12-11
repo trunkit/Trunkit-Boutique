@@ -124,4 +124,43 @@
                }] resume];
 }
 
+- (void)queryCategories:(QueryCompletionBlock)completionBlock
+{
+    NSString *categoriesRootAPI = @"https://www.trunkit.com/categories.json";
+    NSString *getCategoriesAPI = [categoriesRootAPI stringByAppendingString:[NSString stringWithFormat:@"?api_key=%@", [self apiKey]]];
+    NSURL *getCategoriesURL = [NSURL URLWithString:getCategoriesAPI];
+    NSURLSession *urlSession = [NSURLSession sharedSession];
+    [[urlSession dataTaskWithURL:getCategoriesURL
+               completionHandler:^(NSData *data,
+                                   NSURLResponse *response,
+                                   NSError *error) {
+                   NSArray *records = nil;
+                   
+                   if (error) {
+                       NSLog(@"Error in request with URL %@: %@", getCategoriesURL, error);
+                   }
+                   else
+                   {
+                       NSMutableArray *workArray = [@[] mutableCopy];
+                       
+                       NSError *serializeError = nil;
+                       NSArray *categoriesArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&serializeError];
+                       if (serializeError) {
+                           //TODO: Add to the returned error
+                           NSLog(@"Error serializing brands: %@", serializeError);
+                       }
+                       else
+                       {
+                           for (NSDictionary *aDict in categoriesArray) {
+                               ItemCategory *category = [[ItemCategory alloc] init];
+                               [category mts_setValuesForKeysWithDictionary:aDict];
+                               [workArray addObject:category];
+                           }
+                           records = [NSArray arrayWithArray:workArray];
+                       }
+                   }
+                   completionBlock((!error), records, error);
+               }] resume];
+}
+
 @end
